@@ -1,0 +1,47 @@
+# ---- Core deep learning -------------------------------------------------
+torch>=2.2.0
+torchvision>=0.17.0
+transformers>=4.40.0
+accelerate>=0.30.0
+timm>=1.0.3
+
+# ---- Experiment tracking & config ---------------------------------------
+wandb>=0.17.0
+omegaconf>=2.3.0
+pyyaml>=6.0.1
+python-dotenv>=1.0.1
+
+# ---- Radio astronomy / signal processing --------------------------------
+blimpy>=2.2.9
+setigen>=2.5.1
+h5py>=3.11.0
+astropy>=6.0.1
+
+# ---- Scientific computing ------------------------------------------------
+numpy>=1.26.4
+scipy>=1.13.0
+pandas>=2.2.2
+scikit-learn>=1.4.2
+scikit-image>=0.23.2
+
+# ---- Visualization ---------------------------------------------------------
+matplotlib>=3.8.4
+seaborn>=0.13.2
+plotly>=5.22.0
+
+# ---- Deployment -------------------------------------------------------------
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+streamlit>=1.35.0
+pydantic>=2.7.1
+
+# ---- Testing & code quality --------------------------------------------------
+pytest>=8.2.0
+pytest-cov>=5.0.0
+black>=24.4.2
+ruff>=0.4.4
+mypy>=1.10.0
+
+# ---- Notebooks --------------------------------------------------------------
+jupyterlab>=4.2.0
+tqdm>=4.66.4

@@ -1,0 +1,117 @@
+project:
+  name: deepseti
+  seed: 42
+  device: cpu                # cpu locally; override to cuda when running on Colab
+  output_dir: experiments/${now:%Y-%m-%d_%H-%M-%S}
+  log_level: INFO
+
+# -----------------------------------------------------------------------------
+# Data: Breakthrough Listen ingestion + spectrogram generation
+# -----------------------------------------------------------------------------
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  synthetic_dir: data/synthetic
+
+  cadence: ABACAD             # standard BL ON-OFF cadence label
+  telescope: GBT               # GBT | Parkes | ATA
+  frequency_band: L             # L | S | C | X
+
+  spectrogram:
+    format: hdf5
+    n_time_bins: 16
+    n_freq_bins: 4096
+    normalize: zscore           # zscore | minmax | log
+    log_scale: true
+    clip_percentile: [0.5, 99.5]
+
+  split:
+    train: 0.8
+    val: 0.1
+    test: 0.1
+
+  dataloader:
+    batch_size: 32
+    num_workers: 4
+    pin_memory: true
+
+# -----------------------------------------------------------------------------
+# Model: ViT Masked Autoencoder (Hugging Face ViTMAEForPreTraining)
+# -----------------------------------------------------------------------------
+model:
+  architecture: vit_mae
+  pretrained_backbone: null
+  image_size: 224
+  patch_size: 16
+  num_channels: 1              # spectrograms are single-channel
+
+  encoder:
+    hidden_size: 768
+    num_hidden_layers: 12
+    num_attention_heads: 12
+    intermediate_size: 3072
+
+  decoder:
+    decoder_hidden_size: 512
+    decoder_num_hidden_layers: 8
+    decoder_num_attention_heads: 16
+    decoder_intermediate_size: 2048
+
+  mask_ratio: 0.75
+  norm_pix_loss: true
+
+# -----------------------------------------------------------------------------
+# Training
+# -----------------------------------------------------------------------------
+training:
+  epochs: 300
+  batch_size: 32
+  optimizer: adamw
+  learning_rate: 1.5e-4
+  weight_decay: 0.05
+  warmup_epochs: 40
+  lr_scheduler: cosine
+  min_lr: 1e-6
+  max_grad_norm: 1.0
+  mixed_precision: bf16        # no | fp16 | bf16 (only matters on GPU)
+  early_stopping:
+    enabled: true
+    patience: 20
+    metric: val_loss
+    mode: min
+  checkpoint:
+    save_dir: experiments/checkpoints
+    save_every_n_epochs: 10
+    keep_last_n: 5
+    save_best: true
+  resume_from: null
+
+# -----------------------------------------------------------------------------
+# Evaluation / anomaly scoring
+# -----------------------------------------------------------------------------
+evaluation:
+  reconstruction_metric: mse
+  anomaly_threshold_method: percentile
+  anomaly_threshold_percentile: 99.5
+  synthetic_signal_types: [narrowband, drifting, pulsed, broadband]
+  metrics: [auroc, auprc, precision_at_k, recall_at_k]
+
+# -----------------------------------------------------------------------------
+# Weights & Biases
+# -----------------------------------------------------------------------------
+wandb:
+  enabled: true
+  entity: null                 # set your W&B username/team
+  project: deepseti
+  tags: [seti, vit-mae, self-supervised, technosignature]
+
+# -----------------------------------------------------------------------------
+# Deployment
+# -----------------------------------------------------------------------------
+deployment:
+  fastapi:
+    host: 0.0.0.0
+    port: 8000
+  streamlit:
+    port: 8501
+  model_registry_path: experiments/checkpoints/best_model.pt
