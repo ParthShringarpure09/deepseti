@@ -12,7 +12,8 @@ pyyaml>=6.0.1
 python-dotenv>=1.0.1
 
 # ---- Radio astronomy / signal processing --------------------------------
-blimpy>=2.2.9
+blimpy>=2.1.4
+setuptools>=69.0.0
 setigen>=2.5.1
 h5py>=3.11.0
 astropy>=6.0.1

@@ -15,7 +15,7 @@ data:
 
   cadence: ABACAD             # standard BL ON-OFF cadence label
   telescope: GBT               # GBT | Parkes | ATA
-  frequency_band: L             # L | S | C | X
+  frequency_band: C             # L | S | C | X
 
   spectrogram:
     format: hdf5

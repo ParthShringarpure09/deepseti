@@ -21,7 +21,8 @@ dependencies:
       - wandb>=0.17.0
       - omegaconf>=2.3.0
       - python-dotenv>=1.0.1
-      - blimpy>=2.2.9
+      - blimpy>=2.1.4
+      - setuptools>=69.0.0
       - setigen>=2.5.1
       - astropy>=6.0.1
       - scikit-learn>=1.4.2
