@@ -1,0 +1,75 @@
+{
+  "model": "PCA reconstruction baseline",
+  "n_components": 64,
+  "anomaly_score": "mean of top 0.2% squared reconstruction errors",
+  "top_error_fraction": 0.002,
+  "training_frames": 816,
+  "training_observations": 6,
+  "validation": {
+    "auroc": 0.6461673469387755,
+    "auprc": 0.5944344738901635
+  },
+  "test": {
+    "auroc": 0.6768551020408163,
+    "auprc": 0.6435536752089339
+  },
+  "test_by_snr": [
+    {
+      "robust_snr": 0.5,
+      "auroc": 0.5060714285714285,
+      "auprc": 0.509622922012871
+    },
+    {
+      "robust_snr": 1.0,
+      "auroc": 0.545,
+      "auprc": 0.5277019106752951
+    },
+    {
+      "robust_snr": 2.0,
+      "auroc": 0.6271428571428572,
+      "auprc": 0.5738538764369511
+    },
+    {
+      "robust_snr": 5.0,
+      "auroc": 0.793469387755102,
+      "auprc": 0.7168288855662417
+    },
+    {
+      "robust_snr": 10.0,
+      "auroc": 0.8998469387755103,
+      "auprc": 0.8234456191053778
+    }
+  ],
+  "test_by_morphology": [
+    {
+      "morphology": "burst",
+      "auroc": 0.7231604938271605,
+      "auprc": 0.7216892042697314
+    },
+    {
+      "morphology": "intermittent",
+      "auroc": 0.5813333333333334,
+      "auprc": 0.5703741812881477
+    },
+    {
+      "morphology": "linear_drift",
+      "auroc": 0.6609777777777778,
+      "auprc": 0.620211780055958
+    },
+    {
+      "morphology": "multiple_carriers",
+      "auroc": 0.6992,
+      "auprc": 0.6881575114000262
+    },
+    {
+      "morphology": "nonlinear_drift",
+      "auroc": 0.6558,
+      "auprc": 0.6202032190917655
+    },
+    {
+      "morphology": "stationary_narrowband",
+      "auroc": 0.6968888888888889,
+      "auprc": 0.66641587971834
+    }
+  ]
+}
