@@ -1,0 +1,39 @@
+{
+    "benchmark_name": "deepseti_dev_synthetic_v1",
+    "seed": 42,
+    "repeats_per_setting": 5,
+    "frame_shape": [16, 4096],
+    "allowed_splits": ["validation", "test"],
+    "training_injections_allowed": false,
+  
+    "strength": {
+      "definition": "added_signal_power / (1.4826 * frame_MAD)",
+      "robust_snr_levels": [0.5, 1.0, 2.0, 5.0, 10.0]
+    },
+  
+    "stationary_narrowband": {
+      "bandwidth_bins": [1, 2, 4]
+    },
+  
+    "linear_drift": {
+      "drift_bins_per_time": [-20, -10, -5, 5, 10, 20]
+    },
+  
+    "nonlinear_drift": {
+      "linear_drift_bins_per_time": [3.0],
+      "curvature_bins_per_time2": [-0.8, -0.4, 0.4, 0.8]
+    },
+  
+    "intermittent": {
+      "active_fraction": [0.25, 0.5, 0.75]
+    },
+  
+    "multiple_carriers": {
+      "num_carriers": [2, 3, 5]
+    },
+  
+    "burst": {
+      "duration_bins": [2, 4, 8],
+      "bandwidth_bins": [4, 20, 64]
+    }
+  }
