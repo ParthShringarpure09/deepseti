@@ -266,8 +266,10 @@ def train(args: argparse.Namespace) -> None:
     train_history: list[float] = []
     val_history:   list[float] = []
     best_val_loss = float("inf")
-    # Generator state deferred until after the generator is constructed below.
-    _deferred_generator_state: torch.Tensor | None = None
+    # Checkpoint retained so _restore_rng_state can be called after the
+    # DataLoader generator is constructed below. No PyTorch device RNG is
+    # consumed between here and that call, so the ordering is preserved.
+    _ckpt_rng: dict[str, Any] | None = None
 
     if args.resume is not None:
         resume_path = Path(args.resume)
@@ -289,16 +291,9 @@ def train(args: argparse.Namespace) -> None:
         train_history = list(ckpt.get("train_history", []))
         val_history   = list(ckpt.get("val_history", []))
         best_val_loss = float(ckpt.get("best_val_loss", float("inf")))
-        # Restore global RNG states so masking sequences continue faithfully.
-        if "cpu_rng_state" in ckpt:
-            torch.set_rng_state(ckpt["cpu_rng_state"])
-        if device.type == "cuda" and "cuda_rng_state_all" in ckpt:
-            torch.cuda.set_rng_state_all(ckpt["cuda_rng_state_all"])
-        if device.type == "mps" and "mps_rng_state" in ckpt:
-            if hasattr(torch.mps, "set_rng_state"):
-                torch.mps.set_rng_state(ckpt["mps_rng_state"])
-        # Generator state is applied after the generator is constructed below.
-        _deferred_generator_state = ckpt.get("train_generator_state")
+        # All RNG states (CPU, CUDA/MPS, generator) are restored together
+        # via _restore_rng_state after the generator is constructed below.
+        _ckpt_rng = ckpt
         print(
             f"Resumed at epoch {start_epoch - 1}. "
             f"Best val loss so far: {best_val_loss:.6f}"
@@ -345,10 +340,10 @@ def train(args: argparse.Namespace) -> None:
     # independent of the global RNG consumed by model init.
     train_generator = torch.Generator()
     train_generator.manual_seed(seed)
-    # On resume: override the fresh seed with the saved generator state so
-    # the shuffle sequence continues from exactly where it left off.
-    if _deferred_generator_state is not None:
-        train_generator.set_state(_deferred_generator_state)
+    # On resume: restore all RNG states (CPU, CUDA, MPS, and generator) in
+    # a single call so masking and shuffle sequences continue faithfully.
+    if _ckpt_rng is not None:
+        _restore_rng_state(_ckpt_rng, device, train_generator)
 
     num_workers: int = int(train_cfg["dataloader_num_workers"])
     worker_fn = _seed_worker if num_workers > 0 else None
@@ -421,8 +416,12 @@ def train(args: argparse.Namespace) -> None:
         val_history.append(val_loss)
 
         # ----- Checkpoint -----
-        # Capture RNG states after this epoch so resume continues the
-        # masking and shuffle sequences faithfully from the next epoch.
+        # Update best_val_loss BEFORE constructing the state dict so that
+        # both latest.pt and best.pt always carry the correct current best.
+        is_new_best = val_loss < best_val_loss
+        if is_new_best:
+            best_val_loss = val_loss
+
         rng_snapshot = _capture_rng_state(device, train_generator)
         state: dict[str, Any] = {
             "epoch":                epoch,
@@ -434,13 +433,10 @@ def train(args: argparse.Namespace) -> None:
             "config":               config,
             **rng_snapshot,
         }
-        # latest.pt — overwritten atomically every epoch
         _save_atomic(state, checkpoint_dir / "latest.pt")
 
         marker = ""
-        if val_loss < best_val_loss:
-            best_val_loss        = val_loss
-            state["best_val_loss"] = best_val_loss
+        if is_new_best:
             _save_atomic(state, checkpoint_dir / "best.pt")
             marker = " <- best"
 

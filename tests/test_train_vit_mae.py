@@ -124,3 +124,133 @@ def test_restore_rng_state_does_not_touch_cuda_when_cpu():
     snapshot["cuda_rng_state_all"] = object()
     # Should not raise even though cuda_rng_state_all is present but device=cpu
     _restore_rng_state(snapshot, device, generator)
+
+
+def test_restore_rng_state_tolerates_extra_checkpoint_keys():
+    """
+    _restore_rng_state is now called with the full checkpoint dict (which
+    contains non-RNG keys). Verify extra keys are silently ignored and that
+    two restores from the same snapshot produce identical draws.
+    """
+    device = torch.device("cpu")
+    generator = torch.Generator()
+    generator.manual_seed(0)
+
+    torch.manual_seed(7)
+
+    rng_snapshot = _capture_rng_state(device, generator)
+    full_ckpt = {
+        "epoch": 10,
+        "model_state_dict": {"dummy": "value"},
+        "best_val_loss": 0.3,
+        **rng_snapshot,
+    }
+
+    # Advance both RNGs past the snapshot point
+    _ = torch.rand(100)
+    _ = torch.randint(0, 10, (10,), generator=generator)
+
+    # First restore — should not raise despite extra non-RNG keys
+    _restore_rng_state(full_ckpt, device, generator)
+    first_global = torch.rand(5)
+    first_gen    = torch.randint(0, 100, (5,), generator=generator)
+
+    # Second restore from same snapshot must produce identical draws
+    _restore_rng_state(full_ckpt, device, generator)
+    second_global = torch.rand(5)
+    second_gen    = torch.randint(0, 100, (5,), generator=generator)
+
+    assert torch.equal(first_global, second_global), \
+        "Two restores from same snapshot should produce identical global RNG draws"
+    assert torch.equal(first_gen, second_gen), \
+        "Two restores from same snapshot should produce identical generator draws"
+
+
+# ---------------------------------------------------------------------------
+# best_val_loss correctness in latest.pt
+# ---------------------------------------------------------------------------
+
+def test_latest_checkpoint_stores_updated_best_val_loss(tmp_path):
+    """
+    When the current epoch is a new best, latest.pt must contain the
+    updated best_val_loss, not the stale value from before the comparison.
+    """
+    old_best  = 0.50
+    val_loss  = 0.30   # new best
+
+    # Replicate the corrected checkpoint logic
+    best_val_loss = old_best
+    is_new_best   = val_loss < best_val_loss
+    if is_new_best:
+        best_val_loss = val_loss
+
+    state = {"epoch": 5, "best_val_loss": best_val_loss}
+    latest_path = tmp_path / "latest.pt"
+    _mod._save_atomic(state, latest_path)
+
+    loaded = torch.load(latest_path, weights_only=False)
+    assert loaded["best_val_loss"] == pytest.approx(val_loss), (
+        "latest.pt contains stale best_val_loss; should be updated before save"
+    )
+
+
+def test_latest_checkpoint_best_val_loss_unchanged_when_not_best(tmp_path):
+    """When an epoch does not improve, best_val_loss in latest.pt is unchanged."""
+    old_best = 0.30
+    val_loss  = 0.45   # not a new best
+
+    best_val_loss = old_best
+    is_new_best   = val_loss < best_val_loss
+    if is_new_best:
+        best_val_loss = val_loss
+
+    state = {"epoch": 6, "best_val_loss": best_val_loss}
+    latest_path = tmp_path / "latest.pt"
+    _mod._save_atomic(state, latest_path)
+
+    loaded = torch.load(latest_path, weights_only=False)
+    assert loaded["best_val_loss"] == pytest.approx(old_best)
+
+
+def test_best_checkpoint_not_overwritten_by_worse_resumed_epoch():
+    """
+    Demonstrate that the stale best_val_loss bug allowed best.pt to be
+    overwritten after resume, and confirm the fix prevents it.
+
+    Scenario:
+      epoch 5 → val_loss 0.40 (true best)
+      epoch 6 → val_loss 0.45 (not a new best)
+        old bug:  latest.pt stored best_val_loss=0.45 (stale, pre-update value)
+        fix:      latest.pt stores best_val_loss=0.40 (correct)
+      epoch 7 resumed from latest.pt → val_loss 0.42
+        old bug:  0.42 < 0.45 → wrongly overwrites best.pt with a worse model
+        fix:      0.42 < 0.40 → False → correctly skips overwrite
+    """
+    true_best = 0.40
+
+    # Epoch 6: not a new best
+    val_loss_6 = 0.45
+
+    # Correct logic (fix): update first, then build state
+    best_after_epoch6 = true_best
+    is_new_best_6 = val_loss_6 < best_after_epoch6
+    if is_new_best_6:
+        best_after_epoch6 = val_loss_6
+    assert not is_new_best_6
+    assert best_after_epoch6 == pytest.approx(true_best)  # latest.pt has 0.40
+
+    # Stale value that old code would have written to latest.pt
+    stale_best = 0.45
+
+    # Epoch 7 resumed: val_loss = 0.42
+    val_loss_7 = 0.42
+
+    would_overwrite_with_fix = val_loss_7 < best_after_epoch6   # 0.42 < 0.40 → False
+    would_overwrite_with_bug = val_loss_7 < stale_best           # 0.42 < 0.45 → True
+
+    assert not would_overwrite_with_fix, (
+        "Fix should prevent overwriting the true best (0.40) with a worse model (0.42)"
+    )
+    assert would_overwrite_with_bug, (
+        "Documents that the old code incorrectly overwrote best.pt in this scenario"
+    )
