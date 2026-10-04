@@ -84,3 +84,14 @@ runs/
 *.log
 *.tmp
 *.temp
+
+# -------------------------
+# DeepSeti experiment artifacts
+# -------------------------
+results/checkpoints/*
+results/logs/
+results/runs/
+
+# Windows
+Thumbs.db
+Desktop.ini
