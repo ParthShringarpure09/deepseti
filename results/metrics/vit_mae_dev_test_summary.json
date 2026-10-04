@@ -1,0 +1,16 @@
+{
+  "checkpoint_epoch": 125,
+  "patch_size": [
+    4,
+    64
+  ],
+  "mask_ratio": 0.75,
+  "num_inference_masks": 1,
+  "score": "masked_top_error",
+  "top_fraction": 0.002,
+  "development_test": {
+    "auroc": 0.5785448979591836,
+    "auprc": 0.5503940129055307,
+    "paired_win_rate": 0.7457142857142857
+  }
+}
