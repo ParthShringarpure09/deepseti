@@ -1,16 +1,15 @@
 import platform
+import sys
+from pathlib import Path
 
 import torch
 
+# Allow running without editable install
+_src = Path(__file__).resolve().parent.parent / "src"
+if str(_src) not in sys.path:
+    sys.path.insert(0, str(_src))
 
-def detect_device() -> torch.device:
-    if torch.cuda.is_available():
-        return torch.device("cuda")
-
-    if torch.backends.mps.is_available():
-        return torch.device("mps")
-
-    return torch.device("cpu")
+from deepseti.utils.device import detect_device
 
 
 def main() -> None:
