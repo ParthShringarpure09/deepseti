@@ -1,0 +1,43 @@
+# V2 GPU experiment: higher patch resolution, larger encoder/decoder,
+# lower mask ratio, longer training.
+# Data, preprocessing, splits, seeds, and precision are identical to V1.
+# Do not use synthetic technosignatures for training.
+
+experiment:
+  name: vit_mae_v2_highres_medium
+  seed: 42
+
+model:
+  frame_shape: [16, 4096]
+  patch_size: [4, 32]
+  channels: 1
+  embed_dim: 256
+  encoder_depth: 6
+  encoder_heads: 8
+  encoder_mlp_dim: 1024
+  decoder_dim: 128
+  decoder_depth: 4
+  decoder_heads: 4
+  decoder_mlp_dim: 512
+  mask_ratio: 0.60
+
+data:
+  manifest_path: configs/data/observations.csv
+  raw_root: data/raw
+  f_start: 2200.0
+  f_stop: 2300.0
+  time_window: 16
+  freq_window: 4096
+
+training:
+  epochs: 250
+  batch_size: 8
+  learning_rate: 1.0e-4
+  weight_decay: 0.05
+  grad_clip: 1.0
+  precision: float32
+  dataloader_num_workers: 0
+
+output:
+  checkpoint_dir: results/checkpoints/vit_mae_v2_highres_medium
+  log_file: results/logs/vit_mae_v2_highres_medium/train.log
