@@ -109,6 +109,60 @@ def _build_metadata(
 
 
 # ---------------------------------------------------------------------------
+# RNG state capture and restore
+# ---------------------------------------------------------------------------
+
+def _capture_rng_state(
+    device: torch.device,
+    generator: torch.Generator,
+) -> dict[str, Any]:
+    """Snapshot all RNG states needed to faithfully resume training."""
+    snapshot: dict[str, Any] = {
+        "cpu_rng_state": torch.get_rng_state(),
+        "train_generator_state": generator.get_state(),
+    }
+    if device.type == "cuda":
+        snapshot["cuda_rng_state_all"] = torch.cuda.get_rng_state_all()
+    if device.type == "mps" and hasattr(torch.mps, "get_rng_state"):
+        snapshot["mps_rng_state"] = torch.mps.get_rng_state()
+    return snapshot
+
+
+def _restore_rng_state(
+    snapshot: dict[str, Any],
+    device: torch.device,
+    generator: torch.Generator,
+) -> None:
+    """Restore all RNG states from a snapshot produced by _capture_rng_state."""
+    if "cpu_rng_state" in snapshot:
+        torch.set_rng_state(snapshot["cpu_rng_state"])
+    if "train_generator_state" in snapshot:
+        generator.set_state(snapshot["train_generator_state"])
+    if device.type == "cuda" and "cuda_rng_state_all" in snapshot:
+        torch.cuda.set_rng_state_all(snapshot["cuda_rng_state_all"])
+    if device.type == "mps" and "mps_rng_state" in snapshot:
+        if hasattr(torch.mps, "set_rng_state"):
+            torch.mps.set_rng_state(snapshot["mps_rng_state"])
+
+
+# ---------------------------------------------------------------------------
+# Resume config validation
+# ---------------------------------------------------------------------------
+
+def _validate_resume_config(
+    ckpt_config: dict[str, Any] | None,
+    current_config: dict[str, Any],
+) -> None:
+    """Raise ValueError if the checkpoint was created with a different config."""
+    if ckpt_config is not None and ckpt_config != current_config:
+        raise ValueError(
+            "Resume checkpoint was created with a different configuration "
+            "than the one currently loaded. Use the same --config as the "
+            "original run, or start a new run without --resume."
+        )
+
+
+# ---------------------------------------------------------------------------
 # Atomic checkpoint write
 # ---------------------------------------------------------------------------
 
@@ -212,6 +266,8 @@ def train(args: argparse.Namespace) -> None:
     train_history: list[float] = []
     val_history:   list[float] = []
     best_val_loss = float("inf")
+    # Generator state deferred until after the generator is constructed below.
+    _deferred_generator_state: torch.Tensor | None = None
 
     if args.resume is not None:
         resume_path = Path(args.resume)
@@ -225,12 +281,24 @@ def train(args: argparse.Namespace) -> None:
             map_location=device,
             weights_only=False,
         )
+        # Reject mismatched configs before touching model weights.
+        _validate_resume_config(ckpt.get("config"), config)
         model.load_state_dict(ckpt["model_state_dict"])
         optimizer.load_state_dict(ckpt["optimizer_state_dict"])
         start_epoch   = int(ckpt["epoch"]) + 1
         train_history = list(ckpt.get("train_history", []))
         val_history   = list(ckpt.get("val_history", []))
         best_val_loss = float(ckpt.get("best_val_loss", float("inf")))
+        # Restore global RNG states so masking sequences continue faithfully.
+        if "cpu_rng_state" in ckpt:
+            torch.set_rng_state(ckpt["cpu_rng_state"])
+        if device.type == "cuda" and "cuda_rng_state_all" in ckpt:
+            torch.cuda.set_rng_state_all(ckpt["cuda_rng_state_all"])
+        if device.type == "mps" and "mps_rng_state" in ckpt:
+            if hasattr(torch.mps, "set_rng_state"):
+                torch.mps.set_rng_state(ckpt["mps_rng_state"])
+        # Generator state is applied after the generator is constructed below.
+        _deferred_generator_state = ckpt.get("train_generator_state")
         print(
             f"Resumed at epoch {start_epoch - 1}. "
             f"Best val loss so far: {best_val_loss:.6f}"
@@ -277,6 +345,10 @@ def train(args: argparse.Namespace) -> None:
     # independent of the global RNG consumed by model init.
     train_generator = torch.Generator()
     train_generator.manual_seed(seed)
+    # On resume: override the fresh seed with the saved generator state so
+    # the shuffle sequence continues from exactly where it left off.
+    if _deferred_generator_state is not None:
+        train_generator.set_state(_deferred_generator_state)
 
     num_workers: int = int(train_cfg["dataloader_num_workers"])
     worker_fn = _seed_worker if num_workers > 0 else None
@@ -349,6 +421,9 @@ def train(args: argparse.Namespace) -> None:
         val_history.append(val_loss)
 
         # ----- Checkpoint -----
+        # Capture RNG states after this epoch so resume continues the
+        # masking and shuffle sequences faithfully from the next epoch.
+        rng_snapshot = _capture_rng_state(device, train_generator)
         state: dict[str, Any] = {
             "epoch":                epoch,
             "model_state_dict":     model.state_dict(),
@@ -357,6 +432,7 @@ def train(args: argparse.Namespace) -> None:
             "val_history":          val_history,
             "best_val_loss":        best_val_loss,
             "config":               config,
+            **rng_snapshot,
         }
         # latest.pt — overwritten atomically every epoch
         _save_atomic(state, checkpoint_dir / "latest.pt")
