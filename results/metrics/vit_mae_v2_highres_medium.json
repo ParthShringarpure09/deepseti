@@ -1,0 +1,96 @@
+{
+  "experiment_name": "vit_mae_v2_highres_medium",
+  "checkpoint": "results/checkpoints/vit_mae_v2_highres_medium/best.pt",
+  "checkpoint_epoch": 115,
+  "best_val_loss": 0.5656617340796134,
+  "benchmark": "development (data/synthetic/validation)",
+  "scoring": {
+    "method": "masked_top_error",
+    "top_fraction": 0.002,
+    "num_inference_masks": 1,
+    "batch_size": 16,
+    "base_seed": 42,
+    "mask_ratio": 0.6,
+    "num_patches": 512,
+    "patch_size": [
+      4,
+      32
+    ]
+  },
+  "overall": {
+    "auroc": 0.6123448979591837,
+    "auprc": 0.5671535024002281,
+    "paired_win_rate": 0.8342857142857143,
+    "n": 700
+  },
+  "by_snr": {
+    "0.5": {
+      "auroc": 0.5015816326530612,
+      "auprc": 0.5061841599210318,
+      "paired_win_rate": 0.6285714285714286,
+      "n": 140
+    },
+    "1.0": {
+      "auroc": 0.5175,
+      "auprc": 0.5101532415282735,
+      "paired_win_rate": 0.7785714285714286,
+      "n": 140
+    },
+    "2.0": {
+      "auroc": 0.5570918367346939,
+      "auprc": 0.5301314609804275,
+      "paired_win_rate": 0.85,
+      "n": 140
+    },
+    "5.0": {
+      "auroc": 0.7015816326530613,
+      "auprc": 0.6217772945774855,
+      "paired_win_rate": 0.95,
+      "n": 140
+    },
+    "10.0": {
+      "auroc": 0.7740306122448979,
+      "auprc": 0.6657020200685684,
+      "paired_win_rate": 0.9642857142857143,
+      "n": 140
+    }
+  },
+  "by_morphology": {
+    "burst": {
+      "auroc": 0.6553283950617285,
+      "auprc": 0.6125147982025688,
+      "paired_win_rate": 0.84,
+      "n": 225
+    },
+    "intermittent": {
+      "auroc": 0.5543111111111111,
+      "auprc": 0.5406597045044558,
+      "paired_win_rate": 0.8133333333333334,
+      "n": 75
+    },
+    "linear_drift": {
+      "auroc": 0.5884444444444444,
+      "auprc": 0.5472349271082335,
+      "paired_win_rate": 0.82,
+      "n": 150
+    },
+    "multiple_carriers": {
+      "auroc": 0.6320000000000001,
+      "auprc": 0.5836406354750295,
+      "paired_win_rate": 0.8533333333333334,
+      "n": 75
+    },
+    "nonlinear_drift": {
+      "auroc": 0.5862,
+      "auprc": 0.5484660753346853,
+      "paired_win_rate": 0.83,
+      "n": 100
+    },
+    "stationary_narrowband": {
+      "auroc": 0.6263111111111112,
+      "auprc": 0.5911789156632385,
+      "paired_win_rate": 0.8533333333333334,
+      "n": 75
+    }
+  }
+}
