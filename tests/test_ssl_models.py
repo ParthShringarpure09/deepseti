@@ -79,3 +79,4 @@ def test_projection_head_rejects_wrong_rank():
 
     with pytest.raises(ValueError):
         projector(z)
+    
