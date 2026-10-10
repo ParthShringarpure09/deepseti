@@ -1,0 +1,23 @@
+{
+  "experiment": "vit_mae_v2_large_data",
+  "checkpoint_epoch": 157,
+  "best_val_loss": 0.36805915236473086,
+  "train_frames": 4080,
+  "validation_frames": 680,
+  "benchmark": "data/synthetic/validation",
+  "benchmark_pairs": 700,
+  "scoring": {
+    "method": "masked_topk",
+    "top_fraction": 0.002,
+    "num_inference_masks": 1,
+    "batch_size": 16,
+    "base_seed": 42
+  },
+  "metrics": {
+    "auroc": 0.6155367346938776,
+    "auprc": 0.5681897799538704,
+    "paired_win_rate": 0.8557142857142858,
+    "mean_clean_score": 135.84373474121094,
+    "mean_injected_score": 144.8622589111328
+  }
+}
