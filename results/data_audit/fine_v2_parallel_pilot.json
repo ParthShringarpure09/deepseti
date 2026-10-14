@@ -1,0 +1,334 @@
+{
+  "created_utc": "2026-10-14T21:08:33+00:00",
+  "scope": "TRAIN only: G001 positions 0-3; no validation/test access",
+  "plan": "results/data_audit/fine_v2_chunk_plan.csv",
+  "plan_slab": {
+    "stratum": 0,
+    "stratum_slot": 1,
+    "slot_q": 0.375,
+    "slab_start_channel": 7340032,
+    "slab_lo_mhz": 2779.394533,
+    "slab_hi_mhz": 2782.32422
+  },
+  "workers": 4,
+  "serial_reference": {
+    "source": "results/data_audit/fine_v2_chunked_pilot.json",
+    "seconds_per_file": 233.54,
+    "seconds_for_4_files": 934.2,
+    "bytes_per_second_slab": 366149.4098554146
+  },
+  "parallel_wall_seconds": 237.1,
+  "speedup_vs_serial": 3.94,
+  "total_bytes": 226440480,
+  "aggregate_mb_per_s": 0.955,
+  "frames": 168,
+  "bytes_per_retained_frame": 1347860,
+  "http_statuses": {
+    "206": 440
+  },
+  "full_body_responses": 0,
+  "failures": 0,
+  "retries": 0,
+  "extra_http_bytes_from_slicing": 0,
+  "peak_rss_bytes_max_worker": 247660544,
+  "parent_peak_rss_bytes": 91488256,
+  "worker_records": [
+    {
+      "filename": "spliced_blc0001020304050607_guppi_57697_14199_HIP1803_0045.gpuspec.0000.h5",
+      "cadence_position": 0,
+      "slab_start_channel": 7340032,
+      "geometry": {
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": {
+          "32008": [
+            0,
+            3,
+            4,
+            0,
+            2
+          ]
+        }
+      },
+      "geometry_problems": [],
+      "matches_manifest": true,
+      "slab_freq_mhz": [
+        2779.394532646984,
+        2782.324220146984
+      ],
+      "slab_matches_plan": true,
+      "header_requests": 1,
+      "header_bytes": 65536,
+      "chunks_in_slab": 16,
+      "index_requests": 93,
+      "index_bytes": 6094848,
+      "slab_fetch_seconds": 131.71,
+      "slab_requests": 16,
+      "slab_bytes": 49247226,
+      "slab_compressed_chunk_bytes": 49247226,
+      "slab_shape": [
+        16,
+        1048576
+      ],
+      "extra_http_bytes_from_slicing": 0,
+      "n_frames": 42,
+      "unique_frames": 42,
+      "frame_shapes_ok": true,
+      "stats": {
+        "raw_min": 496431552.0,
+        "raw_median": 1439074816.0,
+        "raw_max": 2325130752.0,
+        "norm_per_frame_median_absmax": 1.6555743059143424e-05,
+        "norm_per_frame_mad_min": 0.9999834299087524,
+        "norm_per_frame_mad_max": 1.000016450881958,
+        "norm_all_finite": true
+      },
+      "total_requests": 110,
+      "total_bytes": 55407610,
+      "http_statuses": {
+        "206": 110
+      },
+      "full_body_responses": 0,
+      "retries": 0,
+      "wall_seconds": 230.79,
+      "bytes_per_retained_frame": 1319229,
+      "passed": true,
+      "error": null,
+      "worker_started_utc": "2026-10-14T21:04:36+00:00",
+      "worker_seconds": 230.8,
+      "worker_cpu_seconds": 1.14,
+      "worker_peak_rss_bytes": 239583232
+    },
+    {
+      "filename": "spliced_blc0001020304050607_guppi_57697_14537_HIP1191_0046.gpuspec.0000.h5",
+      "cadence_position": 1,
+      "slab_start_channel": 7340032,
+      "geometry": {
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": {
+          "32008": [
+            0,
+            3,
+            4,
+            0,
+            2
+          ]
+        }
+      },
+      "geometry_problems": [],
+      "matches_manifest": true,
+      "slab_freq_mhz": [
+        2779.394532646984,
+        2782.324220146984
+      ],
+      "slab_matches_plan": true,
+      "header_requests": 1,
+      "header_bytes": 65536,
+      "chunks_in_slab": 16,
+      "index_requests": 94,
+      "index_bytes": 6160384,
+      "slab_fetch_seconds": 134.72,
+      "slab_requests": 16,
+      "slab_bytes": 50850828,
+      "slab_compressed_chunk_bytes": 50850828,
+      "slab_shape": [
+        16,
+        1048576
+      ],
+      "extra_http_bytes_from_slicing": 0,
+      "n_frames": 42,
+      "unique_frames": 42,
+      "frame_shapes_ok": true,
+      "stats": {
+        "raw_min": 387824544.0,
+        "raw_median": 1111975808.0,
+        "raw_max": 1793402368.0,
+        "norm_per_frame_median_absmax": 1.6539861462661065e-05,
+        "norm_per_frame_mad_min": 0.9999836683273315,
+        "norm_per_frame_mad_max": 1.0000165700912476,
+        "norm_all_finite": true
+      },
+      "total_requests": 111,
+      "total_bytes": 57076748,
+      "http_statuses": {
+        "206": 111
+      },
+      "full_body_responses": 0,
+      "retries": 0,
+      "wall_seconds": 234.74,
+      "bytes_per_retained_frame": 1358970,
+      "passed": true,
+      "error": null,
+      "worker_started_utc": "2026-10-14T21:04:36+00:00",
+      "worker_seconds": 234.75,
+      "worker_cpu_seconds": 1.14,
+      "worker_peak_rss_bytes": 247660544
+    },
+    {
+      "filename": "spliced_blc0001020304050607_guppi_57697_14875_HIP1803_0047.gpuspec.0000.h5",
+      "cadence_position": 2,
+      "slab_start_channel": 7340032,
+      "geometry": {
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": {
+          "32008": [
+            0,
+            3,
+            4,
+            0,
+            2
+          ]
+        }
+      },
+      "geometry_problems": [],
+      "matches_manifest": true,
+      "slab_freq_mhz": [
+        2779.394532646984,
+        2782.324220146984
+      ],
+      "slab_matches_plan": true,
+      "header_requests": 1,
+      "header_bytes": 65536,
+      "chunks_in_slab": 16,
+      "index_requests": 93,
+      "index_bytes": 6094848,
+      "slab_fetch_seconds": 137.83,
+      "slab_requests": 16,
+      "slab_bytes": 50850999,
+      "slab_compressed_chunk_bytes": 50850999,
+      "slab_shape": [
+        16,
+        1048576
+      ],
+      "extra_http_bytes_from_slicing": 0,
+      "n_frames": 42,
+      "unique_frames": 42,
+      "frame_shapes_ok": true,
+      "stats": {
+        "raw_min": 368132288.0,
+        "raw_median": 1112017408.0,
+        "raw_max": 1783968384.0,
+        "norm_per_frame_median_absmax": 1.658402288740035e-05,
+        "norm_per_frame_mad_min": 0.9999834299087524,
+        "norm_per_frame_mad_max": 1.000016450881958,
+        "norm_all_finite": true
+      },
+      "total_requests": 110,
+      "total_bytes": 57011383,
+      "http_statuses": {
+        "206": 110
+      },
+      "full_body_responses": 0,
+      "retries": 0,
+      "wall_seconds": 236.73,
+      "bytes_per_retained_frame": 1357414,
+      "passed": true,
+      "error": null,
+      "worker_started_utc": "2026-10-14T21:04:36+00:00",
+      "worker_seconds": 236.73,
+      "worker_cpu_seconds": 1.14,
+      "worker_peak_rss_bytes": 243400704
+    },
+    {
+      "filename": "spliced_blc0001020304050607_guppi_57697_15213_HIP1266_0048.gpuspec.0000.h5",
+      "cadence_position": 3,
+      "slab_start_channel": 7340032,
+      "geometry": {
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": {
+          "32008": [
+            0,
+            3,
+            4,
+            0,
+            2
+          ]
+        }
+      },
+      "geometry_problems": [],
+      "matches_manifest": true,
+      "slab_freq_mhz": [
+        2779.394532646984,
+        2782.324220146984
+      ],
+      "slab_matches_plan": true,
+      "header_requests": 1,
+      "header_bytes": 65536,
+      "chunks_in_slab": 16,
+      "index_requests": 92,
+      "index_bytes": 6029312,
+      "slab_fetch_seconds": 136.04,
+      "slab_requests": 16,
+      "slab_bytes": 50849891,
+      "slab_compressed_chunk_bytes": 50849891,
+      "slab_shape": [
+        16,
+        1048576
+      ],
+      "extra_http_bytes_from_slicing": 0,
+      "n_frames": 42,
+      "unique_frames": 42,
+      "frame_shapes_ok": true,
+      "stats": {
+        "raw_min": 370313856.0,
+        "raw_median": 1111053056.0,
+        "raw_max": 1807186688.0,
+        "norm_per_frame_median_absmax": 1.6527559637324885e-05,
+        "norm_per_frame_mad_min": 0.9999836087226868,
+        "norm_per_frame_mad_max": 1.0000165700912476,
+        "norm_all_finite": true
+      },
+      "total_requests": 109,
+      "total_bytes": 56944739,
+      "http_statuses": {
+        "206": 109
+      },
+      "full_body_responses": 0,
+      "retries": 0,
+      "wall_seconds": 234.1,
+      "bytes_per_retained_frame": 1355827,
+      "passed": true,
+      "error": null,
+      "worker_started_utc": "2026-10-14T21:04:36+00:00",
+      "worker_seconds": 234.11,
+      "worker_cpu_seconds": 1.13,
+      "worker_peak_rss_bytes": 243122176
+    }
+  ],
+  "processed_disk_bytes": 88081408
+}

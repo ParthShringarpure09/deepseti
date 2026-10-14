@@ -1,0 +1,353 @@
+{
+  "created_utc": "2026-10-14T20:33:43+00:00",
+  "scope": "TRAIN only for HTTP; validation/test plan rows from frozen manifest metadata only",
+  "seed": 20261013,
+  "rule": {
+    "slab_channels": 1048576,
+    "eligible": "slab outer edges within (1700.0, 2900.0) MHz and not intersecting ((2300.0, 2360.0),) MHz",
+    "strata": "15 contiguous near-equal-count strata over the cadence's eligible slabs sorted by descending centre frequency (all node setups pooled)",
+    "stratum_assignment": "sorted group ids shuffled with random.Random(f'{seed}|chunk_strata|{split}'); stratum = rank mod 15",
+    "slab_choice": "eligible slab nearest the midpoint frequency of the stratum's first and last slab (ties -> higher frequency)",
+    "frames": "42 windows at grid cell floor((i+0.5)*256/42), i=0..41, same for every scan",
+    "same_slab_all_positions": true,
+    "content_used": false
+  },
+  "plan_file": "results/data_audit/fine_v2_chunk_plan.csv",
+  "plan_summary": {
+    "train": {
+      "cadences": 60,
+      "per_stratum": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "distinct_slabs": 25,
+      "slab_freq_range_mhz": [
+        1827.246095,
+        2773.535158
+      ]
+    },
+    "validation": {
+      "cadences": 15,
+      "per_stratum": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "distinct_slabs": 15,
+      "slab_freq_range_mhz": [
+        1844.82422,
+        2773.535158
+      ]
+    },
+    "test": {
+      "cadences": 15,
+      "per_stratum": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "distinct_slabs": 15,
+      "slab_freq_range_mhz": [
+        1844.82422,
+        2773.535158
+      ]
+    }
+  },
+  "gpuspec_scan": {
+    "filename": "spliced_blc0001020304050607_guppi_57697_14199_HIP1803_0045.gpuspec.0000.h5",
+    "cadence_position": 0,
+    "slab_start_channel": 10485760,
+    "geometry": {
+      "fch1": 2802.83203125,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 359661568,
+      "n_ints": 16,
+      "tsamp": 18.253611008,
+      "chunks": [
+        1,
+        1,
+        1048576
+      ],
+      "filters": {
+        "32008": [
+          0,
+          3,
+          4,
+          0,
+          2
+        ]
+      }
+    },
+    "geometry_problems": [],
+    "matches_manifest": true,
+    "slab_freq_mhz": [
+      2770.605470146984,
+      2773.535157646984
+    ],
+    "slab_matches_plan": true,
+    "header_requests": 1,
+    "header_bytes": 65536,
+    "chunks_in_slab": 16,
+    "index_requests": 93,
+    "index_bytes": 6094848,
+    "slab_fetch_seconds": 135.56,
+    "slab_requests": 16,
+    "slab_bytes": 49635214,
+    "slab_compressed_chunk_bytes": 49635214,
+    "slab_shape": [
+      16,
+      1048576
+    ],
+    "extra_http_bytes_from_slicing": 0,
+    "window_offsets_in_slab": [
+      12288,
+      36864,
+      61440,
+      86016,
+      110592,
+      135168,
+      159744,
+      184320,
+      208896,
+      233472,
+      262144,
+      286720,
+      311296,
+      335872,
+      360448,
+      385024,
+      409600,
+      434176,
+      458752,
+      483328,
+      507904,
+      536576,
+      561152,
+      585728,
+      610304,
+      634880,
+      659456,
+      684032,
+      708608,
+      733184,
+      757760,
+      786432,
+      811008,
+      835584,
+      860160,
+      884736,
+      909312,
+      933888,
+      958464,
+      983040,
+      1007616,
+      1032192
+    ],
+    "n_frames": 42,
+    "unique_frames": 42,
+    "frame_shapes_ok": true,
+    "stats": {
+      "raw_min": 528766816.0,
+      "raw_median": 1607490560.0,
+      "raw_max": 3286918400.0,
+      "norm_per_frame_median_absmax": 1.647989483899437e-05,
+      "norm_per_frame_mad_min": 0.999983549118042,
+      "norm_per_frame_mad_max": 1.000016450881958,
+      "norm_all_finite": true
+    },
+    "total_requests": 110,
+    "total_bytes": 55795598,
+    "http_statuses": {
+      "206": 110
+    },
+    "full_body_responses": 0,
+    "wall_seconds": 233.54,
+    "bytes_per_retained_frame": 1328467,
+    "passed": true
+  },
+  "rawspec_smoke": {
+    "filename": "blc01_guppi_59427_03910_NGC4660_0052.rawspec.0000.h5",
+    "cadence_position": 0,
+    "slab_start_channel": 17825792,
+    "geometry": {
+      "fch1": 2063.96484375,
+      "foff": -2.7939677238464355e-06,
+      "nchans": 67108864,
+      "n_ints": 16,
+      "tsamp": 18.253611007999982,
+      "chunks": [
+        1,
+        1,
+        65536
+      ],
+      "filters": {
+        "32008": [
+          0,
+          3,
+          4,
+          0,
+          2
+        ]
+      }
+    },
+    "geometry_problems": [],
+    "matches_manifest": true,
+    "slab_freq_mhz": [
+      2011.2304701469839,
+      2014.1601576469839
+    ],
+    "slab_matches_plan": true,
+    "header_requests": 2,
+    "header_bytes": 131072,
+    "chunks_in_slab": 256,
+    "index_requests": 290,
+    "index_bytes": 19005440,
+    "slab_fetch_seconds": 126.94,
+    "slab_requests": 16,
+    "slab_bytes": 49827396,
+    "slab_compressed_chunk_bytes": 49827396,
+    "slab_shape": [
+      16,
+      1048576
+    ],
+    "extra_http_bytes_from_slicing": 0,
+    "window_offsets_in_slab": [
+      12288,
+      36864,
+      61440,
+      86016,
+      110592,
+      135168,
+      159744,
+      184320,
+      208896,
+      233472,
+      262144,
+      286720,
+      311296,
+      335872,
+      360448,
+      385024,
+      409600,
+      434176,
+      458752,
+      483328,
+      507904,
+      536576,
+      561152,
+      585728,
+      610304,
+      634880,
+      659456,
+      684032,
+      708608,
+      733184,
+      757760,
+      786432,
+      811008,
+      835584,
+      860160,
+      884736,
+      909312,
+      933888,
+      958464,
+      983040,
+      1007616,
+      1032192
+    ],
+    "n_frames": 42,
+    "unique_frames": 42,
+    "frame_shapes_ok": true,
+    "stats": {
+      "raw_min": 8722.6796875,
+      "raw_median": 24668.888671875,
+      "raw_max": 39991.9140625,
+      "norm_per_frame_median_absmax": 8.071609045146033e-06,
+      "norm_per_frame_mad_min": 0.9999920129776001,
+      "norm_per_frame_mad_max": 1.0000079870224,
+      "norm_all_finite": true
+    },
+    "total_requests": 308,
+    "total_bytes": 68963908,
+    "http_statuses": {
+      "206": 308
+    },
+    "full_body_responses": 0,
+    "wall_seconds": 544.83,
+    "bytes_per_retained_frame": 1641998,
+    "passed": true
+  },
+  "projection": {
+    "frames_per_cadence": 252,
+    "cadences": {
+      "test": 15,
+      "train": 60,
+      "validation": 15
+    },
+    "by_split": {
+      "train": {
+        "cadences": 60,
+        "frames": 15120,
+        "transfer_bytes": 20165425140
+      },
+      "validation": {
+        "cadences": 15,
+        "frames": 3780,
+        "transfer_bytes": 5021603820
+      },
+      "test": {
+        "cadences": 15,
+        "frames": 3780,
+        "transfer_bytes": 5021603820
+      }
+    },
+    "frames_total": 22680,
+    "transfer_bytes_total": 30208632780,
+    "basis": "measured whole-file bytes (header + chunk index + slab) of G001 pos0 for each of 534 gpuspec files, G116 smoke file for each of 6 rawspec files",
+    "storage_bytes_raw_float32": 5945425920,
+    "storage_bytes_normalized_float32": 5945425920,
+    "storage_bytes_both": 11890851840,
+    "single_stream_rate_bytes_per_s": 366149,
+    "wall_clock_hours_by_rate": 22.9,
+    "wall_clock_hours_by_measured_file_time": 35.5
+  },
+  "wall_clock_seconds": 778.4,
+  "processed_disk_bytes": 44040704
+}

@@ -1,0 +1,2078 @@
+{
+  "dataset": "DeepSeti Dataset V2 - GBT Fine HDF5 S-band (provisional), frozen split",
+  "generated_utc": "2026-10-13T17:19:50+00:00",
+  "seed": 20261013,
+  "inputs": {
+    "catalog": "results/data_audit/bl_fine_sband_catalog.csv",
+    "catalog_sha256": "1d554654c41fee0bfe5a6be0d5a6b8c1495adb4c76585de54a1e3f8791a145f0",
+    "audit_summary": "results/data_audit/bl_fine_sband_summary.json",
+    "audit_summary_sha256": "373b85e7b990dbad09539bfaffb228d5ca7ac99a1bae1251d640116d7e45c1de"
+  },
+  "outputs": {
+    "manifest": "configs/data/fine_v2_manifest.csv",
+    "summary": "results/data_audit/fine_v2_split_summary.json"
+  },
+  "independence_rule": {
+    "split_unit": "group = connected component of inferred session folders and the ON (A) targets of their inferred ABACAD-like cadences",
+    "hard": [
+      "no ON target in more than one split",
+      "no inferred session/cadence in more than one split"
+    ],
+    "soft": "off-target identity overlap minimised (not excluded) and reported"
+  },
+  "selection_procedure": [
+    "Eligible cadence: every file passed audit filters; no file with an unavailable/failed header read; no header-verified geometry mismatch.",
+    "Per group, eligible cadences are ranked by a seeded shuffle (Random('<seed>:cadence-rank:<group>')).",
+    "Groups are visited in seeded order; the primary cadence is the first ranked cadence whose UTC observing day is not yet used (else the first).",
+    "Groups are sorted by (year, pipeline, seeded key) and allocated {'train': 60, 'validation': 15, 'test': 15} + reserve with a largest-deficit systematic rule.",
+    "50000 seeded same-stratum label swaps; a swap is kept only if it strictly lowers (cross-split target count, cross-split day count).",
+    "No signal content, RFI cleanliness, anomaly score or model result used."
+  ],
+  "groups": {
+    "total": 120,
+    "with_eligible_cadence": 120,
+    "without_eligible_cadence": [],
+    "eligible_cadences_per_group": {
+      "min": 1,
+      "median": 7.0,
+      "max": 231
+    },
+    "ineligible_cadences": {}
+  },
+  "split_counts": {
+    "train": {
+      "groups": 60,
+      "cadences": 60,
+      "files": 372,
+      "unique_on_targets": 60,
+      "unique_sessions": 60,
+      "unique_observing_days": 59,
+      "year_distribution_cadences": {
+        "2016": 18,
+        "2017": 36,
+        "2018": 5,
+        "2021": 1
+      },
+      "pipeline_distribution_cadences": {
+        "gpuspec": 59,
+        "rawspec": 1
+      },
+      "pipeline_distribution_files": {
+        "gpuspec": 354,
+        "rawspec": 18
+      },
+      "era_distribution_cadences": {
+        "spliced_multinode": 59,
+        "single_node": 1
+      },
+      "files_pending_header_verification": 372,
+      "storage_tib": 5.578
+    },
+    "validation": {
+      "groups": 15,
+      "cadences": 15,
+      "files": 90,
+      "unique_on_targets": 15,
+      "unique_sessions": 15,
+      "unique_observing_days": 15,
+      "year_distribution_cadences": {
+        "2016": 5,
+        "2017": 9,
+        "2018": 1
+      },
+      "pipeline_distribution_cadences": {
+        "gpuspec": 15
+      },
+      "pipeline_distribution_files": {
+        "gpuspec": 90
+      },
+      "era_distribution_cadences": {
+        "spliced_multinode": 15
+      },
+      "files_pending_header_verification": 90,
+      "storage_tib": 1.381
+    },
+    "test": {
+      "groups": 15,
+      "cadences": 15,
+      "files": 90,
+      "unique_on_targets": 15,
+      "unique_sessions": 15,
+      "unique_observing_days": 15,
+      "year_distribution_cadences": {
+        "2016": 4,
+        "2017": 9,
+        "2018": 2
+      },
+      "pipeline_distribution_cadences": {
+        "gpuspec": 15
+      },
+      "pipeline_distribution_files": {
+        "gpuspec": 90
+      },
+      "era_distribution_cadences": {
+        "spliced_multinode": 15
+      },
+      "files_pending_header_verification": 90,
+      "storage_tib": 1.405
+    }
+  },
+  "checks": {
+    "on_target_overlap_across_splits": 0,
+    "session_overlap_across_splits": 0,
+    "group_overlap_across_splits": 0,
+    "on_targets_spanning_multiple_groups_catalog_wide": 0,
+    "selected_unavailable_files": 0,
+    "selected_known_geometry_mismatch_files": 0
+  },
+  "off_target_overlap": {
+    "targets_in_more_than_one_split": 0,
+    "on_targets_also_off_target_in_another_split": 0,
+    "off_only_targets_in_more_than_one_split": 0,
+    "targets": [],
+    "swap_search": {
+      "start": [
+        1,
+        1
+      ],
+      "end": [
+        0,
+        0
+      ],
+      "accepted_swaps": 2
+    }
+  },
+  "observing_days_shared_across_splits": 0,
+  "geometry": {
+    "required": {
+      "channel_width_hz": 2.794,
+      "tsamp_s": 18.2536,
+      "n_ints": 16
+    },
+    "rule": "Every selected file must be individually header-verified before extraction; files without 16 usable integrations are excluded from the final manifest.",
+    "files_header_verified_match": 0,
+    "files_pending_header_verification": 552
+  },
+  "fallback_rule": "If any file of a primary cadence fails individual header verification (unavailable, or not ~2.794 Hz / ~18.2536 s / 16 integrations), replace that cadence with the next alternate cadence of the SAME group (same split). If a group has no passing alternate, replace the group with the first reserve group (in listed order) that passes and introduces no ON-target or session leakage; record every replacement.",
+  "selected_groups": {
+    "G001": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_61|HIP1803|scans0045-0050",
+      "alternates": [
+        "AGBT16B_999_77|HIP83945|scans0021-0026",
+        "AGBT17A_999_23|HIP12447|scans0002-0007",
+        "AGBT16B_999_47|HIP30112|scans0015-0020",
+        "AGBT17B_999_34|HIP12390|scans0002-0007",
+        "AGBT17A_999_25|HIP91699|scans0002-0007",
+        "AGBT17A_999_10|HIP114570|scans0048-0053",
+        "AGBT17B_999_34|HIP12444|scans0008-0013",
+        "AGBT17A_999_29|HIP39896|scans0020-0025",
+        "AGBT17A_999_25|HIP92161|scans0026-0031",
+        "AGBT16B_999_61|HIP103441|scans0015-0020",
+        "AGBT16B_999_39|HIP29525|scans0051-0056",
+        "AGBT16B_999_20|HIP14729|scans0015-0020",
+        "AGBT16B_999_115|HIP75277|scans0027-0032",
+        "AGBT16B_999_47|HIP29860|scans0009-0014",
+        "AGBT16B_999_04|HIP110640|scans0021-0026",
+        "AGBT17A_999_29|HIP40693|scans0032-0037",
+        "AGBT16B_999_04|HIP116971|scans0045-0050",
+        "AGBT17A_999_10|HIP91262|scans0006-0011",
+        "AGBT16B_999_27|HIP13642|scans0009-0014",
+        "AGBT16B_999_86|HIP11029|scans0039-0044",
+        "AGBT16B_999_80|HIP110341|scans0009-0014",
+        "AGBT17A_999_10|HIP114622|scans0054-0059",
+        "AGBT16B_999_132|HIP3998|scans0014-0019",
+        "AGBT17A_999_25|HIP92043|scans0020-0025",
+        "AGBT16B_999_91|HIP74926|scans0020-0025",
+        "AGBT16B_999_39|HIP17147|scans0009-0014",
+        "AGBT17A_999_20|HIP12158|scans0026-0031",
+        "AGBT16B_999_132|HIP3979|scans0008-0013",
+        "AGBT17A_999_20|HIP12390|scans0032-0037",
+        "AGBT16B_999_99|HIP86620|scans0027-0032",
+        "AGBT16B_999_61|HIP171|scans0039-0044",
+        "AGBT16B_999_99|HIP86340|scans0009-0014",
+        "AGBT17B_999_15|HIP14293|scans0032-0037",
+        "AGBT16B_999_47|HIP46843|scans0051-0056",
+        "AGBT16B_999_132|HIP443|scans0032-0037",
+        "AGBT17A_999_20|HIP24874|scans0044-0049",
+        "AGBT16B_999_77|HIP83996|scans0033-0038",
+        "AGBT16B_999_106|GJ725|scans0021-0027",
+        "AGBT16B_999_47|HIP30630|scans0027-0032",
+        "AGBT17B_999_15|HIP14729|scans0044-0049",
+        "AGBT17B_999_34|HIP12530|scans0026-0031",
+        "AGBT16B_999_27|HIP13601|scans0003-0008",
+        "AGBT17A_999_67|HIP91971|scans0009-0014",
+        "AGBT16B_999_75|HIP80093|scans0027-0032",
+        "AGBT16B_999_39|HIP17378|scans0015-0020",
+        "AGBT17A_999_29|HIP48833|scans0044-0049",
+        "AGBT17A_999_20|HIP11783|scans0008-0013",
+        "AGBT16B_999_87|HIP112190|scans0009-0014",
+        "AGBT16B_999_88|HIP72220|scans0009-0014",
+        "AGBT17B_999_19|HIP28267|scans0037-0042",
+        "AGBT17A_999_67|HIP2|scans0037-0042",
+        "AGBT16B_999_20|HIP15099|scans0027-0032",
+        "AGBT17B_999_19|HIP11452|scans0007-0012",
+        "AGBT16B_999_86|HIP11452|scans0045-0050",
+        "AGBT17A_999_25|HIP92200|scans0032-0037",
+        "AGBT17B_999_19|HIP11565|scans0013-0018",
+        "AGBT16B_999_20|HIP14445|scans0009-0014",
+        "AGBT16B_999_132|HIP3909|scans0002-0007",
+        "AGBT16B_999_27|HIP14293|scans0033-0038",
+        "AGBT16B_999_100|HIP90376|scans0008-0013",
+        "AGBT17B_999_34|HIP12447|scans0014-0019",
+        "AGBT16B_999_80|HIP111313|scans0027-0032",
+        "AGBT16B_999_75|HIP78913|scans0009-0014",
+        "AGBT16B_999_04|HIP105932|scans0003-0008",
+        "AGBT17A_999_75|HIP26801|scans0050-0055",
+        "AGBT17A_999_23|HIP12706|scans0020-0025",
+        "AGBT16B_999_80|HIP10723|scans0051-0056",
+        "AGBT17B_999_15|HIP194|scans0014-0019",
+        "AGBT17A_999_20|HIP12097|scans0014-0019",
+        "AGBT17B_999_19|HIP11783|scans0025-0030",
+        "AGBT16B_999_75|GJ725|scans0003-0008",
+        "AGBT17A_999_29|HIP28267|scans0014-0019",
+        "AGBT16B_999_80|HIP110951|scans0015-0020",
+        "AGBT16B_999_47|HIP46769|scans0045-0050",
+        "AGBT16B_999_20|GJ144|scans0003-0008",
+        "AGBT16B_999_100|HIP91262|scans0008-0013",
+        "AGBT16B_999_75|HIP92871|scans0057-0062",
+        "AGBT17B_999_19|HIP11759|scans0019-0024",
+        "AGBT17A_999_75|HIP28103|scans0044-0049",
+        "AGBT16B_999_115|HIP75266|scans0021-0026",
+        "AGBT16B_999_61|HIP106106|scans0027-0032",
+        "AGBT17A_999_25|HIP116727|scans0038-0043",
+        "AGBT17A_999_75|HIP22044|scans0026-0031",
+        "AGBT16B_999_39|HIP29650|scans0057-0062",
+        "AGBT16B_999_61|HIP105932|scans0021-0026",
+        "AGBT16B_999_87|HIP11565|scans0039-0044",
+        "AGBT17B_999_15|HIP14954|scans0050-0055",
+        "AGBT16B_999_75|HIP102805|scans0039-0044",
+        "AGBT16B_999_80|HIP105932|scans0003-0008",
+        "AGBT16B_999_86|GJ860A|scans0003-0008",
+        "AGBT16B_999_61|HIP1692|scans0033-0038",
+        "AGBT17A_999_10|HIP94376|scans0024-0029",
+        "AGBT16B_999_77|HIP100859|scans0051-0056",
+        "AGBT16B_999_78|HIP85235|scans0027-0032",
+        "AGBT17A_999_20|HIP12114|scans0020-0025",
+        "AGBT17A_999_29|HIP27207|scans0008-0013",
+        "AGBT17B_999_34|HIP12493|scans0020-0025",
+        "AGBT17B_999_34|HIP29525|scans0038-0043",
+        "AGBT16B_999_27|HIP28368|scans0039-0044",
+        "AGBT17B_999_19|HIP12097|scans0031-0036",
+        "AGBT16B_999_100|HIP91128|scans0020-0025",
+        "AGBT16B_999_87|HIP112774|scans0027-0032",
+        "AGBT17A_999_67|HIP91699|scans0003-0008",
+        "AGBT16B_999_75|HIP80008|scans0021-0026",
+        "AGBT16B_999_78|HIP84183|scans0003-0008",
+        "AGBT16B_999_04|HIP110526|scans0015-0020",
+        "AGBT17A_999_23|HIP22449|scans0038-0043",
+        "AGBT16B_999_78|HIP84223|scans0009-0014",
+        "AGBT16B_999_77|HIP81919|scans0003-0008",
+        "AGBT16B_999_86|HIP108092|scans0033-0038",
+        "AGBT16B_999_04|HIP110750|scans0027-0032",
+        "AGBT17B_999_15|HIP400|scans0020-0025",
+        "AGBT16B_999_78|HIP84616|scans0015-0020",
+        "AGBT16B_999_61|HIP194|scans0051-0056",
+        "AGBT16B_999_20|HIP14954|scans0021-0026",
+        "AGBT16B_999_88|HIP72603|scans0015-0020",
+        "AGBT17A_999_23|HIP12530|scans0014-0019",
+        "AGBT17A_999_10|HIP114456|scans0042-0047",
+        "AGBT16B_999_91|HIP74702|scans0014-0019",
+        "AGBT17A_999_10|HIP91926|scans0018-0023",
+        "AGBT16B_999_132|HIP4288|scans0026-0031",
+        "AGBT16B_999_80|HIP10644|scans0039-0044",
+        "AGBT17A_999_25|HIP91973|scans0014-0019",
+        "AGBT16B_999_47|HIP29800|scans0003-0008",
+        "AGBT16B_999_77|HIP82333|scans0009-0014",
+        "AGBT17A_999_25|HIP91971|scans0008-0013",
+        "AGBT16B_999_39|HIP17395|scans0021-0026",
+        "AGBT16B_999_115|HIP73457|scans0015-0020",
+        "AGBT17A_999_29|HIP49197|scans0050-0055",
+        "AGBT16B_999_86|GJ905|scans0021-0026",
+        "AGBT17A_999_20|HIP25486|scans0050-0055",
+        "AGBT16B_999_27|HIP29277|scans0051-0056",
+        "AGBT16B_999_75|HIP81833|scans0033-0038",
+        "AGBT17A_999_29|HIP40035|scans0026-0031",
+        "AGBT16B_999_77|HIP100017|scans0045-0050",
+        "AGBT16B_999_20|HIP15197|scans0033-0038",
+        "AGBT16B_999_20|GJ280|scans0051-0056",
+        "AGBT16B_999_27|HIP13976|scans0021-0026",
+        "AGBT17A_999_67|HIP92161|scans0027-0032",
+        "AGBT16B_999_86|HIP107346|scans0027-0032",
+        "AGBT16B_999_78|HIP102101|scans0045-0050",
+        "AGBT16B_999_99|GJ725|scans0039-0044",
+        "AGBT16B_999_99|HIP86201|scans0003-0008",
+        "AGBT16B_999_87|HIP12781|scans0045-0050",
+        "AGBT16B_999_27|HIP29067|scans0045-0050",
+        "AGBT16B_999_80|HIP10670|scans0045-0050",
+        "AGBT17A_999_75|HIP23786|scans0032-0037",
+        "AGBT17A_999_23|HIP22627|scans0044-0049",
+        "AGBT16B_999_20|GJ1111|scans0039-0044",
+        "AGBT17A_999_10|HIP94779|scans0030-0035",
+        "AGBT16B_999_86|GJ873|scans0015-0020",
+        "AGBT17A_999_23|HIP22715|scans0050-0055",
+        "AGBT16B_999_39|HIP29432|scans0045-0050",
+        "AGBT17A_999_75|HIP12444|scans0014-0019",
+        "AGBT16B_999_100|HIP91919|scans0014-0019",
+        "AGBT16B_999_04|HIP117197|scans0051-0056",
+        "AGBT17B_999_15|HIP2|scans0002-0007",
+        "AGBT16B_999_47|HIP46816|scans0039-0044",
+        "AGBT16B_999_78|GJ725|scans0039-0044",
+        "AGBT16B_999_78|HIP84790|scans0021-0026",
+        "AGBT17A_999_29|HIP48714|scans0038-0043",
+        "AGBT16B_999_99|HIP86776|scans0033-0038",
+        "AGBT16B_999_91|HIP103650|scans0032-0037",
+        "AGBT16B_999_61|HIP103256|scans0003-0008",
+        "AGBT17B_999_19|HIP28614|scans0044-0049",
+        "AGBT16B_999_47|HIP30419|scans0021-0026",
+        "AGBT16B_999_77|GJ725|scans0039-0044",
+        "AGBT16B_999_115|HIP73165|scans0009-0014",
+        "AGBT16B_999_20|GJ273|scans0045-0050",
+        "AGBT16B_999_27|HIP14150|scans0027-0032",
+        "AGBT16B_999_87|HIP112870|scans0033-0038",
+        "AGBT17A_999_29|HIP27288|scans0002-0007",
+        "AGBT16B_999_99|HIP89560|scans0051-0056",
+        "AGBT17B_999_19|HIP28954|scans0050-0055",
+        "AGBT17B_999_15|HIP14445|scans0038-0043",
+        "AGBT16B_999_78|HIP102253|scans0051-0056",
+        "AGBT16B_999_39|HIP28614|scans0039-0044",
+        "AGBT16B_999_99|HIP86456|scans0015-0020",
+        "AGBT16B_999_04|HIP110395|scans0009-0014",
+        "AGBT16B_999_91|GJ725|scans0026-0031",
+        "AGBT16B_999_115|GJ725|scans0033-0038",
+        "AGBT16B_999_78|HIP85653|scans0033-0038",
+        "AGBT16B_999_87|HIP112496|scans0015-0020",
+        "AGBT17A_999_75|HIP23941|scans0038-0043",
+        "AGBT16B_999_115|HIP72944|scans0003-0008",
+        "AGBT17A_999_75|HIP3765|scans0002-0007",
+        "AGBT16B_999_88|HIP72848|scans0027-0032",
+        "AGBT17B_999_15|HIP171|scans0008-0013",
+        "AGBT16B_999_88|HIP72622|scans0021-0026",
+        "AGBT16B_999_39|HIP17027|scans0003-0008",
+        "AGBT16B_999_61|HIP103388|scans0009-0014",
+        "AGBT16B_999_04|HIP110778|scans0033-0038",
+        "AGBT16B_999_100|HIP92549|scans0026-0031",
+        "AGBT16B_999_87|HIP105932|scans0003-0008",
+        "AGBT17A_999_75|HIP12709|scans0020-0025",
+        "AGBT16B_999_88|HIP72146|scans0003-0008",
+        "AGBT16B_999_100|HIP91009|scans0014-0019",
+        "AGBT17B_999_34|HIP29650|scans0044-0049",
+        "AGBT17A_999_23|HIP12832|scans0032-0037",
+        "AGBT16B_999_77|HIP83988|scans0027-0032",
+        "AGBT16B_999_77|HIP83608|scans0015-0020",
+        "AGBT17A_999_67|HIP91973|scans0015-0020",
+        "AGBT16B_999_88|GJ725|scans0039-0044",
+        "AGBT17A_999_67|HIP92043|scans0021-0026",
+        "AGBT16B_999_88|HIP87585|scans0045-0050",
+        "AGBT16B_999_75|HIP79248|scans0015-0020",
+        "AGBT16B_999_132|HIP400|scans0020-0025",
+        "AGBT17A_999_20|HIP24786|scans0038-0043",
+        "AGBT16B_999_75|HIP105932|scans0051-0056",
+        "AGBT16B_999_99|HIP86614|scans0021-0026",
+        "AGBT16B_999_100|HIP93408|scans0032-0037",
+        "AGBT16B_999_75|HIP102851|scans0045-0050",
+        "AGBT16B_999_47|HIP30756|scans0033-0038",
+        "AGBT16B_999_86|GJ860B|scans0009-0014",
+        "AGBT17A_999_20|HIP11759|scans0002-0007",
+        "AGBT17A_999_75|HIP5346|scans0008-0013",
+        "AGBT17A_999_23|HIP12493|scans0008-0013",
+        "AGBT16B_999_87|HIP112748|scans0021-0026",
+        "AGBT16B_999_80|HIP111888|scans0033-0038",
+        "AGBT16B_999_99|HIP89474|scans0045-0050",
+        "AGBT16B_999_100|GJ725|scans0002-0007",
+        "AGBT16B_999_80|HIP111170|scans0021-0026",
+        "AGBT16B_999_88|HIP72944|scans0033-0038",
+        "AGBT17B_999_34|HIP29800|scans0050-0055",
+        "AGBT17A_999_10|HIP114430|scans0036-0041",
+        "AGBT17A_999_23|HIP12828|scans0026-0031",
+        "AGBT16B_999_39|HIP17405|scans0027-0032",
+        "AGBT16B_999_04|HIP116838|scans0039-0044",
+        "AGBT17A_999_10|HIP91919|scans0012-0017",
+        "AGBT16B_999_39|HIP17414|scans0033-0038"
+      ]
+    },
+    "G004": {
+      "split": "validation",
+      "primary_cadence": "AGBT16B_999_107|HIP64577|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_107|HIP64394|scans0009-0014",
+        "AGBT16B_999_107|HIP64457|scans0015-0020",
+        "AGBT16B_999_107|HIP64241|scans0003-0008"
+      ]
+    },
+    "G005": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_110|HIP53954|scans0051-0056",
+      "alternates": [
+        "AGBT16B_999_110|HIP35550|scans0033-0038",
+        "AGBT16B_999_110|HIP34414|scans0003-0008",
+        "AGBT16B_999_110|HIP53824|scans0045-0050",
+        "AGBT16B_999_110|HIP34567|scans0009-0014",
+        "AGBT16B_999_110|HIP35350|scans0027-0032",
+        "AGBT16B_999_110|HIP53767|scans0039-0044",
+        "AGBT16B_999_110|HIP34950|scans0015-0020",
+        "AGBT16B_999_110|HIP35191|scans0021-0026"
+      ]
+    },
+    "G008": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_113|HIP27922|scans0038-0043",
+      "alternates": [
+        "AGBT16B_999_113|HIP23783|scans0020-0025",
+        "AGBT16B_999_113|HIP14286|scans0008-0013",
+        "AGBT16B_999_113|HIP13665|scans0002-0007",
+        "AGBT16B_999_113|HIP23147|scans0014-0019",
+        "AGBT16B_999_113|HIP24813|scans0032-0037",
+        "AGBT16B_999_113|HIP24340|scans0026-0031"
+      ]
+    },
+    "G009": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_114|HIP113357|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_114|HIP112909|scans0003-0008",
+        "AGBT16B_999_114|HIP112935|scans0015-0020",
+        "AGBT16B_999_114|HIP112918|scans0009-0014"
+      ]
+    },
+    "G010": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_117|HIP26779|scans0015-0020",
+      "alternates": [
+        "AGBT16B_999_117|HIP26505|scans0009-0014"
+      ]
+    },
+    "G011": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_122|HIP21402|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_122|HIP21039|scans0003-0008",
+        "AGBT16B_999_122|HIP21273|scans0015-0020"
+      ]
+    },
+    "G013": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_130|HIP54459|scans0020-0025",
+      "alternates": [
+        "AGBT16B_999_130|HIP54426|scans0014-0019",
+        "AGBT16B_999_130|HIP54155|scans0002-0007"
+      ]
+    },
+    "G014": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_17|HIP19205|scans0033-0038",
+      "alternates": [
+        "AGBT16B_999_17|GJ166BC|scans0009-0014",
+        "AGBT16B_999_17|GJ234|scans0015-0020",
+        "AGBT16B_999_17|HIP19076|scans0027-0032",
+        "AGBT16B_999_17|HIP35643|scans0051-0056",
+        "AGBT16B_999_17|GJ166|scans0003-0008",
+        "AGBT16B_999_17|GJ244|scans0021-0026",
+        "AGBT16B_999_17|HIP35136|scans0045-0050",
+        "AGBT16B_999_17|HIP120005|scans0039-0044"
+      ]
+    },
+    "G016": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_19|GJ65A|scans0039-0044",
+      "alternates": [
+        "AGBT16B_999_19|HIP107975|scans0033-0038",
+        "AGBT16B_999_19|GJ71|scans0045-0050",
+        "AGBT16B_999_19|HIP107350|scans0015-0020",
+        "AGBT16B_999_19|HIP106897|scans0009-0014",
+        "AGBT16B_999_19|HIP106811|scans0003-0008",
+        "AGBT16B_999_19|HIP107788|scans0027-0032"
+      ]
+    },
+    "G017": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_28|GJ412A|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_28|HIP45963|scans0033-0038",
+        "AGBT16B_999_28|GJ412B|scans0015-0020",
+        "AGBT16B_999_28|HIP45836|scans0027-0032",
+        "AGBT16B_999_28|HIP45493|scans0021-0026",
+        "AGBT16B_999_28|HIP60303|scans0045-0050",
+        "AGBT16B_999_28|HIP59774|scans0039-0044"
+      ]
+    },
+    "G018": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_32|HIP58684|scans0039-0044",
+      "alternates": [
+        "AGBT16B_999_32|HIP44955|scans0027-0032",
+        "AGBT16B_999_32|HIP44984|scans0033-0038",
+        "AGBT16B_999_32|HIP44722|scans0015-0020",
+        "AGBT16B_999_32|HIP44295|scans0009-0014",
+        "AGBT16B_999_32|HIP59378|scans0051-0056",
+        "AGBT16B_999_32|GJ411|scans0003-0008",
+        "AGBT16B_999_32|HIP44897|scans0021-0026",
+        "AGBT16B_999_32|HIP59280|scans0045-0050"
+      ]
+    },
+    "G019": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_33|HIP15919|scans0029-0034",
+      "alternates": [
+        "AGBT16B_999_33|HIP13375|scans0005-0010",
+        "AGBT16B_999_33|HIP27803|scans0041-0046",
+        "AGBT16B_999_33|HIP13402|scans0011-0016",
+        "AGBT16B_999_33|HIP27435|scans0035-0040",
+        "AGBT16B_999_33|HIP15411|scans0017-0022",
+        "AGBT16B_999_33|HIP27913|scans0047-0052",
+        "AGBT16B_999_33|HIP15457|scans0023-0028"
+      ]
+    },
+    "G020": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_36|HIP45383|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_36|HIP45617|scans0027-0032",
+        "AGBT16B_999_36|HIP61100|scans0051-0056",
+        "AGBT16B_999_36|GJ388|scans0003-0008",
+        "AGBT16B_999_36|HIP45170|scans0009-0014",
+        "AGBT16B_999_36|HIP59514|scans0045-0050",
+        "AGBT16B_999_36|HIP45336|scans0015-0020",
+        "AGBT16B_999_36|HIP45688|scans0033-0038",
+        "AGBT16B_999_36|HIP59504|scans0039-0044"
+      ]
+    },
+    "G021": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_40|HIP104019|scans0003-0008",
+      "alternates": [
+        "AGBT16B_999_40|HIP104521|scans0033-0038",
+        "AGBT16B_999_40|HIP104239|scans0021-0026",
+        "AGBT16B_999_40|HIP104139|scans0015-0020",
+        "AGBT16B_999_40|HIP10279|scans0039-0044",
+        "AGBT16B_999_40|HIP104383|scans0027-0032",
+        "AGBT16B_999_40|HIP10416|scans0051-0056",
+        "AGBT16B_999_40|HIP104092|scans0009-0014",
+        "AGBT16B_999_40|HIP10306|scans0045-0050"
+      ]
+    },
+    "G022": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_42|HIP62512|scans0051-0056",
+      "alternates": [
+        "AGBT16B_999_42|HIP45839|scans0009-0014",
+        "AGBT16B_999_42|HIP46706|scans0033-0038",
+        "AGBT16B_999_42|HIP46509|scans0015-0020",
+        "AGBT16B_999_42|HIP61946|scans0039-0044",
+        "AGBT16B_999_42|HIP46549|scans0021-0026",
+        "AGBT16B_999_42|HIP62145|scans0045-0050",
+        "AGBT16B_999_42|HIP62956|scans0057-0062",
+        "AGBT16B_999_42|GJ406|scans0003-0008",
+        "AGBT16B_999_42|HIP46580|scans0027-0032"
+      ]
+    },
+    "G024": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_52|HIP63076|scans0003-0008",
+      "alternates": [
+        "AGBT16B_999_52|HIP65026|scans0027-0032",
+        "AGBT16B_999_52|HIP63762|scans0015-0020",
+        "AGBT16B_999_52|HIP65327|scans0033-0038",
+        "AGBT16B_999_52|HIP75809|scans0051-0056",
+        "AGBT16B_999_52|HIP63894|scans0021-0026",
+        "AGBT16B_999_52|HIP75829|scans0057-0062",
+        "AGBT16B_999_52|HIP75458|scans0045-0050",
+        "AGBT16B_999_52|HIP63503|scans0009-0014",
+        "AGBT16B_999_52|GJ687|scans0039-0044"
+      ]
+    },
+    "G025": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_53|HIP65378|scans0003-0008",
+      "alternates": [
+        "AGBT16B_999_53|HIP65477|scans0009-0014"
+      ]
+    },
+    "G026": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_57|HIP71181|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_57|HIP70857|scans0009-0014",
+        "AGBT16B_999_57|HIP70952|scans0015-0020",
+        "AGBT16B_999_57|HIP70497|scans0003-0008",
+        "AGBT16B_999_57|HIP72607|scans0027-0032"
+      ]
+    },
+    "G027": {
+      "split": "validation",
+      "primary_cadence": "AGBT16B_999_58|HIP79755|scans0051-0056",
+      "alternates": [
+        "AGBT16B_999_58|HIP59406|scans0027-0032",
+        "AGBT16B_999_58|HIP57866|scans0009-0014",
+        "AGBT16B_999_58|HIP59608|scans0033-0038",
+        "AGBT16B_999_58|HIP58576|scans0015-0020",
+        "AGBT16B_999_58|HIP78180|scans0039-0044",
+        "AGBT16B_999_58|HIP59000|scans0021-0026",
+        "AGBT16B_999_58|GJ473AB|scans0003-0008",
+        "AGBT16B_999_58|HIP78286|scans0045-0050"
+      ]
+    },
+    "G029": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_62|HIP79822|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_62|HIP81813|scans0033-0038",
+        "AGBT16B_999_62|HIP80480|scans0027-0032",
+        "AGBT16B_999_62|HIP79796|scans0003-0008",
+        "AGBT16B_999_62|GJ1245B|scans0045-0050",
+        "AGBT16B_999_62|GJ1245AC|scans0039-0044",
+        "AGBT16B_999_62|HIP80331|scans0015-0020",
+        "AGBT16B_999_62|HIP80459|scans0021-0026"
+      ]
+    },
+    "G031": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_64|HIP17496|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_64|HIP17420|scans0003-0008",
+        "AGBT16B_999_64|HIP31167|scans0039-0044",
+        "AGBT16B_999_64|HIP31635|scans0051-0056",
+        "AGBT16B_999_64|HIP18267|scans0021-0026",
+        "AGBT16B_999_64|HIP17609|scans0015-0020",
+        "AGBT16B_999_64|HIP18512|scans0033-0038",
+        "AGBT16B_999_64|HIP31592|scans0045-0050",
+        "AGBT16B_999_64|HIP18280|scans0027-0032"
+      ]
+    },
+    "G032": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_65|HIP3419|scans0027-0032",
+      "alternates": [
+        "AGBT16B_999_65|HIP18975|scans0051-0056",
+        "AGBT16B_999_65|HIP3093|scans0015-0020",
+        "AGBT16B_999_65|HIP18859|scans0039-0044",
+        "AGBT16B_999_65|HIP3092|scans0009-0014",
+        "AGBT16B_999_65|HIP3418|scans0021-0026",
+        "AGBT16B_999_65|HIP2762|scans0003-0008",
+        "AGBT16B_999_65|HIP3535|scans0033-0038",
+        "AGBT16B_999_65|HIP18907|scans0045-0050"
+      ]
+    },
+    "G033": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_66|HIP49366|scans0027-0032",
+      "alternates": [
+        "AGBT16B_999_66|HIP60994|scans0057-0062",
+        "AGBT16B_999_66|HIP43970|scans0003-0008",
+        "AGBT16B_999_66|HIP60866|scans0039-0044",
+        "AGBT16B_999_66|HIP44075|scans0021-0026",
+        "AGBT16B_999_66|HIP44001|scans0009-0014",
+        "AGBT16B_999_66|HIP60910|scans0045-0050",
+        "AGBT16B_999_66|HIP44072|scans0015-0020",
+        "AGBT16B_999_66|HIP60965|scans0051-0056",
+        "AGBT16B_999_66|HIP49544|scans0033-0038"
+      ]
+    },
+    "G034": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_69|HIP34115|scans0057-0062",
+      "alternates": [
+        "AGBT16B_999_69|HIP18324|scans0021-0026",
+        "AGBT16B_999_69|HIP33142|scans0045-0050",
+        "AGBT16B_999_69|HIP15673|scans0003-0008",
+        "AGBT16B_999_69|HIP18413|scans0027-0032",
+        "AGBT16B_999_69|HIP17749|scans0015-0020",
+        "AGBT16B_999_69|HIP16499|scans0009-0014",
+        "AGBT16B_999_69|HIP32919|scans0039-0044",
+        "AGBT16B_999_69|HIP33852|scans0051-0056",
+        "AGBT16B_999_69|HIP18774|scans0033-0038"
+      ]
+    },
+    "G035": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_70|HIP22263|scans0033-0038",
+      "alternates": [
+        "AGBT16B_999_70|HIP19849|scans0015-0020",
+        "AGBT16B_999_70|HIP19832|scans0009-0014",
+        "AGBT16B_999_70|HIP21556|scans0021-0026",
+        "AGBT16B_999_70|HIP21594|scans0027-0032",
+        "AGBT16B_999_70|HIP38117|scans0057-0062",
+        "AGBT16B_999_70|HIP36439|scans0039-0044",
+        "AGBT16B_999_70|HIP37494|scans0051-0056",
+        "AGBT16B_999_70|HIP36915|scans0045-0050",
+        "AGBT16B_999_70|HIP19335|scans0003-0008"
+      ]
+    },
+    "G036": {
+      "split": "validation",
+      "primary_cadence": "AGBT16B_999_72|HIP69713|scans0003-0008",
+      "alternates": [
+        "AGBT16B_999_72|HIP69732|scans0009-0014"
+      ]
+    },
+    "G037": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_73|HIP77760|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_73|HIP76375|scans0003-0008"
+      ]
+    },
+    "G038": {
+      "split": "validation",
+      "primary_cadence": "AGBT16B_999_76|HIP49669|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_76|HIP49593|scans0003-0008",
+        "AGBT16B_999_76|HIP49809|scans0021-0026",
+        "AGBT16B_999_76|HIP61901|scans0045-0050",
+        "AGBT16B_999_76|HIP61099|scans0039-0044",
+        "AGBT16B_999_76|HIP62523|scans0051-0056",
+        "AGBT16B_999_76|HIP49969|scans0033-0038",
+        "AGBT16B_999_76|HIP49699|scans0015-0020",
+        "AGBT16B_999_76|HIP49841|scans0027-0032"
+      ]
+    },
+    "G039": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_79|HIP19554|scans0003-0008",
+      "alternates": [
+        "AGBT16B_999_79|HIP19930|scans0033-0038",
+        "AGBT16B_999_79|HIP19859|scans0027-0032",
+        "AGBT16B_999_79|HIP19855|scans0021-0026",
+        "AGBT16B_999_79|HIP32851|scans0051-0056",
+        "AGBT16B_999_79|HIP19337|scans0015-0020",
+        "AGBT16B_999_79|HIP32423|scans0039-0044",
+        "AGBT16B_999_79|HIP32617|scans0045-0050",
+        "AGBT16B_999_79|HIP19719|scans0009-0014"
+      ]
+    },
+    "G041": {
+      "split": "train",
+      "primary_cadence": "AGBT16B_999_84|HIP61212|scans0033-0038",
+      "alternates": [
+        "AGBT16B_999_84|HIP61329|scans0039-0044",
+        "AGBT16B_999_84|HIP50583|scans0021-0026",
+        "AGBT16B_999_84|HIP61174|scans0027-0032",
+        "AGBT16B_999_84|HIP50384|scans0009-0014",
+        "AGBT16B_999_84|HIP50564|scans0015-0020"
+      ]
+    },
+    "G042": {
+      "split": "validation",
+      "primary_cadence": "AGBT16B_999_85|HIP20542|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_85|HIP33226|scans0045-0050",
+        "AGBT16B_999_85|HIP33537|scans0051-0056",
+        "AGBT16B_999_85|HIP20219|scans0009-0014",
+        "AGBT16B_999_85|HIP33202|scans0039-0044",
+        "AGBT16B_999_85|HIP20261|scans0015-0020",
+        "AGBT16B_999_85|HIP20641|scans0033-0038",
+        "AGBT16B_999_85|HIP20635|scans0027-0032",
+        "AGBT16B_999_85|HIP19990|scans0003-0008"
+      ]
+    },
+    "G043": {
+      "split": "validation",
+      "primary_cadence": "AGBT16B_999_89|HIP51254|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_89|HIP51933|scans0033-0038",
+        "AGBT16B_999_89|HIP62505|scans0039-0044",
+        "AGBT16B_999_89|HIP50944|scans0009-0014",
+        "AGBT16B_999_89|HIP63366|scans0057-0062",
+        "AGBT16B_999_89|HIP62687|scans0045-0050",
+        "AGBT16B_999_89|HIP50782|scans0003-0008",
+        "AGBT16B_999_89|HIP51007|scans0015-0020",
+        "AGBT16B_999_89|HIP51317|scans0027-0032",
+        "AGBT16B_999_89|HIP63257|scans0051-0056"
+      ]
+    },
+    "G046": {
+      "split": "test",
+      "primary_cadence": "AGBT16B_999_93|HIP20901|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_93|HIP33955|scans0039-0044",
+        "AGBT16B_999_93|HIP34104|scans0051-0056",
+        "AGBT16B_999_93|HIP20713|scans0009-0014",
+        "AGBT16B_999_93|HIP20648|scans0003-0008",
+        "AGBT16B_999_93|HIP34017|scans0045-0050",
+        "AGBT16B_999_93|HIP20917|scans0027-0032",
+        "AGBT16B_999_93|HIP20842|scans0015-0020",
+        "AGBT16B_999_93|HIP21029|scans0033-0038"
+      ]
+    },
+    "G047": {
+      "split": "test",
+      "primary_cadence": "AGBT17A_999_01|HIP105406|scans0043-0048",
+      "alternates": [
+        "AGBT17A_999_01|HIP105199|scans0037-0042",
+        "AGBT17A_999_01|HIP88574|scans0002-0007",
+        "AGBT17A_999_01|HIP88771|scans0019-0024"
+      ]
+    },
+    "G048": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_03|HIP54651|scans0036-0041",
+      "alternates": [
+        "AGBT17A_999_03|HIP110774|scans0018-0023"
+      ]
+    },
+    "G049": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_05|HIP109926|scans0176-0181",
+      "alternates": [
+        "AGBT17A_999_05|HIP106400|scans0164-0169",
+        "AGBT17A_999_05|HIP106481|scans0170-0175"
+      ]
+    },
+    "G050": {
+      "split": "test",
+      "primary_cadence": "AGBT17A_999_06|HIP40118|scans0035-0040",
+      "alternates": [
+        "AGBT17A_999_06|HIP40375|scans0048-0053",
+        "AGBT17A_999_06|HIP40501|scans0054-0059"
+      ]
+    },
+    "G051": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_07|HIP64924|scans0015-0020",
+      "alternates": [
+        "AGBT17A_999_07|HIP65011|scans0021-0026",
+        "AGBT17A_999_07|HIP65352|scans0039-0044",
+        "AGBT17A_999_07|HIP79607|scans0051-0056",
+        "AGBT17A_999_07|HIP65143|scans0027-0032",
+        "AGBT17A_999_07|HIP65343|scans0033-0038",
+        "AGBT17A_999_07|HIP79492|scans0045-0050"
+      ]
+    },
+    "G052": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_08|HIP21932|scans0045-0050",
+      "alternates": [
+        "AGBT17A_999_08|HIP21988|scans0051-0056"
+      ]
+    },
+    "G053": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_09|HIP113944|scans0051-0056",
+      "alternates": [
+        "AGBT17A_999_09|HIP112245|scans0027-0032",
+        "AGBT17A_999_09|HIP112915|scans0045-0050",
+        "AGBT17A_999_09|HIP112724|scans0039-0044"
+      ]
+    },
+    "G056": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_14|HIP36985|scans0008-0013",
+      "alternates": [
+        "AGBT17A_999_14|HIP37288|scans0014-0019",
+        "AGBT17A_999_14|HIP54966|scans0038-0043",
+        "AGBT17A_999_14|HIP37629|scans0026-0031",
+        "AGBT17A_999_14|HIP55705|scans0051-0056",
+        "AGBT17A_999_14|HIP36850|scans0002-0007",
+        "AGBT17A_999_14|HIP37349|scans0020-0025",
+        "AGBT17A_999_14|HIP37766|scans0032-0037"
+      ]
+    },
+    "G057": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_15|HIP89962|scans0032-0037",
+      "alternates": [
+        "AGBT17A_999_15|HIP88622|scans0014-0019",
+        "AGBT17A_999_15|HIP88348|scans0008-0013",
+        "AGBT17A_999_15|HIP88175|scans0002-0007",
+        "AGBT17A_999_15|HIP115147|scans0044-0049",
+        "AGBT17A_999_15|HIP88684|scans0020-0025",
+        "AGBT17A_999_15|HIP115331|scans0050-0055",
+        "AGBT17A_999_15|HIP114924|scans0038-0043",
+        "AGBT17A_999_15|HIP89825|scans0026-0031"
+      ]
+    },
+    "G058": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_16|HIP75253|scans0038-0043",
+      "alternates": [
+        "AGBT17A_999_16|HIP66459|scans0026-0031",
+        "AGBT17A_999_16|HIP66193|scans0002-0007",
+        "AGBT17A_999_16|HIP66252|scans0020-0025",
+        "AGBT17A_999_16|HIP66249|scans0014-0019",
+        "AGBT17A_999_16|HIP75312|scans0044-0049",
+        "AGBT17A_999_16|HIP66675|scans0032-0037",
+        "AGBT17A_999_16|HIP75718|scans0050-0055",
+        "AGBT17A_999_16|HIP66222|scans0008-0013"
+      ]
+    },
+    "G059": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_17|HIP11569|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_17|HIP23875|scans0032-0037",
+        "AGBT17A_999_17|HIP11048|scans0002-0007",
+        "AGBT17A_999_17|HIP11090|scans0008-0013",
+        "AGBT17A_999_17|HIP9727|scans0026-0031",
+        "AGBT17A_999_17|HIP12777|scans0020-0025"
+      ]
+    },
+    "G060": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_18|HIP116584|scans0050-0055",
+      "alternates": [
+        "AGBT17A_999_18|HIP115562|scans0038-0043",
+        "AGBT17A_999_18|HIP90790|scans0026-0031",
+        "AGBT17A_999_18|HIP90626|scans0014-0019",
+        "AGBT17A_999_18|HIP90035|scans0002-0007",
+        "AGBT17A_999_18|HIP90139|scans0008-0013",
+        "AGBT17A_999_18|HIP116085|scans0044-0049",
+        "AGBT17A_999_18|HIP90959|scans0032-0037",
+        "AGBT17A_999_18|HIP90656|scans0020-0025"
+      ]
+    },
+    "G061": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_19|HIP42080|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_19|HIP55848|scans0038-0043",
+        "AGBT17A_999_19|HIP39494|scans0014-0019",
+        "AGBT17A_999_19|HIP56238|scans0050-0055",
+        "AGBT17A_999_19|HIP56157|scans0044-0049",
+        "AGBT17A_999_19|HIP33373|scans0002-0007",
+        "AGBT17A_999_19|HIP42220|scans0026-0031",
+        "AGBT17A_999_19|HIP42438|scans0032-0037",
+        "AGBT17A_999_19|HIP38956|scans0008-0013"
+      ]
+    },
+    "G062": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_45|HIP82003|scans0038-0043",
+      "alternates": [
+        "AGBT17A_999_21|HIP63406|scans0014-0019",
+        "AGBT17A_999_21|HIP62207|scans0008-0013",
+        "AGBT17B_999_30|HIP75761|scans0032-0037",
+        "AGBT17B_999_36|HIP82389|scans0016-0021",
+        "AGBT17B_999_36|HIP82817|scans0034-0039",
+        "AGBT17A_999_45|HIP71743|scans0014-0019",
+        "AGBT17B_999_36|HIP82587|scans0022-0027",
+        "AGBT17A_999_52|HIP82817|scans0050-0055",
+        "AGBT17A_999_21|HIP61317|scans0002-0007",
+        "AGBT17B_999_32|HIP76267|scans0014-0019",
+        "AGBT17B_999_36|HIP82588|scans0028-0033",
+        "AGBT17A_999_21|HIP76267|scans0050-0055",
+        "AGBT17B_999_32|HIP76602|scans0020-0025",
+        "AGBT17A_999_39|HIP93843|scans0014-0019",
+        "AGBT17B_999_32|HIP76233|scans0008-0013",
+        "AGBT17A_999_21|HIP76219|scans0038-0043",
+        "AGBT17A_999_21|HIP76233|scans0044-0049",
+        "AGBT17B_999_30|HIP75722|scans0026-0031",
+        "AGBT17A_999_45|HIP76603|scans0026-0031",
+        "AGBT17A_999_45|HIP71957|scans0020-0025",
+        "AGBT17A_999_52|HIP77516|scans0020-0025",
+        "AGBT17A_999_39|HIP93871|scans0020-0025",
+        "AGBT17A_999_45|HIP82587|scans0050-0055",
+        "AGBT17A_999_52|HIP82588|scans0044-0049",
+        "AGBT17A_999_21|HIP66781|scans0032-0037",
+        "AGBT17A_999_39|HIP114233|scans0050-0055",
+        "AGBT17A_999_52|HIP77408|scans0008-0013",
+        "AGBT17A_999_52|HIP77349|scans0002-0007",
+        "AGBT17B_999_30|HIP76602|scans0038-0043",
+        "AGBT17A_999_21|HIP66704|scans0026-0031",
+        "AGBT17A_999_39|HIP93747|scans0008-0013",
+        "AGBT17A_999_52|HIP77464|scans0014-0019",
+        "AGBT17A_999_39|HIP113718|scans0044-0049",
+        "AGBT17A_999_39|HIP93873|scans0026-0031",
+        "AGBT17A_999_52|HIP81375|scans0038-0043",
+        "AGBT17B_999_32|HIP76219|scans0002-0007",
+        "AGBT17A_999_45|HIP76779|scans0032-0037",
+        "AGBT17A_999_52|HIP77622|scans0026-0031",
+        "AGBT17B_999_32|HIP76603|scans0026-0031",
+        "AGBT17A_999_39|HIP93185|scans0002-0007",
+        "AGBT17A_999_39|HIP113421|scans0038-0043",
+        "AGBT17A_999_52|HIP77655|scans0032-0037",
+        "AGBT17A_999_45|HIP71395|scans0008-0013",
+        "AGBT17A_999_45|HIP82389|scans0044-0049",
+        "AGBT17B_999_30|HIP77257|scans0044-0049",
+        "AGBT17A_999_39|HIP93899|scans0032-0037",
+        "AGBT17A_999_21|HIP66492|scans0020-0025",
+        "AGBT17B_999_32|HIP93185|scans0032-0037"
+      ]
+    },
+    "G063": {
+      "split": "test",
+      "primary_cadence": "AGBT17A_999_22|HIP38228|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_22|HIP45038|scans0050-0055",
+        "AGBT17A_999_22|HIP38048|scans0008-0013",
+        "AGBT17A_999_22|HIP44248|scans0038-0043",
+        "AGBT17A_999_22|HIP37826|scans0002-0007",
+        "AGBT17A_999_22|HIP38082|scans0014-0019",
+        "AGBT17A_999_22|HIP38382|scans0026-0031",
+        "AGBT17A_999_22|HIP44901|scans0044-0049",
+        "AGBT17A_999_22|HIP38625|scans0032-0037"
+      ]
+    },
+    "G064": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_24|HIP91608|scans0033-0038",
+      "alternates": [
+        "AGBT17A_999_24|HIP114886|scans0045-0050",
+        "AGBT17A_999_24|HIP91237|scans0015-0020",
+        "AGBT17A_999_24|HIP116416|scans0051-0056",
+        "AGBT17A_999_24|HIP91217|scans0009-0014",
+        "AGBT17A_999_24|HIP114189|scans0039-0044",
+        "AGBT17A_999_24|HIP91430|scans0021-0026",
+        "AGBT17A_999_24|HIP90979|scans0003-0008",
+        "AGBT17A_999_24|HIP91605|scans0027-0032"
+      ]
+    },
+    "G065": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_26|HIP56802|scans0038-0043",
+      "alternates": [
+        "AGBT17A_999_26|HIP39826|scans0032-0037",
+        "AGBT17A_999_26|HIP38931|scans0014-0019",
+        "AGBT17A_999_26|HIP38712|scans0008-0013",
+        "AGBT17A_999_26|HIP38657|scans0002-0007",
+        "AGBT17A_999_26|HIP39064|scans0020-0025",
+        "AGBT17A_999_26|HIP39157|scans0026-0031",
+        "AGBT17A_999_26|HIP57274|scans0050-0055",
+        "AGBT17A_999_26|HIP56997|scans0044-0049"
+      ]
+    },
+    "G066": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_27|HIP95853|scans0044-0049",
+      "alternates": [
+        "AGBT17A_999_27|HIP67164|scans0032-0037",
+        "AGBT17A_999_27|HIP67155|scans0026-0031",
+        "AGBT17A_999_27|HIP67090|scans0014-0019",
+        "AGBT17A_999_27|HIP66840|scans0002-0007",
+        "AGBT17A_999_27|HIP67105|scans0020-0025",
+        "AGBT17A_999_27|HIP95575|scans0038-0043",
+        "AGBT17A_999_27|HIP95995|scans0050-0055",
+        "AGBT17A_999_27|HIP66886|scans0008-0013"
+      ]
+    },
+    "G067": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_30|HIP80628|scans0048-0053",
+      "alternates": [
+        "AGBT17A_999_30|HIP68469|scans0036-0041",
+        "AGBT17A_999_30|HIP68030|scans0024-0029",
+        "AGBT17A_999_30|HIP67422|scans0012-0017",
+        "AGBT17A_999_30|HIP68337|scans0030-0035",
+        "AGBT17A_999_30|HIP67275|scans0006-0011",
+        "AGBT17A_999_30|HIP80366|scans0042-0047"
+      ]
+    },
+    "G069": {
+      "split": "test",
+      "primary_cadence": "AGBT17A_999_32|HIP117795|scans0002-0007",
+      "alternates": [
+        "AGBT17A_999_32|HIP544|scans0038-0043",
+        "AGBT17A_999_32|HIP12929|scans0026-0031",
+        "AGBT17A_999_32|HIP118162|scans0008-0013",
+        "AGBT17A_999_32|HIP13081|scans0032-0037",
+        "AGBT17A_999_32|HIP5957|scans0044-0049",
+        "AGBT17A_999_32|HIP677|scans0050-0055",
+        "AGBT17A_999_32|HIP118212|scans0014-0019",
+        "AGBT17A_999_32|HIP12843|scans0020-0025"
+      ]
+    },
+    "G070": {
+      "split": "test",
+      "primary_cadence": "AGBT17A_999_33|HIP92984|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_33|HIP92951|scans0008-0013",
+        "AGBT17A_999_33|HIP93017|scans0020-0025",
+        "AGBT17A_999_33|HIP92946|scans0002-0007"
+      ]
+    },
+    "G073": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_37|HIP46343|scans0028-0033",
+      "alternates": [
+        "AGBT17A_999_37|HIP46417|scans0034-0039",
+        "AGBT17A_999_37|HIP42940|scans0002-0007",
+        "AGBT17A_999_37|HIP43534|scans0008-0013"
+      ]
+    },
+    "G075": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_40|HIP71075|scans0079-0084",
+      "alternates": [
+        "AGBT17A_999_40|HIP70950|scans0067-0072",
+        "AGBT17A_999_40|HIP71253|scans0085-0090",
+        "AGBT17A_999_40|HIP70956|scans0073-0078"
+      ]
+    },
+    "G076": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_41|HIP4872|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_41|HIP4856|scans0014-0019",
+        "AGBT17A_999_41|HIP25623|scans0044-0049",
+        "AGBT17A_999_41|HIP518|scans0032-0037",
+        "AGBT17A_999_41|HIP4436|scans0002-0007",
+        "AGBT17A_999_41|HIP4454|scans0008-0013",
+        "AGBT17A_999_41|HIP25878|scans0050-0055",
+        "AGBT17A_999_41|HIP25578|scans0038-0043",
+        "AGBT17A_999_41|HIP4907|scans0026-0031"
+      ]
+    },
+    "G077": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_42|HIP95730|scans0032-0037",
+      "alternates": [
+        "AGBT17A_999_42|HIP95319|scans0020-0025",
+        "AGBT17A_999_42|HIP95501|scans0026-0031",
+        "AGBT17A_999_42|HIP115142|scans0038-0043",
+        "AGBT17A_999_42|HIP94650|scans0014-0019",
+        "AGBT17A_999_42|HIP93917|scans0002-0007",
+        "AGBT17A_999_42|HIP115738|scans0050-0055",
+        "AGBT17A_999_42|HIP115445|scans0044-0049",
+        "AGBT17A_999_42|HIP94349|scans0008-0013"
+      ]
+    },
+    "G078": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_44|HIP116384|scans0044-0049",
+      "alternates": [
+        "AGBT17A_999_44|HIP96901|scans0026-0031",
+        "AGBT17A_999_44|HIP96895|scans0020-0025",
+        "AGBT17A_999_44|HIP96395|scans0008-0013",
+        "AGBT17A_999_44|HIP96258|scans0002-0007",
+        "AGBT17A_999_44|HIP98921|scans0032-0037",
+        "AGBT17A_999_44|HIP96441|scans0014-0019",
+        "AGBT17A_999_44|HIP116215|scans0038-0043",
+        "AGBT17A_999_44|HIP116495|scans0050-0055"
+      ]
+    },
+    "G079": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_46|HIP51248|scans0044-0049",
+      "alternates": [
+        "AGBT17A_999_46|HIP42762|scans0008-0013",
+        "AGBT17A_999_46|HIP42748|scans0002-0007",
+        "AGBT17A_999_46|HIP50505|scans0038-0043",
+        "AGBT17A_999_46|HIP42806|scans0014-0019",
+        "AGBT17A_999_46|HIP43557|scans0026-0031",
+        "AGBT17A_999_46|HIP43233|scans0020-0025",
+        "AGBT17A_999_46|HIP43587|scans0032-0037",
+        "AGBT17A_999_46|HIP51384|scans0050-0055"
+      ]
+    },
+    "G080": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_48|HIP77052|scans0008-0013",
+      "alternates": [
+        "AGBT17A_999_48|HIP77060|scans0014-0019",
+        "AGBT17A_999_48|HIP77070|scans0020-0025",
+        "AGBT17A_999_48|HIP77233|scans0026-0031"
+      ]
+    },
+    "G081": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_50|HIP6537|scans0023-0028",
+      "alternates": [
+        "AGBT17A_999_50|HIP5938|scans0017-0022",
+        "AGBT17A_999_50|HIP27188|scans0041-0046",
+        "AGBT17A_999_50|HIP47300|scans0053-0058",
+        "AGBT17A_999_50|HIP5799|scans0011-0016",
+        "AGBT17A_999_50|HIP5364|scans0003-0010",
+        "AGBT17A_999_50|HIP8486|scans0035-0040",
+        "AGBT17A_999_50|HIP6748|scans0029-0034"
+      ]
+    },
+    "G083": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_54|HIP52469|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_54|HIP26624|scans0002-0007",
+        "AGBT17A_999_54|HIP26857|scans0008-0013",
+        "AGBT17A_999_54|HIP51814|scans0014-0019"
+      ]
+    },
+    "G084": {
+      "split": "test",
+      "primary_cadence": "AGBT17A_999_55|HIP117473|scans0051-0056",
+      "alternates": [
+        "AGBT17A_999_55|HIP84123|scans0015-0020",
+        "AGBT17A_999_55|HIP83762|scans0003-0008",
+        "AGBT17A_999_55|HIP84379|scans0027-0032",
+        "AGBT17A_999_55|HIP98505|scans0039-0044",
+        "AGBT17A_999_55|HIP84521|scans0033-0038",
+        "AGBT17A_999_55|HIP84012|scans0009-0014",
+        "AGBT17A_999_55|HIP84195|scans0021-0026",
+        "AGBT17A_999_55|HIP98677|scans0045-0050"
+      ]
+    },
+    "G085": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_57|HIP52600|scans0033-0038",
+      "alternates": [
+        "AGBT17A_999_57|HIP53910|scans0051-0056",
+        "AGBT17A_999_57|HIP53580|scans0039-0044",
+        "AGBT17A_999_57|HIP53721|scans0045-0050"
+      ]
+    },
+    "G087": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_59|HIP56035|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_59|HIP83207|scans0038-0043",
+        "AGBT17A_999_59|HIP54952|scans0002-0007",
+        "AGBT17A_999_59|HIP55360|scans0008-0013",
+        "AGBT17A_999_59|HIP83599|scans0050-0055",
+        "AGBT17A_999_59|HIP56199|scans0026-0031",
+        "AGBT17A_999_59|HIP55718|scans0014-0019",
+        "AGBT17A_999_59|HIP56630|scans0032-0037",
+        "AGBT17A_999_59|HIP83591|scans0044-0049"
+      ]
+    },
+    "G092": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_69|HIP56809|scans0002-0007",
+      "alternates": [
+        "AGBT17A_999_69|HIP58001|scans0020-0025",
+        "AGBT17A_999_69|HIP56829|scans0008-0013",
+        "AGBT17A_999_69|HIP57493|scans0014-0019"
+      ]
+    },
+    "G093": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_70|HIP7535|scans0021-0026",
+      "alternates": [
+        "AGBT17A_999_70|HIP8051|scans0035-0040",
+        "AGBT17A_999_70|HIP8275|scans0041-0046",
+        "AGBT17A_999_70|HIP6069|scans0003-0008",
+        "AGBT17A_999_70|HIP6917|scans0015-0020",
+        "AGBT17A_999_70|HIP7981|scans0029-0034",
+        "AGBT17A_999_70|HIP6706|scans0009-0014"
+      ]
+    },
+    "G094": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_71|HIP9829|scans0031-0036",
+      "alternates": [
+        "AGBT17A_999_71|HIP8543|scans0001-0006",
+        "AGBT17A_999_71|HIP9153|scans0013-0018",
+        "AGBT17A_999_71|HIP9884|scans0037-0042",
+        "AGBT17A_999_71|HIP8903|scans0007-0012",
+        "AGBT17A_999_71|HIP9487|scans0025-0030",
+        "AGBT17A_999_71|HIP9269|scans0019-0024"
+      ]
+    },
+    "G096": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_73|HIP77801|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_73|HIP78072|scans0020-0025",
+        "AGBT17A_999_73|HIP78353|scans0032-0037",
+        "AGBT17A_999_73|HIP78241|scans0026-0031",
+        "AGBT17A_999_73|HIP77725|scans0008-0013",
+        "AGBT17A_999_73|HIP77660|scans0002-0007"
+      ]
+    },
+    "G097": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_74|HIP9480|scans0002-0007",
+      "alternates": [
+        "AGBT17A_999_74|SO0253|scans0014-0019",
+        "AGBT17A_999_74|HIP9598|scans0008-0013"
+      ]
+    },
+    "G098": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_76|HIP85810|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_76|HIP85665|scans0008-0013",
+        "AGBT17A_999_76|HIP87579|scans0032-0037",
+        "AGBT17A_999_76|HIP87768|scans0038-0043",
+        "AGBT17A_999_76|HIP85582|scans0002-0007",
+        "AGBT17A_999_76|HIP106231|scans0044-0049",
+        "AGBT17A_999_76|HIP87108|scans0026-0031",
+        "AGBT17A_999_76|HIP85922|scans0020-0025",
+        "AGBT17A_999_76|HIP109388|scans0050-0055"
+      ]
+    },
+    "G099": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_77|HIP57328|scans0032-0037",
+      "alternates": [
+        "AGBT17A_999_77|HIP54646|scans0014-0019",
+        "AGBT17A_999_77|HIP47690|scans0044-0049",
+        "AGBT17A_999_77|HIP61094|scans0038-0043",
+        "AGBT17A_999_77|HIP38325|scans0008-0013",
+        "AGBT17A_999_77|HIP54906|scans0020-0025",
+        "AGBT17A_999_77|HIP69483|scans0051-0056",
+        "AGBT17A_999_77|HIP32769|scans0002-0007",
+        "AGBT17A_999_77|HIP56445|scans0026-0031"
+      ]
+    },
+    "G101": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_84|HIP63467|scans0002-0007",
+      "alternates": [
+        "AGBT17A_999_84|HIP64797|scans0008-0013"
+      ]
+    },
+    "G102": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_85|HIP50125|scans0045-0050",
+      "alternates": [
+        "AGBT17A_999_85|HIP50485|scans0051-0056"
+      ]
+    },
+    "G103": {
+      "split": "train",
+      "primary_cadence": "AGBT17A_999_87|HIP98204|scans0008-0013",
+      "alternates": [
+        "AGBT17A_999_87|HIP103039|scans0044-0049",
+        "AGBT17A_999_87|HIP99452|scans0026-0031",
+        "AGBT17A_999_87|HIP99572|scans0032-0037",
+        "AGBT17A_999_87|HIP98192|scans0002-0007",
+        "AGBT17A_999_87|HIP113409|scans0050-0055",
+        "AGBT17A_999_87|HIP99316|scans0020-0025",
+        "AGBT17A_999_87|HIP98416|scans0014-0019",
+        "AGBT17A_999_87|HIP99711|scans0038-0043"
+      ]
+    },
+    "G104": {
+      "split": "validation",
+      "primary_cadence": "AGBT17A_999_91|HIP99770|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_91|HIP92270|scans0026-0031",
+        "AGBT17A_999_91|HIP88745|scans0020-0025",
+        "AGBT17A_999_91|HIP93101|scans0032-0037",
+        "AGBT17A_999_91|HIP114971|scans0038-0043",
+        "AGBT17A_999_91|HIP99742|scans0002-0007",
+        "AGBT17A_999_91|HIP116758|scans0050-0055",
+        "AGBT17A_999_91|HIP116106|scans0044-0049"
+      ]
+    },
+    "G105": {
+      "split": "train",
+      "primary_cadence": "AGBT17B_999_12|GJ54.1|scans0049-0054",
+      "alternates": [
+        "AGBT17B_999_12|HIP117559|scans0043-0048",
+        "AGBT17B_999_12|HIP117463|scans0037-0042",
+        "AGBT17B_999_12|GJ83.1|scans0055-0060"
+      ]
+    },
+    "G107": {
+      "split": "train",
+      "primary_cadence": "AGBT17B_999_31|HIP21818|scans0008-0013",
+      "alternates": [
+        "AGBT17B_999_31|HIP19255|scans0002-0007",
+        "AGBT17B_999_31|HIP24332|scans0020-0025",
+        "AGBT17B_999_31|HIP22845|scans0014-0019",
+        "AGBT17B_999_31|HIP26335|scans0026-0031"
+      ]
+    },
+    "G109": {
+      "split": "train",
+      "primary_cadence": "AGBT17B_999_93|HIP117712|scans0057-0062",
+      "alternates": [
+        "AGBT17B_999_93|HIP116613|scans0051-0056",
+        "AGBT17B_999_93|HIP96100|scans0039-0044",
+        "AGBT17B_999_93|HIP115341|scans0045-0050"
+      ]
+    },
+    "G110": {
+      "split": "train",
+      "primary_cadence": "AGBT18A_999_49|UGC09992|scans0029-0034",
+      "alternates": [
+        "AGBT18A_999_49|NGC6789|scans0041-0046",
+        "AGBT18A_999_49|UGC11411|scans0047-0052",
+        "AGBT18A_999_49|UGC09660|scans0035-0040"
+      ]
+    },
+    "G112": {
+      "split": "train",
+      "primary_cadence": "AGBT18A_999_63|LV_J0956-092|scans0031-0036",
+      "alternates": [
+        "AGBT18A_999_63|LEOIV|scans0007-0012",
+        "AGBT18A_999_63|BOOTESIII|scans0043-0048",
+        "AGBT18A_999_63|KKSG19|scans0025-0030",
+        "AGBT18A_999_63|LEOI|scans0013-0018",
+        "AGBT18A_999_63|BOOTESI|scans0049-0054",
+        "AGBT18A_999_63|BOOTESII|scans0037-0042"
+      ]
+    },
+    "G113": {
+      "split": "train",
+      "primary_cadence": "AGBT18A_999_81|IC0342|scans0003-0008",
+      "alternates": [
+        "AGBT18A_999_64|IC0342|scans0031-0036",
+        "AGBT18A_999_81|NGC2403|scans0031-0036"
+      ]
+    },
+    "G115": {
+      "split": "train",
+      "primary_cadence": "AGBT18A_999_72|DDO187|scans0039-0044",
+      "alternates": [
+        "AGBT18A_999_72|KK230|scans0033-0038",
+        "AGBT18A_999_72|AGC182595|scans0015-0020",
+        "AGBT18A_999_72|LV_J1213+295|scans0051-0056",
+        "AGBT18A_999_72|LV_J1158+153|scans0021-0026",
+        "AGBT18A_999_72|BTS76|scans0003-0008",
+        "AGBT18A_999_72|KKH86|scans0045-0050",
+        "AGBT18A_999_72|UGC05456|scans0009-0014",
+        "AGBT18A_999_72|UGC05209|scans0027-0032"
+      ]
+    },
+    "G116": {
+      "split": "train",
+      "primary_cadence": "AGBT21A_996_55|NGC4660|scans0052-0057",
+      "alternates": [
+        "AGBT18B_999_07|AND_XI|scans0019-0024",
+        "AGBT19B_999_116|NGC0672|scans0063-0068",
+        "AGBT21A_996_55|MESSIER59|scans0046-0051",
+        "AGBT18B_999_98|UGCA127|scans0052-0057",
+        "AGBT18B_999_80|AND_XI|scans0014-0019",
+        "AGBT18B_999_01|SEGUE_2|scans0085-0090",
+        "AGBT18B_999_89|NGC6946|scans0094-0099",
+        "AGBT18B_999_01|DDO217|scans0031-0036",
+        "AGBT19B_999_118|LEOT|scans0065-0070",
+        "AGBT19B_999_112|NGC3193|scans0027-0032",
+        "AGBT22B_999_22|NGC7454|scans0040-0045",
+        "AGBT22B_999_22|NGC720|scans0010-0015",
+        "AGBT19B_999_123|MESSIER84|scans0052-0057",
+        "AGBT19B_999_116|MESSIER033|scans0057-0062",
+        "AGBT21A_996_55|IC1613|scans0100-0105",
+        "AGBT21A_996_47|MESSIER87|scans0124-0129",
+        "AGBT21A_996_47|NGC0672|scans0034-0039",
+        "AGBT21A_996_47|LGS_3|scans0016-0021",
+        "AGBT21A_996_55|NGC4458|scans0028-0033",
+        "AGBT22B_999_22|NGC596|scans0022-0027",
+        "AGBT19B_999_123|MESSIER86|scans0040-0045",
+        "AGBT19B_999_114|NGC4478|scans0053-0058",
+        "AGBT19B_999_116|AND_X|scans0039-0044",
+        "AGBT21A_996_46|SEXDSPH|scans0010-0015",
+        "AGBT18B_999_91|MESSIER101|scans0072-0077",
+        "AGBT19B_999_114|NGC4736|scans0065-0070",
+        "AGBT21A_996_55|NGC4551|scans0034-0039",
+        "AGBT19B_999_114|NGC4600|scans0041-0046",
+        "AGBT21A_996_02|UGC04879|scans0063-0068",
+        "AGBT19B_999_129|NGC4489|scans0064-0069",
+        "AGBT21A_996_46|NGC5194|scans0082-0087",
+        "AGBT22B_999_22|NGC636|scans0016-0021",
+        "AGBT21B_999_03|NGC4434|scans0094-0099",
+        "AGBT19B_999_118|LEOA|scans0059-0064",
+        "AGBT22B_999_22|NGC7640|scans0046-0051",
+        "AGBT18B_999_01|PISCESII|scans0038-0043",
+        "AGBT19B_999_112|NGC4239|scans0045-0050",
+        "AGBT18B_999_15|AND_XXVIII|scans0013-0018",
+        "AGBT19B_999_134|NGC5195|scans0130-0135",
+        "AGBT20A_999_01|SEXA|scans0031-0036",
+        "AGBT19B_999_112|NGC3226|scans0021-0026",
+        "AGBT21A_996_46|NGC4559|scans0064-0069",
+        "AGBT19B_999_123|NGC4318|scans0010-0015",
+        "AGBT18B_999_98|AND_I|scans0022-0027",
+        "AGBT19B_999_135|NGC4564|scans0025-0030",
+        "AGBT21A_996_46|NGC4473|scans0058-0063",
+        "AGBT22B_999_21|SEXB|scans0033-0038",
+        "AGBT19B_999_114|NGC5322|scans0083-0088",
+        "AGBT21A_996_47|NGC2683|scans0088-0093",
+        "AGBT19B_999_131|NGC0628|scans0124-0129",
+        "AGBT21A_996_46|SAG_DIR|scans0094-0099",
+        "AGBT19B_999_116|IC0010|scans0027-0032",
+        "AGBT18A_999_88|PEG_DSPH|scans0022-0027",
+        "AGBT18A_999_88|SEGUE_2|scans0034-0039",
+        "AGBT18A_999_88|AND_XXVIII|scans0010-0015",
+        "AGBT19B_999_123|NGC5845|scans0076-0081",
+        "AGBT19B_999_118|MESSIER081|scans0029-0034",
+        "AGBT18A_999_85|NGC4826|scans0013-0018",
+        "AGBT21A_996_25|SEXB|scans0016-0021",
+        "AGBT18B_999_15|PEG_DSPH|scans0031-0036",
+        "AGBT21A_996_47|NGC1407|scans0064-0069",
+        "AGBT19B_999_134|NGC6946|scans0034-0039",
+        "AGBT18A_999_88|UGC12713|scans0028-0033",
+        "AGBT18B_999_98|AND_XIV|scans0010-0015",
+        "AGBT21A_996_47|LEOA|scans0094-0099",
+        "AGBT18A_999_78|SAG_DIR|scans0021-0026",
+        "AGBT18B_999_98|AND_XI|scans0016-0021",
+        "AGBT19B_999_135|MESSIER60|scans0043-0048",
+        "AGBT19B_999_131|MESSIER031|scans0118-0123",
+        "AGBT22B_999_21|NGC2787|scans0021-0026",
+        "AGBT19B_999_123|MESSIER87|scans0022-0027",
+        "AGBT19B_999_135|MESSIER59|scans0031-0036",
+        "AGBT18B_999_76|NGC4244|scans0046-0051",
+        "AGBT21B_999_03|NGC4365|scans0088-0093",
+        "AGBT21A_996_55|NGC5846|scans0076-0081",
+        "AGBT21A_996_46|NGC3193|scans0028-0033",
+        "AGBT19B_999_120|NGC5831|scans0080-0085",
+        "AGBT19B_999_112|LEOII|scans0039-0044",
+        "AGBT18B_999_15|PISCESII|scans0007-0012",
+        "AGBT21A_996_47|NGC821|scans0046-0051",
+        "AGBT18B_999_98|IC1613|scans0004-0009",
+        "AGBT19B_999_112|NGC3344|scans0033-0038",
+        "AGBT19B_999_116|AND_XXIII|scans0051-0056",
+        "AGBT21A_996_47|NGC1052|scans0052-0057",
+        "AGBT21A_996_55|MESSIER84|scans0016-0021",
+        "AGBT19B_999_116|AND_XXIV|scans0045-0050",
+        "AGBT19B_999_120|NGC5638|scans0068-0073",
+        "AGBT21A_996_55|NGC584|scans0106-0111",
+        "AGBT19B_999_129|NGC4434|scans0058-0063",
+        "AGBT21A_996_46|NGC4618|scans0070-0075",
+        "AGBT19B_999_129|MESSIER49|scans0052-0057",
+        "AGBT18B_999_80|AND_XIV|scans0008-0013",
+        "AGBT19B_999_129|NGC4365|scans0046-0051",
+        "AGBT21A_996_47|HIZSS003|scans0082-0087",
+        "AGBT21A_996_47|UGCA127|scans0076-0081",
+        "AGBT21A_996_55|NGC4387|scans0022-0027",
+        "AGBT19B_999_123|NGC4387|scans0046-0051",
+        "AGBT19B_999_120|HERCULES|scans0092-0097",
+        "AGBT19B_999_134|NGC5322|scans0118-0123",
+        "AGBT21A_996_46|LEOT|scans0022-0027",
+        "AGBT21A_996_46|NGC4736|scans0076-0081",
+        "AGBT21A_996_55|NGC4826|scans0064-0069",
+        "AGBT19B_999_118|UGC04879|scans0047-0052",
+        "AGBT21A_996_55|MESSIER60|scans0058-0063",
+        "AGBT21A_996_47|NGC1172|scans0058-0063",
+        "AGBT19B_999_123|NGC4136|scans0058-0063",
+        "AGBT18B_999_98|NGC1400|scans0064-0069",
+        "AGBT18A_999_78|DDO210|scans0015-0020",
+        "AGBT19B_999_116|NGC0185|scans0033-0038",
+        "AGBT19B_999_116|DW1|scans0015-0020",
+        "AGBT21A_996_46|NGC636|scans0118-0123",
+        "AGBT19B_999_131|NGC821|scans0130-0135",
+        "AGBT22B_999_21|NGC4168|scans0027-0032",
+        "AGBT19B_999_116|MAFFEI2|scans0021-0026",
+        "AGBT18B_999_15|SEGUE_2|scans0037-0042",
+        "AGBT19B_999_120|NGC5813|scans0074-0079",
+        "AGBT18B_999_80|AND_I|scans0020-0025",
+        "AGBT21A_996_47|NGC0628|scans0040-0045",
+        "AGBT19B_999_120|NGC5846|scans0086-0091",
+        "AGBT18B_999_15|AND_XXIX|scans0019-0024",
+        "AGBT19B_999_123|NGC4618|scans0064-0069",
+        "AGBT18B_999_07|UGCA127|scans0061-0066",
+        "AGBT21A_996_47|NGC7454|scans0010-0015",
+        "AGBT18B_999_89|IC1613|scans0120-0125",
+        "AGBT21A_996_47|AND_II|scans0028-0033",
+        "AGBT21A_996_50|NGC1172|scans0017-0022",
+        "AGBT21A_996_50|NGC1407|scans0023-0028",
+        "AGBT19B_999_134|MESSIER101|scans0124-0129",
+        "AGBT21A_996_47|NGC4478|scans0118-0123",
+        "AGBT21B_999_03|NGC4318|scans0106-0111",
+        "AGBT19B_999_120|SEXDSPH|scans0032-0037",
+        "AGBT19B_999_135|NGC4660|scans0037-0042",
+        "AGBT21A_996_46|NGC3344|scans0040-0045",
+        "AGBT19B_999_129|NGC4258|scans0070-0075",
+        "AGBT19B_999_135|NGC4551|scans0019-0024",
+        "AGBT19B_999_112|NGC3379|scans0015-0020",
+        "AGBT21A_996_46|NGC596|scans0124-0129",
+        "AGBT19B_999_114|NGC5195|scans0077-0082",
+        "AGBT19B_999_123|NGC4458|scans0034-0039",
+        "AGBT21A_996_55|NGC5845|scans0082-0087",
+        "AGBT18B_999_01|AND_XXIX|scans0067-0072",
+        "AGBT18B_999_07|AND_XIV|scans0013-0018",
+        "AGBT22B_999_22|WLM|scans0034-0039",
+        "AGBT18B_999_01|AND_XXVIII|scans0044-0049",
+        "AGBT19B_999_123|NGC5194|scans0070-0075",
+        "AGBT21A_996_50|HIZSS003|scans0029-0034",
+        "AGBT18B_999_91|NGC4244|scans0035-0040",
+        "AGBT21A_996_55|CVNI|scans0070-0075",
+        "AGBT21B_999_03|NGC4600|scans0112-0117",
+        "AGBT18B_999_80|IC1613|scans0002-0007",
+        "AGBT18B_999_01|LGS_3|scans0109-0114",
+        "AGBT21A_996_55|NGC4564|scans0040-0045",
+        "AGBT20A_999_01|NGC2683|scans0019-0024",
+        "AGBT21A_996_47|NGC4486B|scans0112-0117",
+        "AGBT21A_996_46|NGC6822|scans0100-0105",
+        "AGBT22B_999_22|NGC584|scans0028-0033",
+        "AGBT19B_999_114|NGC4559|scans0059-0064",
+        "AGBT21A_996_55|NGC4168|scans0010-0015",
+        "AGBT18A_999_78|NGC6822|scans0009-0014",
+        "AGBT19B_999_123|NGC4486B|scans0016-0021",
+        "AGBT19B_999_123|NGC4473|scans0028-0033",
+        "AGBT21A_996_46|WLM|scans0106-0111",
+        "AGBT19B_999_114|CVNI|scans0071-0076",
+        "AGBT21A_996_46|AND_XXIII|scans0088-0093",
+        "AGBT21B_999_03|MESSIER49|scans0100-0105",
+        "AGBT21A_996_47|NGC4136|scans0100-0105",
+        "AGBT21A_996_50|NGC1052|scans0011-0016"
+      ]
+    },
+    "G117": {
+      "split": "train",
+      "primary_cadence": "AGBT18B_999_24|UGC11583|scans0096-0101",
+      "alternates": [
+        "AGBT18B_999_24|KK251|scans0084-0089",
+        "AGBT18B_999_57|KKR55|scans0020-0025",
+        "AGBT18B_999_57|KK251|scans0014-0019",
+        "AGBT18B_999_57|KKR56|scans0002-0007"
+      ]
+    },
+    "G118": {
+      "split": "test",
+      "primary_cadence": "AGBT18B_999_50|KK77|scans0089-0094",
+      "alternates": [
+        "AGBT18B_999_42|AND_XV|scans0041-0046",
+        "AGBT18B_999_27|UGC03755|scans0075-0080",
+        "AGBT18B_999_72|UGC02716|scans0038-0043",
+        "AGBT18B_999_50|NGC1637|scans0077-0082",
+        "AGBT18B_999_42|HIZSS014|scans0048-0053",
+        "AGBT18B_999_27|UGC04115|scans0081-0086",
+        "AGBT18B_999_42|LV_J0935-134|scans0057-0062",
+        "AGBT18B_999_33|KK78|scans0019-0024",
+        "AGBT18B_999_33|UGC05288|scans0007-0012",
+        "AGBT18B_999_27|WHI_B0619-07|scans0099-0104",
+        "AGBT18B_999_50|AND_XV|scans0046-0051",
+        "AGBT18B_999_72|AND_III|scans0026-0031",
+        "AGBT18B_999_50|[CKT2009]D09|scans0083-0088",
+        "AGBT18B_999_27|AND_III|scans0026-0031",
+        "AGBT18B_999_36|AND_III|scans0071-0076",
+        "AGBT18B_999_50|UGCA127SAT|scans0065-0070",
+        "AGBT18B_999_27|AND_III|scans0063-0068",
+        "AGBT18B_999_33|UGC05427|scans0025-0030",
+        "AGBT18B_999_42|AND_III|scans0035-0040",
+        "AGBT18B_999_27|AND_XV|scans0032-0037",
+        "AGBT18B_999_27|HIZSS014|scans0069-0074",
+        "AGBT18B_999_33|DDO064|scans0031-0036",
+        "AGBT18B_999_42|HIZSS014|scans0063-0068",
+        "AGBT18B_999_27|KK65|scans0087-0092",
+        "AGBT18B_999_27|DDO047|scans0093-0098",
+        "AGBT18B_999_50|[CKT2009]D09|scans0096-0101",
+        "AGBT18B_999_50|UGC02905|scans0053-0058",
+        "AGBT18B_999_27|UGC07596|scans0111-0116",
+        "AGBT18B_999_72|WHI_B0619-07|scans0044-0049",
+        "AGBT18B_999_42|KK70|scans0075-0080",
+        "AGBT18B_999_42|UGC03755|scans0069-0074",
+        "AGBT18B_999_33|LV_J1000+303|scans0013-0018",
+        "AGBT18B_999_72|UGC02905|scans0032-0037",
+        "AGBT18B_999_50|WHI_B0619-07|scans0059-0064",
+        "AGBT18B_999_50|AND_III|scans0040-0045",
+        "AGBT18B_999_33|UGC07596|scans0043-0048"
+      ]
+    },
+    "G119": {
+      "split": "validation",
+      "primary_cadence": "AGBT18B_999_30|LV_J1354+543|scans0020-0025",
+      "alternates": [
+        "AGBT18B_999_30|NGC5238|scans0002-0007",
+        "AGBT18B_999_30|NGC5204|scans0008-0013"
+      ]
+    },
+    "G120": {
+      "split": "test",
+      "primary_cadence": "AGBT18B_999_70|CGCG_189-050|scans0022-0027",
+      "alternates": [
+        "AGBT18B_999_70|KK166|scans0010-0015",
+        "AGBT18B_999_70|KDG218|scans0016-0021",
+        "AGBT18B_999_70|KK165|scans0028-0033",
+        "AGBT18B_999_70|KDG235|scans0047-0052"
+      ]
+    }
+  },
+  "reserve_groups_ordered": [
+    {
+      "group_id": "G100",
+      "primary_cadence": "AGBT17A_999_82|HIP81348|scans0032-0037",
+      "alternates": [
+        "AGBT17A_999_82|HIP79702|scans0026-0031",
+        "AGBT17A_999_82|HIP114379|scans0050-0055",
+        "AGBT17A_999_82|HIP83601|scans0038-0043",
+        "AGBT17A_999_82|HIP78459|scans0002-0007",
+        "AGBT17A_999_82|HIP85295|scans0014-0019",
+        "AGBT17A_999_82|HIP101180|scans0044-0049",
+        "AGBT17A_999_82|HIP85365|scans0020-0025",
+        "AGBT17A_999_82|HIP85157|scans0008-0013"
+      ]
+    },
+    {
+      "group_id": "G023",
+      "primary_cadence": "AGBT16B_999_49|HIP14632|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_49|HIP15220|scans0027-0032",
+        "AGBT16B_999_49|HIP32439|scans0051-0056",
+        "AGBT16B_999_49|HIP14576|scans0003-0008",
+        "AGBT16B_999_49|HIP31703|scans0045-0050",
+        "AGBT16B_999_49|HIP29761|scans0039-0044",
+        "AGBT16B_999_49|HIP14633|scans0015-0020",
+        "AGBT16B_999_49|HIP15638|scans0033-0038",
+        "AGBT16B_999_49|HIP32480|scans0057-0062",
+        "AGBT16B_999_49|HIP14862|scans0021-0026"
+      ]
+    },
+    {
+      "group_id": "G040",
+      "primary_cadence": "AGBT16B_999_81|HIP23497|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_81|HIP23179|scans0003-0008",
+        "AGBT16B_999_81|HIP23512|scans0027-0032",
+        "AGBT16B_999_81|HIP23296|scans0009-0014",
+        "AGBT16B_999_81|HIP23311|scans0015-0020"
+      ]
+    },
+    {
+      "group_id": "G089",
+      "primary_cadence": "AGBT17A_999_63|HIP8867|scans0038-0043",
+      "alternates": [
+        "AGBT17A_999_63|HIP7748|scans0014-0019",
+        "AGBT17A_999_63|HIP8362|scans0032-0037",
+        "AGBT17A_999_63|HIP8070|scans0026-0031",
+        "AGBT17A_999_63|HIP7918|scans0020-0025",
+        "AGBT17A_999_63|HIP916|scans0044-0049"
+      ]
+    },
+    {
+      "group_id": "G002",
+      "primary_cadence": "AGBT16B_999_101|HIP63942|scans0002-0007",
+      "alternates": []
+    },
+    {
+      "group_id": "G006",
+      "primary_cadence": "AGBT16B_999_111|HIP69562|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_111|HIP69414|scans0009-0014",
+        "AGBT16B_999_111|HIP69526|scans0015-0020",
+        "AGBT16B_999_111|HIP69357|scans0003-0008"
+      ]
+    },
+    {
+      "group_id": "G086",
+      "primary_cadence": "AGBT17A_999_58|HIP910|scans0024-0029",
+      "alternates": [
+        "AGBT17A_999_58|HIP6344|scans0042-0047",
+        "AGBT17A_999_58|HIP6379|scans0048-0053",
+        "AGBT17A_999_58|HIP9724|scans0036-0041",
+        "AGBT17A_999_58|HIP8497|scans0012-0017",
+        "AGBT17A_999_58|HIP9094|scans0018-0023",
+        "AGBT17A_999_58|HIP7576|scans0006-0011",
+        "AGBT17A_999_58|HIP6813|scans0054-0059",
+        "AGBT17A_999_58|HIP9716|scans0030-0035"
+      ]
+    },
+    {
+      "group_id": "G072",
+      "primary_cadence": "AGBT18A_999_14|HIP64725|scans0044-0049",
+      "alternates": [
+        "AGBT17A_999_36|HIP42499|scans0032-0037",
+        "AGBT17A_999_36|HIP42074|scans0002-0007",
+        "AGBT18A_999_14|HIP42333|scans0020-0025",
+        "AGBT17A_999_36|HIP42418|scans0026-0031",
+        "AGBT17A_999_36|LHS292|scans0038-0043",
+        "AGBT18A_999_14|HIP42172|scans0008-0013",
+        "AGBT18A_999_14|HIP42173|scans0014-0019",
+        "AGBT18A_999_14|HIP64048|scans0038-0043",
+        "AGBT18A_999_14|HIP42418|scans0026-0031",
+        "AGBT17A_999_36|HIP42173|scans0014-0019",
+        "AGBT18A_999_14|HIP63742|scans0032-0037",
+        "AGBT17A_999_36|HIP42172|scans0008-0013",
+        "AGBT18A_999_14|HIP42074|scans0002-0007",
+        "AGBT17A_999_36|HIP42333|scans0020-0025",
+        "AGBT18A_999_14|HIP69673|scans0050-0055"
+      ]
+    },
+    {
+      "group_id": "G003",
+      "primary_cadence": "AGBT16B_999_103|HIP63608|scans0039-0044",
+      "alternates": [
+        "AGBT16B_999_103|HIP53229|scans0021-0026",
+        "AGBT16B_999_103|HIP52422|scans0009-0014",
+        "AGBT16B_999_103|HIP63510|scans0033-0038",
+        "AGBT16B_999_103|HIP53020|scans0015-0020",
+        "AGBT16B_999_103|HIP53486|scans0027-0032"
+      ]
+    },
+    {
+      "group_id": "G114",
+      "primary_cadence": "AGBT18A_999_68|DDO181|scans0041-0046",
+      "alternates": [
+        "AGBT18A_999_68|UGC08508|scans0023-0028",
+        "AGBT18A_999_68|LV_J1228+435|scans0047-0052",
+        "AGBT18A_999_68|FM1|scans0017-0022",
+        "AGBT18A_999_68|DDO125|scans0029-0034",
+        "AGBT18A_999_68|DDO190|scans0035-0040"
+      ]
+    },
+    {
+      "group_id": "G108",
+      "primary_cadence": "AGBT17B_999_33|HIP51459|scans0008-0013",
+      "alternates": [
+        "AGBT17B_999_33|HIP51658|scans0014-0019",
+        "AGBT17B_999_33|HIP50372|scans0002-0007"
+      ]
+    },
+    {
+      "group_id": "G111",
+      "primary_cadence": "AGBT18A_999_55|MAFFEI1|scans0002-0007",
+      "alternates": []
+    },
+    {
+      "group_id": "G091",
+      "primary_cadence": "AGBT17A_999_68|HIP84862|scans0044-0049",
+      "alternates": [
+        "AGBT17A_999_68|HIP84607|scans0038-0043",
+        "AGBT17A_999_68|HIP85042|scans0050-0055"
+      ]
+    },
+    {
+      "group_id": "G030",
+      "primary_cadence": "AGBT16B_999_63|HIP48390|scans0003-0008",
+      "alternates": [
+        "AGBT16B_999_63|HIP48411|scans0009-0014",
+        "AGBT16B_999_63|HIP48477|scans0015-0020",
+        "AGBT16B_999_63|HIP49081|scans0021-0026"
+      ]
+    },
+    {
+      "group_id": "G015",
+      "primary_cadence": "AGBT16B_999_56|GJ768|scans0015-0020",
+      "alternates": [
+        "AGBT16B_999_59|HIP105668|scans0045-0050",
+        "AGBT16B_999_55|HIP73695|scans0015-0020",
+        "AGBT17B_999_16|HIP101027|scans0033-0038",
+        "AGBT16B_999_59|HIP101150|scans0003-0008",
+        "AGBT17B_999_16|HIP100511|scans0027-0032",
+        "AGBT16B_999_59|HIP102040|scans0021-0026",
+        "AGBT16B_999_59|HIP105860|scans0051-0056",
+        "AGBT16B_999_55|GJ702A|scans0045-0050",
+        "AGBT16B_999_56|GJ702B|scans0009-0014",
+        "AGBT16B_999_59|HIP102226|scans0027-0032",
+        "AGBT16B_999_56|HIP100511|scans0027-0032",
+        "AGBT16B_999_56|GJ702A|scans0003-0008",
+        "AGBT16B_999_18|GJ876|scans0009-0014",
+        "AGBT16B_999_56|HIP104887|scans0045-0050",
+        "AGBT16B_999_55|HIP76568|scans0021-0026",
+        "AGBT16B_999_55|HIP73100|scans0003-0008",
+        "AGBT16B_999_18|HIP108782|scans0021-0026",
+        "AGBT18A_999_43|HIP108752|scans0032-0037",
+        "AGBT16B_999_18|GJ1002|scans0039-0044",
+        "AGBT18A_999_43|HIP100511|scans0008-0013",
+        "AGBT16B_999_18|HIP109378|scans0033-0038",
+        "AGBT16B_999_18|HIP109176|scans0027-0032",
+        "AGBT16B_999_56|HIP105038|scans0051-0056",
+        "AGBT18A_999_43|HIP100064|scans0002-0007",
+        "AGBT16B_999_56|HIP100064|scans0021-0026",
+        "AGBT18A_999_43|HIP109176|scans0044-0049",
+        "AGBT18A_999_43|HIP101262|scans0026-0031",
+        "AGBT16B_999_59|HIP101955|scans0015-0020",
+        "AGBT16B_999_18|GJ866|scans0003-0008",
+        "AGBT18A_999_43|HIP101150|scans0020-0025",
+        "AGBT18A_999_43|HIP101027|scans0014-0019",
+        "AGBT16B_999_59|HIP101262|scans0009-0014",
+        "AGBT16B_999_18|HIP108752|scans0015-0020",
+        "AGBT16B_999_55|GJ702B|scans0051-0056",
+        "AGBT17B_999_16|HIP101262|scans0045-0050",
+        "AGBT16B_999_59|HIP105341|scans0039-0044",
+        "AGBT16B_999_55|HIP73470|scans0009-0014",
+        "AGBT18A_999_43|HIP108782|scans0038-0043",
+        "AGBT17B_999_16|HIP101955|scans0051-0056",
+        "AGBT17B_999_16|HIP101150|scans0039-0044",
+        "AGBT16B_999_59|HIP102488|scans0033-0038",
+        "AGBT16B_999_56|HIP103800|scans0039-0044",
+        "AGBT16B_999_55|GJ699|scans0039-0044"
+      ]
+    },
+    {
+      "group_id": "G044",
+      "primary_cadence": "AGBT16B_999_90|HIP15797|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_90|HIP21553|scans0033-0038",
+        "AGBT16B_999_90|HIP15648|scans0003-0008",
+        "AGBT16B_999_90|HIP38784|scans0039-0044",
+        "AGBT16B_999_90|HIP19422|scans0021-0026",
+        "AGBT16B_999_90|HIP41689|scans0057-0062",
+        "AGBT16B_999_90|HIP40875|scans0045-0050",
+        "AGBT16B_999_90|HIP17666|scans0015-0020",
+        "AGBT16B_999_90|HIP19655|scans0027-0032",
+        "AGBT16B_999_90|HIP41484|scans0051-0056"
+      ]
+    },
+    {
+      "group_id": "G106",
+      "primary_cadence": "AGBT17B_999_24|HIP103859|scans0008-0013",
+      "alternates": [
+        "AGBT17B_999_24|HIP109474|scans0014-0019",
+        "AGBT17B_999_24|HIP101093|scans0002-0007"
+      ]
+    },
+    {
+      "group_id": "G012",
+      "primary_cadence": "AGBT16B_999_126|HIP21589|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_126|HIP36046|scans0033-0038",
+        "AGBT16B_999_126|HIP21683|scans0021-0026",
+        "AGBT16B_999_126|HIP21547|scans0003-0008",
+        "AGBT16B_999_126|HIP36121|scans0039-0044",
+        "AGBT16B_999_126|HIP35872|scans0027-0032"
+      ]
+    },
+    {
+      "group_id": "G028",
+      "primary_cadence": "AGBT16B_999_60|HIP47701|scans0021-0026",
+      "alternates": [
+        "AGBT16B_999_60|HIP47741|scans0027-0032",
+        "AGBT16B_999_60|HIP47513|scans0015-0020",
+        "AGBT16B_999_60|HIP48336|scans0033-0038",
+        "AGBT16B_999_60|HIP59750|scans0039-0044",
+        "AGBT16B_999_60|GJ447|scans0003-0008",
+        "AGBT16B_999_60|HIP60559|scans0051-0056",
+        "AGBT16B_999_60|HIP59816|scans0045-0050",
+        "AGBT16B_999_60|HIP47201|scans0009-0014"
+      ]
+    },
+    {
+      "group_id": "G007",
+      "primary_cadence": "AGBT16B_999_112|HIP22361|scans0009-0014",
+      "alternates": [
+        "AGBT16B_999_112|HIP22287|scans0003-0008",
+        "AGBT16B_999_112|HIP22498|scans0015-0020"
+      ]
+    },
+    {
+      "group_id": "G082",
+      "primary_cadence": "AGBT17A_999_51|HIP116819|scans0044-0049",
+      "alternates": [
+        "AGBT17A_999_51|HIP96183|scans0008-0013",
+        "AGBT17A_999_51|HIP116771|scans0038-0043",
+        "AGBT17A_999_51|HIP116936|scans0050-0055",
+        "AGBT17A_999_51|HIP96285|scans0020-0025",
+        "AGBT17A_999_51|HIP97222|scans0032-0037",
+        "AGBT17A_999_51|HIP96085|scans0002-0007",
+        "AGBT17A_999_51|HIP96229|scans0014-0019",
+        "AGBT17A_999_51|HIP97051|scans0026-0031"
+      ]
+    },
+    {
+      "group_id": "G055",
+      "primary_cadence": "AGBT17A_999_13|HIP66147|scans0039-0044",
+      "alternates": [
+        "AGBT17A_999_13|HIP65714|scans0021-0026",
+        "AGBT17A_999_13|HIP65859|scans0027-0032",
+        "AGBT17A_999_13|HIP79882|scans0051-0056",
+        "AGBT17A_999_13|HIP66077|scans0033-0038",
+        "AGBT17A_999_13|HIP65355|scans0009-0014",
+        "AGBT17A_999_13|HIP79672|scans0045-0050",
+        "AGBT17A_999_13|HIP65420|scans0015-0020"
+      ]
+    },
+    {
+      "group_id": "G088",
+      "primary_cadence": "AGBT17A_999_61|HIP118310|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_61|HIP117779|scans0002-0007",
+        "AGBT17A_999_61|HIP7734|scans0044-0049",
+        "AGBT17A_999_61|HIP7513|scans0038-0043",
+        "AGBT17A_999_61|HIP7339|scans0032-0037",
+        "AGBT17A_999_61|HIP117946|scans0008-0013"
+      ]
+    },
+    {
+      "group_id": "G074",
+      "primary_cadence": "AGBT17A_999_38|HIP25220|scans0045-0050",
+      "alternates": [
+        "AGBT17A_999_38|HIP3206|scans0008-0014",
+        "AGBT17A_999_38|HIP2552|scans0002-0007",
+        "AGBT17A_999_38|HIP428|scans0033-0038",
+        "AGBT17A_999_38|HIP4151|scans0027-0032",
+        "AGBT17A_999_38|HIP25119|scans0039-0044",
+        "AGBT17A_999_38|HIP3821|scans0015-0020"
+      ]
+    },
+    {
+      "group_id": "G095",
+      "primary_cadence": "AGBT17A_999_72|HIP86400|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_72|HIP86032|scans0002-0007",
+        "AGBT17A_999_72|HIP86287|scans0014-0019",
+        "AGBT17A_999_72|HIP86623|scans0026-0031",
+        "AGBT17A_999_72|HIP86722|scans0032-0037",
+        "AGBT17A_999_72|HIP86282|scans0008-0013",
+        "AGBT17A_999_72|HIP86742|scans0038-0043"
+      ]
+    },
+    {
+      "group_id": "G054",
+      "primary_cadence": "AGBT17A_999_11|HIP36627|scans0020-0025",
+      "alternates": [
+        "AGBT17A_999_11|HIP36704|scans0026-0031",
+        "AGBT17A_999_11|HIP36357|scans0002-0007",
+        "AGBT17A_999_11|HIP54872|scans0051-0056",
+        "AGBT17A_999_11|HIP36827|scans0032-0037",
+        "AGBT17A_999_11|HIP54810|scans0045-0050",
+        "AGBT17A_999_11|HIP36366|scans0008-0013",
+        "AGBT17A_999_11|HIP36551|scans0014-0019"
+      ]
+    },
+    {
+      "group_id": "G045",
+      "primary_cadence": "AGBT16B_999_92|HIP45343|scans0003-0008",
+      "alternates": []
+    },
+    {
+      "group_id": "G090",
+      "primary_cadence": "AGBT17A_999_64|HIP99427|scans0002-0007",
+      "alternates": [
+        "AGBT17A_999_64|HIP99880|scans0014-0019",
+        "AGBT17A_999_64|HIP99655|scans0008-0013",
+        "AGBT17A_999_64|HIP98828|scans0044-0049",
+        "AGBT17A_999_64|HIP98819|scans0038-0043",
+        "AGBT17A_999_64|HIP98698|scans0020-0025",
+        "AGBT17A_999_64|HIP98767|scans0026-0031",
+        "AGBT17A_999_64|HIP98792|scans0032-0037",
+        "AGBT17A_999_64|HIP99031|scans0050-0055"
+      ]
+    },
+    {
+      "group_id": "G068",
+      "primary_cadence": "AGBT17A_999_31|HIP40910|scans0014-0019",
+      "alternates": [
+        "AGBT17A_999_31|HIP57494|scans0038-0043",
+        "AGBT17A_999_31|HIP40843|scans0008-0013",
+        "AGBT17A_999_31|HIP41307|scans0032-0037",
+        "AGBT17A_999_31|HIP41211|scans0026-0031",
+        "AGBT17A_999_31|HIP41130|scans0020-0025",
+        "AGBT17A_999_31|HIP57632|scans0044-0049",
+        "AGBT17A_999_31|HIP40774|scans0002-0007"
+      ]
+    },
+    {
+      "group_id": "G071",
+      "primary_cadence": "AGBT17A_999_34|HIP70529|scans0021-0026",
+      "alternates": [
+        "AGBT17A_999_34|HIP70865|scans0033-0038",
+        "AGBT17A_999_34|HIP80644|scans0039-0044",
+        "AGBT17A_999_34|HIP80725|scans0045-0050",
+        "AGBT17A_999_34|HIP70536|scans0027-0032",
+        "AGBT17A_999_34|HIP70475|scans0015-0020",
+        "AGBT17A_999_34|HIP81300|scans0051-0056"
+      ]
+    }
+  ],
+  "manifest_rows": 552,
+  "limitations": [
+    "Session, cadence and group IDs are inferred, not archive-native.",
+    "S-band membership is provisional (receiver not exposed by the archive).",
+    "Quality is 'Ungraded' for all files; Grade A was not available.",
+    "Most files are not yet header-verified (geometry_status records this).",
+    "The 2300-2360 MHz region is not removed here; it is a predefined frame-level mask for extraction."
+  ],
+  "header_verification_replacements": {
+    "source": "results/data_audit/fine_v2_header_verification.json",
+    "frozen_selection_sha256": "ef554ca5ce97bc36bb8a7b65abb888eec777b124a34e5690bbbbf5ba82e69807",
+    "final_manifest_md5": "702d3ba6fa3e8629454fb215cf2b8d8a",
+    "replacements": [
+      {
+        "slot_group": "G036",
+        "split": "validation",
+        "original_cadence": "AGBT16B_999_72|HIP69713|scans0003-0008",
+        "reason": "rejected: incompatible geometry/structure/availability; geometry/structure: channel width 2.835503418452676 Hz",
+        "same_group_alternates_rejected": [
+          "AGBT16B_999_72|HIP69732|scans0009-0014"
+        ],
+        "same_group_alternate_used": null,
+        "reserve_groups_rejected": [],
+        "reserve_group_used": "G100",
+        "reserve_cadence_used": "AGBT17A_999_82|HIP81348|scans0032-0037"
+      },
+      {
+        "slot_group": "G037",
+        "split": "train",
+        "original_cadence": "AGBT16B_999_73|HIP77760|scans0009-0014",
+        "reason": "rejected: incompatible geometry/structure/availability; geometry/structure: channel width 2.835503418452676 Hz",
+        "same_group_alternates_rejected": [
+          "AGBT16B_999_73|HIP76375|scans0003-0008"
+        ],
+        "same_group_alternate_used": null,
+        "reserve_groups_rejected": [],
+        "reserve_group_used": "G023",
+        "reserve_cadence_used": "AGBT16B_999_49|HIP14632|scans0009-0014"
+      }
+    ]
+  }
+}

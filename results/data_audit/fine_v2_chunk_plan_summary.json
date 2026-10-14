@@ -1,0 +1,139 @@
+{
+  "plan_revision": 2,
+  "manifest_md5": "702d3ba6fa3e8629454fb215cf2b8d8a",
+  "train": {
+    "cadences": 60,
+    "cadences_per_stratum": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "slot_q_values": [
+      0.125,
+      0.375,
+      0.625,
+      0.875
+    ],
+    "distinct_slab_frequencies": 59,
+    "slabs_used_by_more_than_one_cadence": 1,
+    "cadences_on_a_repeated_slab": 2,
+    "max_cadences_on_one_slab": 2,
+    "sampled_bandwidth_union_mhz": 172.8516,
+    "min_freq_mhz": 1806.738283,
+    "max_freq_mhz": 2796.972658,
+    "all_slabs_avoid_2300_2360": true,
+    "max_slab_offset_across_positions_mhz": 0.0
+  },
+  "validation": {
+    "cadences": 15,
+    "cadences_per_stratum": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "slot_q_values": [
+      0.5
+    ],
+    "distinct_slab_frequencies": 15,
+    "slabs_used_by_more_than_one_cadence": 0,
+    "cadences_on_a_repeated_slab": 0,
+    "max_cadences_on_one_slab": 1,
+    "sampled_bandwidth_union_mhz": 43.9453,
+    "min_freq_mhz": 1844.82422,
+    "max_freq_mhz": 2773.535158,
+    "all_slabs_avoid_2300_2360": true,
+    "max_slab_offset_across_positions_mhz": 0.0
+  },
+  "test": {
+    "cadences": 15,
+    "cadences_per_stratum": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "slot_q_values": [
+      0.5
+    ],
+    "distinct_slab_frequencies": 15,
+    "slabs_used_by_more_than_one_cadence": 0,
+    "cadences_on_a_repeated_slab": 0,
+    "max_cadences_on_one_slab": 1,
+    "sampled_bandwidth_union_mhz": 43.9453,
+    "min_freq_mhz": 1844.82422,
+    "max_freq_mhz": 2773.535158,
+    "all_slabs_avoid_2300_2360": true,
+    "max_slab_offset_across_positions_mhz": 1.3969838619232178e-06
+  },
+  "all": {
+    "cadences": 90,
+    "cadences_per_stratum": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "slot_q_values": [
+      0.125,
+      0.375,
+      0.5,
+      0.625,
+      0.875
+    ],
+    "distinct_slab_frequencies": 76,
+    "slabs_used_by_more_than_one_cadence": 14,
+    "cadences_on_a_repeated_slab": 28,
+    "max_cadences_on_one_slab": 2,
+    "sampled_bandwidth_union_mhz": 220.3125,
+    "min_freq_mhz": 1806.738283,
+    "max_freq_mhz": 2796.972658,
+    "all_slabs_avoid_2300_2360": true,
+    "max_slab_offset_across_positions_mhz": 1.3969838619232178e-06
+  }
+}

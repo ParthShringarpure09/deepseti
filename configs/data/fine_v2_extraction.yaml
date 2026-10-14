@@ -1,0 +1,52 @@
+# Fine Dataset V2 extraction protocol, revision 2 (FROZEN 2026-10-14).
+# Fixed before any Fine model results. Do not edit; any change is a new revision.
+
+protocol:
+  name: fine_v2
+  revision: 2
+  seed: 20261013
+
+inputs:
+  manifest: configs/data/fine_v2_manifest.csv
+  manifest_md5: 702d3ba6fa3e8629454fb215cf2b8d8a
+  chunk_plan: results/data_audit/fine_v2_chunk_plan.csv
+  chunk_plan_md5: aa4cff4e458062589855d1a979b4b8c2
+
+split:
+  cadence_groups: {train: 60, validation: 15, test: 15}
+  # Only train may be extracted under this revision.
+  extractable_splits: [train]
+
+geometry:
+  channel_width_hz: 2.7939677238464355
+  tsamp_s: 18.253611008
+  n_integrations: 16
+  frame_shape: [16, 4096]
+
+sampling:
+  slab_channels: 1048576            # one gpuspec chunk; 16 rawspec chunks
+  frames_per_scan: 42               # grid cell floor((i + 0.5) * 256 / 42), i = 0..41
+  scans_per_cadence: 6
+  frames_per_cadence: 252
+  frequency_strata: 15
+  within_stratum_rule: "q = (j + 0.5) / m, nearest eligible slab inside the stratum"
+  same_slab_all_positions: true
+  sband_window_mhz: [1700.0, 2900.0]
+  excluded_mhz: [[2300.0, 2360.0]]
+  content_based_selection: false
+
+preprocessing:
+  transform: log10
+  normalization: per-frame (x - median) / MAD   # deepseti.preprocessing.frames.robust_normalize_frame
+  clipping: false
+  stored: normalized float32
+  raw_audit_sample: "frame 0 of cadence position 0 for every cadence"
+
+transfer:
+  workers: 4
+  http_status_required: 206
+  abort_on_full_body: true
+  request_retries: 3                # per HTTP request, linear backoff
+  file_attempts: 3                  # per scan, exponential backoff 30 s * 2^k
+
+synthetic_signals_in_training: false

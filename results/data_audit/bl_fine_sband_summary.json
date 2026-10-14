@@ -1,0 +1,667 @@
+{
+  "audit": "DeepSeti Dataset V2 - Breakthrough Listen GBT Fine HDF5 S-band archive audit",
+  "generated_utc": "2026-10-13T13:57:31+00:00",
+  "runtime_s": 289.7,
+  "archive_source": {
+    "api": "http://seti.berkeley.edu/opendata/api/query-files",
+    "web_interface": "http://seti.berkeley.edu/opendata",
+    "parameter_names_source": "http://seti.berkeley.edu/opendata/static/bl-data-search.js",
+    "api_row_cap": 10000,
+    "n_api_requests": 46,
+    "catalog_retrieved_utc": "2026-10-13T12:32:33+00:00",
+    "raw_cache_used": "/private/tmp/claude-501/-Users-parthshringarpure-deepseti/d7a5c2b4-4c2d-4883-8c4d-a25b28f83202/scratchpad/bl_api_raw.json"
+  },
+  "query_definition": {
+    "api_filters": {
+      "target": "",
+      "telescopes": "gbt",
+      "file-types": "hdf5",
+      "grades": "fine"
+    },
+    "mjd_enumeration_range": [
+      50000.0,
+      61328.0
+    ],
+    "initial_window_days": 365.25,
+    "split_rule": "split window at midpoint while it returns >= 10000 rows; time bounds are inclusive (verified), records deduplicated by id",
+    "leaf_windows": [
+      {
+        "mjd_start": 50000.0,
+        "mjd_end": 50365.25,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 50365.25,
+        "mjd_end": 50730.5,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 50730.5,
+        "mjd_end": 51095.75,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 51095.75,
+        "mjd_end": 51461.0,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 51461.0,
+        "mjd_end": 51826.25,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 51826.25,
+        "mjd_end": 52191.5,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 52191.5,
+        "mjd_end": 52556.75,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 52556.75,
+        "mjd_end": 52922.0,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 52922.0,
+        "mjd_end": 53287.25,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 53287.25,
+        "mjd_end": 53652.5,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 53652.5,
+        "mjd_end": 54017.75,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 54017.75,
+        "mjd_end": 54383.0,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 54383.0,
+        "mjd_end": 54748.25,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 54748.25,
+        "mjd_end": 55113.5,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 55113.5,
+        "mjd_end": 55478.75,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 55478.75,
+        "mjd_end": 55844.0,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 55844.0,
+        "mjd_end": 56209.25,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 56209.25,
+        "mjd_end": 56574.5,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 56574.5,
+        "mjd_end": 56939.75,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 56939.75,
+        "mjd_end": 57305.0,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 57305.0,
+        "mjd_end": 57670.25,
+        "n_rows": 6195,
+        "depth": 0
+      },
+      {
+        "mjd_start": 57670.25,
+        "mjd_end": 58035.5,
+        "n_rows": 7806,
+        "depth": 0
+      },
+      {
+        "mjd_start": 58035.5,
+        "mjd_end": 58400.75,
+        "n_rows": 1464,
+        "depth": 0
+      },
+      {
+        "mjd_start": 58400.75,
+        "mjd_end": 58766.0,
+        "n_rows": 1370,
+        "depth": 0
+      },
+      {
+        "mjd_start": 58766.0,
+        "mjd_end": 58788.828125,
+        "n_rows": 0,
+        "depth": 4
+      },
+      {
+        "mjd_start": 58788.828125,
+        "mjd_end": 58794.53515625,
+        "n_rows": 0,
+        "depth": 6
+      },
+      {
+        "mjd_start": 58794.53515625,
+        "mjd_end": 58797.388671875,
+        "n_rows": 4214,
+        "depth": 7
+      },
+      {
+        "mjd_start": 58797.388671875,
+        "mjd_end": 58800.2421875,
+        "n_rows": 6190,
+        "depth": 7
+      },
+      {
+        "mjd_start": 58800.2421875,
+        "mjd_end": 58811.65625,
+        "n_rows": 2700,
+        "depth": 5
+      },
+      {
+        "mjd_start": 58811.65625,
+        "mjd_end": 58857.3125,
+        "n_rows": 2918,
+        "depth": 3
+      },
+      {
+        "mjd_start": 58857.3125,
+        "mjd_end": 58948.625,
+        "n_rows": 1461,
+        "depth": 2
+      },
+      {
+        "mjd_start": 58948.625,
+        "mjd_end": 59131.25,
+        "n_rows": 1320,
+        "depth": 1
+      },
+      {
+        "mjd_start": 59131.25,
+        "mjd_end": 59496.5,
+        "n_rows": 7428,
+        "depth": 0
+      },
+      {
+        "mjd_start": 59496.5,
+        "mjd_end": 59861.75,
+        "n_rows": 554,
+        "depth": 0
+      },
+      {
+        "mjd_start": 59861.75,
+        "mjd_end": 60227.0,
+        "n_rows": 2788,
+        "depth": 0
+      },
+      {
+        "mjd_start": 60227.0,
+        "mjd_end": 60592.25,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 60592.25,
+        "mjd_end": 60957.5,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 60957.5,
+        "mjd_end": 61322.75,
+        "n_rows": 0,
+        "depth": 0
+      },
+      {
+        "mjd_start": 61322.75,
+        "mjd_end": 61328.0,
+        "n_rows": 0,
+        "depth": 0
+      }
+    ],
+    "quality_filter": "NONE (Grade A unavailable; quality recorded as returned)",
+    "sband_candidate_center_freq_mhz": [
+      1700.0,
+      2900.0
+    ],
+    "sband_scan_max_center_freq_mhz": 2000.0,
+    "nonstandard_target_name_regex": "DIAG|TEST|NOISE|_ND($|_)|NDON|NDOFF|^\\s*$",
+    "target_geometry": {
+      "channel_width_hz": 2.7939677238464355,
+      "tsamp_s": 18.253611008,
+      "n_ints": 16,
+      "relative_tolerance": 0.05
+    }
+  },
+  "counts": {
+    "api_rows_returned_incl_window_overlaps": 46408,
+    "fine_gbt_hdf5_records_unique": 46408,
+    "filter_violations": {},
+    "filename_unparseable": 0,
+    "sband_status": {
+      "candidate_provisional": 12721,
+      "edge_ambiguous_possible_lband": 324,
+      "out_of_candidate_range": 33363
+    },
+    "nonstandard_target_name_in_sband_window": 174,
+    "sband_candidate_records": 12547,
+    "unique_targets": 5050,
+    "unique_observing_days_utc": 226,
+    "unique_session_folders": 216,
+    "session_folders_spanning_multiple_utc_days": 29,
+    "by_archive_era": {
+      "single_node": 3642,
+      "spliced_multinode": 8905
+    },
+    "by_reduction_pipeline": {
+      "gpuspec": 10878,
+      "rawspec": 1669
+    },
+    "by_year": {
+      "2016": 3086,
+      "2017": 4052,
+      "2018": 1902,
+      "2019": 1608,
+      "2020": 399,
+      "2021": 1140,
+      "2022": 360
+    }
+  },
+  "quality_field": {
+    "distribution_all_records": {
+      "Ungraded": 46408
+    },
+    "distribution_sband_candidates": {
+      "Ungraded": 12547
+    },
+    "graded_A_B_C_F_records": 0,
+    "tempX_tempY_availability": {
+      "tempX": {
+        "'NULL'": 665,
+        "'Unknown'": 15429,
+        "nan": 30314
+      },
+      "tempY": {
+        "'NULL'": 665,
+        "'Unknown'": 15429,
+        "nan": 30314
+      }
+    }
+  },
+  "file_size_bytes_sband_candidates": {
+    "count": 12547,
+    "min": 962191415.0,
+    "median": 15638876832.0,
+    "mean": 12856680565.104727,
+    "max": 31130207366.0,
+    "total_bytes": 161312771050369,
+    "total_tib": 146.71,
+    "median_gib": 14.565
+  },
+  "file_size_by_era_gib": {
+    "single_node": {
+      "min": 2.944,
+      "median": 3.015,
+      "mean": 3.014,
+      "max": 3.103
+    },
+    "spliced_multinode": {
+      "min": 0.896,
+      "median": 16.152,
+      "mean": 15.638,
+      "max": 28.992
+    }
+  },
+  "center_freq_mhz_sband_candidates": {
+    "distribution_rounded_1mhz_top30": {
+      "2300.0": 5229,
+      "2270.0": 3459,
+      "2683.0": 402,
+      "2495.0": 402,
+      "2308.0": 402,
+      "2120.0": 402,
+      "1933.0": 402,
+      "1745.0": 402,
+      "2158.0": 348,
+      "1970.0": 348,
+      "1783.0": 348,
+      "2401.0": 192,
+      "2870.0": 186,
+      "2024.0": 23,
+      "2035.0": 2
+    },
+    "histogram_100mhz_bins": {
+      "1700": 750,
+      "1900": 750,
+      "2000": 25,
+      "2100": 750,
+      "2200": 3459,
+      "2300": 5631,
+      "2400": 594,
+      "2600": 402,
+      "2800": 186
+    }
+  },
+  "header_verification": {
+    "sample_size": 150,
+    "attempted": 150,
+    "succeeded": 148,
+    "failed": 0,
+    "failure_types": {},
+    "failure_reasons": {},
+    "unavailable_archive_files": 2,
+    "unavailable_archive_file_records": [
+      {
+        "id": 815598,
+        "url": "https://bldata.berkeley.edu/bl_tess/c_band/spliced_blc1011121314151617_guppi_58860_69943_3C295_0115.gpuspec.0000.h5",
+        "error": "HTTP 404 Not Found"
+      },
+      {
+        "id": 815595,
+        "url": "https://bldata.berkeley.edu/bl_tess/c_band/spliced_blc1011121314151617_guppi_58860_69807_3C295_0114.gpuspec.0000.h5",
+        "error": "HTTP 404 Not Found"
+      }
+    ],
+    "aborted": null,
+    "total_bytes_fetched": 12757266,
+    "byte_budget_per_file": 1048576,
+    "range_block_bytes": 65536,
+    "seed": 20261013,
+    "strata": "archive era x reduction pipeline x year x 100-MHz centre-frequency bin; prefers unsampled session folders",
+    "channel_width_hz_distribution": {
+      "2.794": 147,
+      "2.8355": 1
+    },
+    "tsamp_s_distribution": {
+      "17.9862": 1,
+      "18.2536": 147
+    },
+    "n_ints_distribution": {
+      "16.0": 146,
+      "3.0": 1,
+      "9.0": 1
+    },
+    "nchans_distribution": {
+      "155189248.0": 2,
+      "162529280.0": 3,
+      "318230528.0": 1,
+      "322961408.0": 9,
+      "359661568.0": 4,
+      "536870912.0": 6,
+      "67108864.0": 123
+    },
+    "bandwidth_mhz_distribution": {
+      "1004.9": 4,
+      "1500.0": 6,
+      "187.5": 123,
+      "433.6": 2,
+      "454.1": 3,
+      "902.3": 10
+    },
+    "frequency_coverage_mhz_distribution": {
+      "2401-2589": 18,
+      "2589-2776": 18,
+      "2214-2401": 18,
+      "2776-2964": 15,
+      "2026-2214": 13,
+      "1818-2721": 10,
+      "1839-2026": 10,
+      "1651-1839": 9,
+      "1689-1876": 9,
+      "1876-2064": 8,
+      "1651-3151": 6,
+      "2064-2251": 5,
+      "1798-2803": 4,
+      "1797-2251": 3,
+      "1818-2251": 2
+    },
+    "dimension_labels_seen": {
+      "['frequency', 'feed_id', 'time']": 15,
+      "['time', 'feed_id', 'frequency']": 133
+    },
+    "telescope_id_seen": {
+      "6.0": 148
+    },
+    "machine_id_seen": {
+      "20.0": 148
+    },
+    "fine_geometry": {
+      "verified_files": 148,
+      "channel_width_match": 148,
+      "tsamp_match": 148,
+      "n_ints_match": 146,
+      "all_three_match": 146,
+      "all_three_match_by_era": {
+        "single_node": "123/123",
+        "spliced_multinode": "23/25"
+      },
+      "all_three_match_by_pipeline": {
+        "gpuspec": "84/86",
+        "rawspec": "62/62"
+      },
+      "frequency_range_within_sband_window": 109,
+      "tstart_matches_api_mjd": 147,
+      "nchans_attr_matches_shape": 148,
+      "tolerance": "channel width and tsamp within +/-5%; n_ints == 16"
+    }
+  },
+  "problem_region_2300_2360_mhz": {
+    "action": "REPORTED ONLY. Not removed at observation-selection stage; predefined region to be masked (fixed mask) at frame extraction.",
+    "verified_header_files_overlapping": 38,
+    "verified_header_files": 148,
+    "catalog_estimate": {
+      "files_with_estimated_coverage": 12547,
+      "files_estimated_to_overlap": 9307,
+      "rule": "INFERRED: centre_freq +/- (median header-verified bandwidth of the same archive era)/2; not verified per file",
+      "era_median_bandwidth_mhz": {
+        "single_node": 187.5,
+        "spliced_multinode": 902.344
+      }
+    }
+  },
+  "cadence_inference": {
+    "status_counts_sband_candidate_files": {
+      "ambiguous": 1749,
+      "inferred_abacad_like": 10374,
+      "not_confirmed": 424
+    },
+    "inferred_abacad_like_cadences": 1279,
+    "ambiguous_groups_total": 170,
+    "ambiguous_groups_not_overlapping_confirmed": 170,
+    "ambiguous_reason_counts": {
+      "partial A-x-A pattern (4 scans)": 79,
+      "partial A-x-A pattern (3 scans)": 33,
+      "off targets B,C,D not distinct (e.g. ABABAB)": 28,
+      "partial A-x-A pattern (5 scans)": 11,
+      "overlapping candidate ABACAD windows": 10,
+      "gap 22.7 min > 15 min": 1,
+      "scan numbers not strictly increasing": 1,
+      "scan numbers not strictly increasing; gap 107.4 min > 15 min": 1,
+      "scan numbers not strictly increasing; gap 22.7 min > 15 min": 1,
+      "gap 41.5 min > 15 min": 1,
+      "gap 31.2 min > 15 min": 1,
+      "gap 23.7 min > 15 min": 1,
+      "gap 84.5 min > 15 min": 1,
+      "gap 21.4 min > 15 min": 1
+    },
+    "rules": {
+      "session": "INFERRED: inferred_session_id = URL path segment after 'pipeline/' (GBT session folder, e.g. AGBT16B_999_39)",
+      "setup": "INFERRED: same centre frequency (rounded to 1 kHz) = same frequency setup / compute-node slice",
+      "order": "sort by API mjd then filename scan number",
+      "abacad": "6 consecutive scans in one session+setup with targets A,B,A,C,A,D (case-insensitive name match), B/C/D distinct and != A, strictly increasing scan numbers, gaps <= 15 min",
+      "ambiguity": "overlapping valid windows, partial A-x-A runs, ABABAB, duplicate scan numbers -> 'ambiguous', never grouped",
+      "cadence_id": "session|A target|first-last scan; shared across frequency slices of the same scans"
+    }
+  },
+  "split_feasibility_60_15_15": {
+    "needed_groups": 90,
+    "inferred_cadences": 1279,
+    "inferred_cadences_by_era": {
+      "single_node": 119,
+      "spliced_multinode": 1160
+    },
+    "sessions_with_inferred_cadence": 197,
+    "observing_days_with_inferred_cadence": 201,
+    "unique_a_targets": 1117,
+    "independence_components_session_x_A_target": 120,
+    "largest_components_session_x_A_target_sessions": [
+      31,
+      29,
+      7,
+      6,
+      6,
+      2,
+      2,
+      2,
+      1,
+      1
+    ],
+    "independence_components_session_x_all_targets": 49,
+    "largest_components_session_x_all_targets_sessions": [
+      136,
+      9,
+      3,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1
+    ],
+    "target_overlap_risk": {
+      "a_targets_in_multiple_sessions": 134,
+      "a_targets_in_multiple_cadences": 135,
+      "a_targets_also_used_as_off_target": 55,
+      "off_only_targets": 3281,
+      "max_sessions_for_one_a_target": 9
+    },
+    "storage_per_cadence_all_frequency_slices_gib": {
+      "min": 43.455,
+      "median": 97.002,
+      "mean": 94.84,
+      "max": 173.935
+    },
+    "storage_per_cadence_single_frequency_slice_gib": {
+      "min": 17.666,
+      "median": 87.708,
+      "mean": 70.156,
+      "max": 173.935
+    },
+    "estimated_storage_90_cadences_all_slices_tib": 8.53,
+    "estimated_storage_90_cadences_single_slice_tib": 7.71,
+    "appears_feasible": true,
+    "appears_feasible_strict_all_targets": false,
+    "feasibility_basis": "Independence unit = connected component of the graph linking inferred session folders to the A targets of their inferred ABACAD-like cadences; a target observed in several sessions forces those sessions into one unit so a cadence-level split can be target-disjoint. 'strict' also links B/C/D off targets. Feasible if units >= 90. Raw file counts are NOT used."
+  },
+  "missing_metadata_fields": {
+    "not_exposed_by_api": [
+      "receiver/band",
+      "channel width",
+      "number of channels",
+      "number of time integrations",
+      "time resolution",
+      "frequency start/end",
+      "backend/instrument",
+      "session id",
+      "cadence id",
+      "scan type / ON-OFF role",
+      "usable Tsys (tempX/tempY)",
+      "A/B/C/F quality grade (all Ungraded)"
+    ],
+    "available_only_from_headers": [
+      "fch1",
+      "foff",
+      "tsamp",
+      "nchans",
+      "data shape (n_ints)",
+      "telescope_id",
+      "machine_id",
+      "rawdatafile (single-node files)"
+    ],
+    "not_found_in_headers": [
+      "receiver name",
+      "session id",
+      "cadence id",
+      "ON/OFF role"
+    ]
+  },
+  "scientific_limitations": [
+    "Public Quality A grading was unavailable: 0 of 46408 records carry an A/B/C/F grade; Grade A is NOT a selection criterion and Ungraded data is not described as Grade A.",
+    "Quality field distribution is {'Ungraded': 46408}; tempX/tempY (Tsys) are not usable; Tsys grades were not reconstructed.",
+    "S-band membership is INFERRED from centre frequency (receiver not exposed); only header-verified files have a measured frequency range, and even that does not name the receiver.",
+    "Session and cadence IDs are INFERRED from URL folder, filename scan number, MJD order and target sequence; they are not archive-native.",
+    "Fine product selection IS explicit via the API filter grades=fine; 0 returned rows violated the telescope/file-type/.{gpuspec|rawspec}.0000.h5 checks and were excluded.",
+    "GBT and HDF5 filters ARE explicit (telescopes=gbt, file-types=hdf5) and were re-checked on every returned row.",
+    "API results are capped at 10000; complete retrieval required recursive MJD-window enumeration. Records with a missing MJD cannot be retrieved by time windows and would be absent.",
+    "Detailed geometry (channel width, tsamp, n_ints, frequency range) is known only for header-verified sample files; catalog-wide geometry is not verified.",
+    "No signal-content-based selection was performed; the 2300-2360 MHz region was not removed."
+  ],
+  "outputs": {
+    "catalog_csv": "results/data_audit/bl_fine_sband_catalog.csv",
+    "catalog_scope": "ALL unique GBT Fine HDF5 records returned (any frequency); filter on inferred_sband_status for S-band candidates",
+    "column_provenance": {
+      "archive_api": [
+        "id",
+        "target",
+        "telescope",
+        "file_type",
+        "url",
+        "size",
+        "md5sum",
+        "mjd",
+        "utc",
+        "ra",
+        "decl",
+        "center_freq",
+        "quality",
+        "tempX",
+        "tempY"
+      ],
+      "derived_*": "deterministic parse of URL/filename/MJD",
+      "inferred_*, cadence_*": "rule-based inference (see cadence_inference.rules)",
+      "hdr_*": "read from HDF5 header via HTTP range requests (sampled files only)"
+    }
+  }
+}

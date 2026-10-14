@@ -1,0 +1,383 @@
+{
+  "created_utc": "2026-10-14T19:24:19+00:00",
+  "manifest": "configs/data/fine_v2_manifest.csv",
+  "seed": 20261013,
+  "scope": "TRAIN split only; validation/test rows never read or requested",
+  "window_algorithm": {
+    "grid": "start channel = k*4096 in file channel order",
+    "eligible": "window outer edges within (1700.0, 2900.0) MHz and not overlapping ((2300.0, 2360.0),) MHz",
+    "selection": "eligible grid cut into n contiguous near-equal-count strata (np.linspace(0, len, n+1).round()); one draw per stratum with random.Random(f'{seed}|{key}').randrange",
+    "gpuspec_key": "{inferred_cadence_id}|{setup_key}|n={n}",
+    "rawspec_key": "{inferred_cadence_id}|{setup_key}|{filename}|rawspec_smoke|n={n}",
+    "frequency_order": "file channel order (descending frequency when foff < 0)",
+    "content_used": false
+  },
+  "normalization": "deepseti.preprocessing.frames.robust_normalize_frame: log10, (x - median) / MAD per frame, no clipping, float32",
+  "thresholds": {
+    "max_projected_bytes": 1000000000000.0,
+    "max_projected_days": 7.0
+  },
+  "gpuspec": {
+    "group_id": "G001",
+    "inferred_cadence_id": "AGBT16B_999_61|HIP1803|scans0045-0050",
+    "session": "AGBT16B_999_61",
+    "setup_key": 2300.391,
+    "files": [
+      {
+        "cadence_position": 0,
+        "cadence_role": "ON_A",
+        "filename": "spliced_blc0001020304050607_guppi_57697_14199_HIP1803_0045.gpuspec.0000.h5",
+        "size_bytes": 17324803815,
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": "unknown",
+        "geometry_problems": [],
+        "metadata_requests": 1,
+        "metadata_bytes": 65536
+      },
+      {
+        "cadence_position": 1,
+        "cadence_role": "OFF_B",
+        "filename": "spliced_blc0001020304050607_guppi_57697_14537_HIP1191_0046.gpuspec.0000.h5",
+        "size_bytes": 17440243787,
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": "unknown",
+        "geometry_problems": [],
+        "metadata_requests": 1,
+        "metadata_bytes": 65536
+      },
+      {
+        "cadence_position": 2,
+        "cadence_role": "ON_A",
+        "filename": "spliced_blc0001020304050607_guppi_57697_14875_HIP1803_0047.gpuspec.0000.h5",
+        "size_bytes": 17431227642,
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": "unknown",
+        "geometry_problems": [],
+        "metadata_requests": 1,
+        "metadata_bytes": 65536
+      },
+      {
+        "cadence_position": 3,
+        "cadence_role": "OFF_C",
+        "filename": "spliced_blc0001020304050607_guppi_57697_15213_HIP1266_0048.gpuspec.0000.h5",
+        "size_bytes": 17439194457,
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": "unknown",
+        "geometry_problems": [],
+        "metadata_requests": 1,
+        "metadata_bytes": 65536
+      },
+      {
+        "cadence_position": 4,
+        "cadence_role": "ON_A",
+        "filename": "spliced_blc0001020304050607_guppi_57697_15551_HIP1803_0049.gpuspec.0000.h5",
+        "size_bytes": 17419371850,
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": "unknown",
+        "geometry_problems": [],
+        "metadata_requests": 1,
+        "metadata_bytes": 65536
+      },
+      {
+        "cadence_position": 5,
+        "cadence_role": "OFF_D",
+        "filename": "spliced_blc0001020304050607_guppi_57697_15888_HIP1274_0050.gpuspec.0000.h5",
+        "size_bytes": 17386536849,
+        "fch1": 2802.83203125,
+        "foff": -2.7939677238464355e-06,
+        "nchans": 359661568,
+        "n_ints": 16,
+        "tsamp": 18.253611008,
+        "chunks": [
+          1,
+          1,
+          1048576
+        ],
+        "filters": "unknown",
+        "geometry_problems": [],
+        "metadata_requests": 1,
+        "metadata_bytes": 65536
+      }
+    ],
+    "all_positions_compatible": true,
+    "frequency_coverage_mhz": [
+      1797.9492215439677,
+      2802.83203125
+    ],
+    "eligible_windows": 82564,
+    "usable_span_mhz": [
+      1797.9492201469839,
+      2802.832032646984
+    ],
+    "window_starts": [
+      7118848,
+      40869888,
+      49360896,
+      75063296,
+      100265984,
+      120127488,
+      136163328,
+      148672512,
+      207314944,
+      220856320,
+      246468608,
+      268156928,
+      280576000,
+      312307712,
+      323551232,
+      344350720
+    ],
+    "window_bounds_mhz": [
+      [
+        2782.9307570122182,
+        2782.942201104015
+      ],
+      [
+        2688.6314406059682,
+        2688.642884697765
+      ],
+      [
+        2664.9078383110464,
+        2664.9192824028432
+      ],
+      [
+        2593.0961622856557,
+        2593.1076063774526
+      ],
+      [
+        2522.680665459484,
+        2522.6921095512807
+      ],
+      [
+        2467.188264336437,
+        2467.199708428234
+      ],
+      [
+        2422.3846449516714,
+        2422.3960890434682
+      ],
+      [
+        2387.434388604015,
+        2387.445832695812
+      ],
+      [
+        2223.5893263481557,
+        2223.6007704399526
+      ],
+      [
+        2185.755158867687,
+        2185.766602959484
+      ],
+      [
+        2114.1952528618276,
+        2114.2066969536245
+      ],
+      [
+        2053.5987867973745,
+        2053.6102308891714
+      ],
+      [
+        2018.9003004692495,
+        2018.9117445610464
+      ],
+      [
+        1930.2429213188589,
+        1930.2543654106557
+      ],
+      [
+        1898.828889336437,
+        1898.8403334282339
+      ],
+      [
+        1840.7157911919057,
+        1840.7272352837026
+      ]
+    ],
+    "cost_probe": {
+      "window_start": 7118848,
+      "frame_shape": [
+        16,
+        4096
+      ],
+      "requests": 34,
+      "bytes": 50396949,
+      "seconds": 138.13,
+      "bytes_per_second": 364862,
+      "bytes_per_frame": 50396949,
+      "raw_bytes_per_frame": 262144,
+      "read_amplification": 192.2,
+      "bytes_per_compressed_chunk_mean": 3149809,
+      "stats": {
+        "raw_min": 907857024.0,
+        "raw_median": 1502275072.0,
+        "raw_max": 2277441024.0,
+        "norm_per_frame_median_absmax": 0.0,
+        "norm_per_frame_mad_min": 1.0,
+        "norm_per_frame_mad_max": 1.0,
+        "norm_all_finite": true
+      }
+    },
+    "projection": {
+      "assumption": "256 windows per cadence, same 256 windows in each of 6 positions, 90 cadences, measured gpuspec bytes/chunk and single-stream rate; chunk sharing between windows counted exactly from the 256-window selection",
+      "chunk_columns_touched_per_file_256": 221,
+      "frames_total": 138240,
+      "bytes_per_cadence": 66826354374,
+      "bytes_total": 6014371893660,
+      "days_total_single_stream": 190.8,
+      "processed_storage_bytes_float32_raw": 36238786560,
+      "pilot_projection": {
+        "frames": 96,
+        "chunk_columns_per_file": 16,
+        "bytes": 4838107104,
+        "hours_single_stream": 3.68
+      }
+    },
+    "status": "STOPPED_COST_GUARD",
+    "stop_reason": "projected 6.01 TB / 191 days for 256 windows x 90 cadences exceeds thresholds; remaining 95 pilot frames not read"
+  },
+  "rawspec_smoke": {
+    "group_id": "G116",
+    "inferred_cadence_id": "AGBT21A_996_55|NGC4660|scans0052-0057",
+    "cadence_position": 0,
+    "filename": "blc02_guppi_59427_03910_NGC4660_0052.rawspec.0000.h5",
+    "size_bytes": 3190750990,
+    "fch1": 1876.46484375,
+    "foff": -2.7939677238464355e-06,
+    "nchans": 67108864,
+    "n_ints": 16,
+    "tsamp": 18.253611007999982,
+    "chunks": [
+      1,
+      1,
+      65536
+    ],
+    "filters": "unknown",
+    "geometry_problems": [],
+    "frequency_coverage_mhz": [
+      1688.9648465439677,
+      1876.46484375
+    ],
+    "eligible_windows": 15419,
+    "window_starts": [
+      11460608,
+      21028864,
+      31789056,
+      52289536
+    ],
+    "window_bounds_mhz": [
+      [
+        1844.4328322075307,
+        1844.4442762993276
+      ],
+      [
+        1817.6994337700307,
+        1817.7108778618276
+      ],
+      [
+        1787.63580461964,
+        1787.647248711437
+      ],
+      [
+        1730.3581251762807,
+        1730.3695692680776
+      ]
+    ],
+    "frame_shapes": [
+      [
+        16,
+        4096
+      ],
+      [
+        16,
+        4096
+      ],
+      [
+        16,
+        4096
+      ],
+      [
+        16,
+        4096
+      ]
+    ],
+    "metadata_requests": 2,
+    "metadata_bytes": 131072,
+    "extract_requests": 136,
+    "extract_bytes": 17326623,
+    "extract_seconds": 197.96,
+    "bytes_per_frame": 4331656,
+    "stats": {
+      "raw_min": 4515874.5,
+      "raw_median": 9907385.0,
+      "raw_max": 16822712.0,
+      "norm_per_frame_median_absmax": 8.239336239057593e-06,
+      "norm_per_frame_mad_min": 0.999991774559021,
+      "norm_per_frame_mad_max": 1.0,
+      "norm_all_finite": true
+    },
+    "status": "PASSED"
+  },
+  "transfer": {
+    "requests": 179,
+    "bytes": 68313396,
+    "http_statuses": {
+      "206": 179
+    },
+    "all_206": true,
+    "full_body_responses": 0,
+    "wall_clock_seconds": 346.5
+  },
+  "processed_disk_bytes": 2621952,
+  "projection_correction": {
+    "recorded_utc": "2026-10-14",
+    "issue": "The pilot-1 projection assumed 256 windows in EACH of the 6 cadence positions (256 x 6 x 90 = 138,240 frames, ~6.0 TB). The Dataset V2 intent was ~256 frames PER CADENCE TOTAL, so the frame count was overstated by ~6x.",
+    "corrected_plan": "42 frames per scan x 6 scans = 252 frames per cadence; 60/15/15 cadences -> 15,120 / 3,780 / 3,780 frames (22,680 total).",
+    "pilot_1_conclusion_unchanged": "Scattered per-window remote extraction remains NO-GO: ~50.4 MB transferred per 16x4096 frame because each window forces a full 1,048,576-channel compressed gpuspec chunk per integration. Even at 252 frames/cadence this is ~1.1 TB.",
+    "superseded_by": "results/data_audit/fine_v2_chunked_pilot.json (chunk-aware rule)"
+  }
+}
