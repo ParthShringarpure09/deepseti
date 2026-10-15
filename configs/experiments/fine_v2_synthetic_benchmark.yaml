@@ -1,0 +1,57 @@
+# Fine V2 validation synthetic benchmark, development revision 1.
+#
+# Mirrors the constants in src/deepseti/evaluation/fine_benchmark.py and
+# src/deepseti/injection/fine.py exactly; test_fine_benchmark_config.py
+# asserts the two never drift apart. This file documents the frozen
+# development design -- it is not read by the Python modules at runtime,
+# which hardcode the same values as their single source of truth.
+
+benchmark:
+  revision: 1
+  seed: 20261013
+  split: validation
+  protocol_revision: 2  # references the frozen Fine V2 extraction protocol
+
+  source:
+    manifest: configs/data/fine_v2_manifest.csv
+    manifest_md5: 702d3ba6fa3e8629454fb215cf2b8d8a
+    chunk_plan: results/data_audit/fine_v2_chunk_plan.csv
+    chunk_plan_md5: aa4cff4e458062589855d1a979b4b8c2
+    validation_metadata: data/processed/fine_v2/validation/metadata.csv
+    validation_raw_cache: data/processed/fine_v2/validation_raw
+
+  geometry:
+    frame_shape: [16, 4096]
+    channel_width_hz: 2.7939677238464355
+    tsamp_s: 18.253611008
+
+  morphologies:
+    development: [stationary, linear_drift, intermittent, multiple_carriers]
+    # Reserved for later unseen/generalization evaluation; never produced by
+    # this development benchmark.
+    held_out: [nonlinear_chirp, burst]
+
+  snr_levels: [0.5, 1.0, 2.0, 5.0, 10.0]
+  linear_drift_hz_per_s_levels: [0.05, 0.5, 2.0, 5.0, 10.0]
+  duty_cycle_levels: [0.25, 0.5, 0.75]
+  carrier_counts: [2, 3]
+
+  n_validation_cadence_groups: 15
+  repeats_per_setting: 15  # one per validation cadence group
+  n_distinct_settings: 80  # 5 (stationary) + 50 (linear_drift) + 15 (intermittent) + 10 (multiple_carriers)
+  n_examples: 1200         # n_distinct_settings * repeats_per_setting; every example uses a distinct base frame
+
+  injection:
+    domain: linear_power  # injected BEFORE log10 + per-frame median/MAD normalization
+    bandwidth_channels: 2
+    guard_channels: 256
+    margin_channels: 4
+    carrier_spacing_channels: 400
+    local_snr_estimator: "1.4826 * MAD(background pixels)"
+    amplitude_rule: "requested_snr * sigma_local"
+    outside_mask_diff_tolerance: 0.1  # MAD units; normalization is frame-wide
+
+output:
+  frames: data/synthetic/fine_v2_validation/   # gitignored; large arrays
+  audit: results/benchmarks/fine_v2_validation_benchmark_audit.json
+  figures: results/benchmarks/figures/
