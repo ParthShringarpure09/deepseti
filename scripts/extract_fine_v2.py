@@ -1,7 +1,11 @@
 """Production Fine Dataset V2 extraction (protocol revision 2).
 
-Only ``--split train`` is allowed under revision 2; validation and test are
-refused. For every scan (cadence position) of every planned cadence the
+``--split train`` is allowed under the frozen training config. ``--split
+validation`` additionally requires the explicit validation-access config
+(configs/data/fine_v2_validation_access.yaml, marked with
+``access.kind: fine_v2_validation_access``); no config can unlock it.
+``--split test`` is permanently and unconditionally refused. For every scan
+(cadence position) of every planned cadence the
 chunk-aware slab is fetched with HTTP Range requests (206 only), 42 frames are
 sliced locally, normalized with the frozen log10 + median/MAD rule and stored.
 
@@ -318,6 +322,7 @@ def verify(cfg: dict, split: str, out: Path, tasks: list[dict], state: dict) -> 
             statuses[k] = statuses.get(k, 0) + v
     manifest = pd.read_csv(cfg["inputs"]["manifest"])
     src = manifest[manifest["archive_id"].isin(meta["archive_id"])] if done else manifest.iloc[:0]
+    other_splits = [s2 for s2 in ("train", "validation", "test") if s2 != split]
     inv = {
         "cadence_groups_eq_expected": int(meta["group_id"].nunique()) == n_groups if done else False,
         "scans_eq_expected": len(done) == n_groups * s["scans_per_cadence"],
@@ -328,6 +333,7 @@ def verify(cfg: dict, split: str, out: Path, tasks: list[dict], state: dict) -> 
         "frames_per_cadence_all_252": bool((per_cad == s["frames_per_cadence"]).all()) if done else False,
         "no_duplicate_frame_ids": bool(meta["frame_id"].is_unique) if done else False,
         "all_source_rows_in_split": bool((src["split"] == split).all() and len(src) == len(done)),
+        "train_rows": int((src["split"] == "train").sum()),
         "validation_rows": int((src["split"] == "validation").sum()),
         "test_rows": int((src["split"] == "test").sum()),
         "manifest_md5_unchanged": md5(cfg["inputs"]["manifest"]) == cfg["inputs"]["manifest_md5"],
@@ -338,8 +344,11 @@ def verify(cfg: dict, split: str, out: Path, tasks: list[dict], state: dict) -> 
         "full_body_responses_zero": sum(r["full_body_responses"] for r in done) == 0
         and sum(x.get("full_body_responses", 0) for x in state["sessions"]) == 0,
     }
-    inv["all_pass"] = all(v is True or (k in ("validation_rows", "test_rows") and v == 0)
-                          for k, v in inv.items())
+    # The current split's own row count is expected to equal the scan count
+    # (not zero); only rows pulled from *other* splits indicate contamination.
+    inv["other_split_rows_requested_zero"] = all(inv[f"{s2}_rows"] == 0 for s2 in other_splits)
+    inv["all_pass"] = all(v is True for k, v in inv.items()
+                          if k not in ("train_rows", "validation_rows", "test_rows"))
     return {
         "records": done, "metadata": meta, "invariants": inv, "http_statuses": statuses,
         "normalization": {"per_frame_median_absmax": med_absmax, "per_frame_mad_min": mad_min,
@@ -349,6 +358,25 @@ def verify(cfg: dict, split: str, out: Path, tasks: list[dict], state: dict) -> 
 
 def disk_bytes(path: Path) -> int:
     return sum(f.stat().st_size for f in path.rglob("*") if f.is_file())
+
+
+def validate_split_access(split: str, cfg: dict) -> str | None:
+    """Return a refusal reason if ``split`` may not be extracted, else None.
+
+    ``test`` is refused unconditionally, independent of any config file's
+    contents. ``validation`` additionally requires the config to carry the
+    explicit ``access.kind: fine_v2_validation_access`` marker, so no config
+    other than the dedicated validation-access config can unlock it.
+    """
+    if split == "test":
+        return "split 'test' (final test) is permanently disabled in this extractor."
+    if split == "validation" and cfg.get("access", {}).get("kind") != "fine_v2_validation_access":
+        return ("split 'validation' requires the explicit validation-access config "
+                "(configs/data/fine_v2_validation_access.yaml)")
+    if split not in cfg["split"]["extractable_splits"]:
+        return (f"split '{split}' is not extractable under protocol revision "
+                f"{cfg['protocol']['revision']} (allowed: {cfg['split']['extractable_splits']}).")
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -367,9 +395,9 @@ def main() -> int:
     args = p.parse_args()
 
     cfg = yaml.safe_load(Path(args.config).read_text())
-    if args.split not in cfg["split"]["extractable_splits"]:
-        print(f"REFUSED: split '{args.split}' is not extractable under protocol revision "
-              f"{cfg['protocol']['revision']} (allowed: {cfg['split']['extractable_splits']}).")
+    refusal = validate_split_access(args.split, cfg)
+    if refusal:
+        print(f"REFUSED: {refusal}")
         return 2
     workers = args.workers or cfg["transfer"]["workers"]
     if not 1 <= workers <= MAX_WORKERS:

@@ -1,0 +1,105 @@
+{
+  "created_utc": "2026-10-15T12:06:39+00:00",
+  "split": "validation",
+  "config": "configs/data/fine_v2_validation_access.yaml",
+  "protocol_revision": 2,
+  "manifest_md5": "702d3ba6fa3e8629454fb215cf2b8d8a",
+  "chunk_plan_md5": "aa4cff4e458062589855d1a979b4b8c2",
+  "output_dir": "data/processed/fine_v2/validation",
+  "completed_cadences": 15,
+  "completed_scans": 90,
+  "frames": 3780,
+  "disk_bytes": 997151903,
+  "frames_dir_bytes": 991137044,
+  "audit_raw_bytes": 3934080,
+  "transferred_bytes_completed_scans": 5131715627,
+  "transferred_bytes_all_sessions": 5131715627,
+  "requests_all_sessions": 10054,
+  "extraction_wall_seconds_all_sessions": 6486.200000000001,
+  "effective_throughput_mb_per_s": 0.791,
+  "request_retries": 9,
+  "scan_retries": 1,
+  "failures_outstanding": {},
+  "retried_scans": {
+    "G119_pos3_529330": [
+      {
+        "attempt": 1,
+        "ok": false,
+        "error": "RangeError('got 2457295 bytes, expected 3092071')",
+        "permanent": false
+      },
+      {
+        "attempt": 2,
+        "ok": true
+      }
+    ]
+  },
+  "http_statuses": {
+    "206": 10061
+  },
+  "full_body_responses": 0,
+  "normalization": {
+    "per_frame_median_absmax": 1.6642257833154872e-05,
+    "per_frame_mad_min": 0.9999833106994629,
+    "per_frame_mad_max": 1.0000165700912476,
+    "value_min": -9.170287132263184,
+    "value_max": 53.00014114379883
+  },
+  "invariants": {
+    "cadence_groups_eq_expected": true,
+    "scans_eq_expected": true,
+    "frames_eq_expected": true,
+    "every_frame_shape_16x4096": true,
+    "all_normalized_values_finite": true,
+    "frames_per_scan_all_42": true,
+    "frames_per_cadence_all_252": true,
+    "no_duplicate_frame_ids": true,
+    "all_source_rows_in_split": true,
+    "train_rows": 0,
+    "validation_rows": 90,
+    "test_rows": 0,
+    "manifest_md5_unchanged": true,
+    "chunk_plan_md5_unchanged": true,
+    "only_http_206": true,
+    "full_body_responses_zero": true,
+    "other_split_rows_requested_zero": true,
+    "all_pass": true
+  },
+  "sessions": [
+    {
+      "started_utc": "2026-10-15T10:14:36+00:00",
+      "workers": 4,
+      "scans_already_complete": 0,
+      "scans_attempted": 90,
+      "bytes": 455533032,
+      "requests": 911,
+      "request_retries": 0,
+      "scan_retries": 0,
+      "failed": 0,
+      "http_statuses": {
+        "206": 911
+      },
+      "full_body_responses": 0,
+      "elapsed_s": 492.1,
+      "updated_utc": "2026-10-15T10:22:48+00:00"
+    },
+    {
+      "started_utc": "2026-10-15T10:24:47+00:00",
+      "workers": 4,
+      "scans_already_complete": 8,
+      "scans_attempted": 82,
+      "bytes": 4676182595,
+      "requests": 9143,
+      "request_retries": 9,
+      "scan_retries": 1,
+      "failed": 0,
+      "http_statuses": {
+        "206": 9150
+      },
+      "full_body_responses": 0,
+      "elapsed_s": 5994.1,
+      "updated_utc": "2026-10-15T12:04:41+00:00",
+      "ended_utc": "2026-10-15T12:04:41+00:00"
+    }
+  ]
+}
