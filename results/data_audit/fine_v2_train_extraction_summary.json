@@ -1,0 +1,86 @@
+{
+  "created_utc": "2026-10-15T02:40:53+00:00",
+  "split": "train",
+  "config": "configs/data/fine_v2_extraction.yaml",
+  "protocol_revision": 2,
+  "manifest_md5": "702d3ba6fa3e8629454fb215cf2b8d8a",
+  "chunk_plan_md5": "aa4cff4e458062589855d1a979b4b8c2",
+  "output_dir": "data/processed/fine_v2/train",
+  "completed_cadences": 60,
+  "completed_scans": 360,
+  "frames": 15120,
+  "disk_bytes": 3988503534,
+  "frames_dir_bytes": 3964546101,
+  "audit_raw_bytes": 15736320,
+  "transferred_bytes_completed_scans": 20685691857,
+  "transferred_bytes_all_sessions": 20685691857,
+  "requests_all_sessions": 41986,
+  "extraction_wall_seconds_all_sessions": 18153.6,
+  "effective_throughput_mb_per_s": 1.139,
+  "request_retries": 0,
+  "scan_retries": 1,
+  "failures_outstanding": {},
+  "retried_scans": {
+    "G077_pos1_69452": [
+      {
+        "attempt": 1,
+        "ok": false,
+        "error": "RangeError('got 2719437 bytes, expected 3184353')",
+        "permanent": false
+      },
+      {
+        "attempt": 2,
+        "ok": true
+      }
+    ]
+  },
+  "http_statuses": {
+    "206": 41987
+  },
+  "full_body_responses": 0,
+  "normalization": {
+    "per_frame_median_absmax": 1.665168019826524e-05,
+    "per_frame_mad_min": 0.9999833106994629,
+    "per_frame_mad_max": 1.0000165700912476,
+    "value_min": -9.884137153625488,
+    "value_max": 71.39099884033203
+  },
+  "invariants": {
+    "cadence_groups_eq_expected": true,
+    "scans_eq_expected": true,
+    "frames_eq_expected": true,
+    "every_frame_shape_16x4096": true,
+    "all_normalized_values_finite": true,
+    "frames_per_scan_all_42": true,
+    "frames_per_cadence_all_252": true,
+    "no_duplicate_frame_ids": true,
+    "all_source_rows_in_split": true,
+    "validation_rows": 0,
+    "test_rows": 0,
+    "manifest_md5_unchanged": true,
+    "chunk_plan_md5_unchanged": true,
+    "only_http_206": true,
+    "full_body_responses_zero": true,
+    "all_pass": true
+  },
+  "sessions": [
+    {
+      "started_utc": "2026-10-14T21:38:02+00:00",
+      "workers": 4,
+      "scans_already_complete": 0,
+      "scans_attempted": 360,
+      "bytes": 20685691857,
+      "requests": 41986,
+      "request_retries": 0,
+      "scan_retries": 1,
+      "failed": 0,
+      "http_statuses": {
+        "206": 41987
+      },
+      "full_body_responses": 0,
+      "elapsed_s": 18153.6,
+      "updated_utc": "2026-10-15T02:40:35+00:00",
+      "ended_utc": "2026-10-15T02:40:35+00:00"
+    }
+  ]
+}
