@@ -1,0 +1,76 @@
+{
+  "all_source_rows_validation": true,
+  "n_examples": 1200,
+  "n_unique_base_frames": 1200,
+  "all_base_frames_unique": true,
+  "clean_shape_ok": true,
+  "injected_shape_ok": true,
+  "clean_finite": true,
+  "injected_finite": true,
+  "morphology_counts": {
+    "linear_drift": 750,
+    "intermittent": 225,
+    "multiple_carriers": 150,
+    "stationary": 75
+  },
+  "morphology_counts_match_expected": true,
+  "snr_counts": {
+    "0.5": 240,
+    "1.0": 240,
+    "2.0": 240,
+    "5.0": 240,
+    "10.0": 240
+  },
+  "snr_counts_balanced": true,
+  "drift_rate_counts": {
+    "0.05": 150,
+    "0.5": 150,
+    "2.0": 150,
+    "5.0": 150,
+    "10.0": 150
+  },
+  "drift_rate_counts_balanced": true,
+  "drift_sign_counts": {
+    "positive": 375,
+    "negative": 375
+  },
+  "drift_sign_balanced": true,
+  "max_outside_mask_diff": 0.028125762939453125,
+  "outside_mask_diff_negligible": true,
+  "achieved_snr_by_requested": {
+    "0.5": 0.4869647809614738,
+    "1.0": 0.9510148738821348,
+    "2.0": 1.8192235286037126,
+    "5.0": 4.04245749215285,
+    "10.0": 6.894209386905034
+  },
+  "requested_vs_achieved_monotonic": true,
+  "held_out_morphology_count": 0,
+  "held_out_morphology_count_zero": true,
+  "no_track_crosses_boundary": true,
+  "all_pass": true,
+  "preflight": {
+    "final_test_untouched": true,
+    "validation_only_confirmed": true,
+    "test_split_refused": true,
+    "validation_metadata_rows": 3780,
+    "validation_metadata_all_validation_split": true
+  },
+  "deterministic_regeneration": {
+    "clean_frames_identical": true,
+    "injected_frames_identical": true,
+    "metadata_identical": true
+  },
+  "config_checksum_sha256": "b8c35b3cca0405623d80686275b7e2d61a2f59d91525e78f27ae806e53c03286",
+  "clean_frames_checksum_sha256": "72e25034f2fb7f658032b3eebc0a6c601c6ca0a4ac4554ba4559ee1d5036883c",
+  "injected_frames_checksum_sha256": "170642771542d512c4ba8cf7b6e256f728babf2f494159effead75a90191bbe2",
+  "metadata_checksum_sha256": "5a711a5769000e8fba5cedde209ac0e0598d72f1abfba56a0a91c3789e285964",
+  "figure_paths": [
+    "results/benchmarks/figures/clean_baseline.png",
+    "results/benchmarks/figures/stationary.png",
+    "results/benchmarks/figures/linear_drift_slow.png",
+    "results/benchmarks/figures/linear_drift_fast.png",
+    "results/benchmarks/figures/intermittent.png",
+    "results/benchmarks/figures/multiple_carriers.png"
+  ]
+}
