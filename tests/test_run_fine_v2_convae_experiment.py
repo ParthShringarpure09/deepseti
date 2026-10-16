@@ -37,7 +37,7 @@ def test_top_fraction_matches_frozen_scoring_module():
 def test_load_config_rejects_non_dict(tmp_path):
     path = tmp_path / "bad.yaml"
     path.write_text("- just\n- a\n- list\n")
-    with pytest.raises(ValueError, match="dict"):
+    with pytest.raises(TypeError, match="dict"):
         runner.load_config(path)
 
 
